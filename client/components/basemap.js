@@ -10,11 +10,6 @@ import CrimeHeat from './crime-heatmap'
 const loaderOptions = {
   url: 'http://js.arcgis.com/4.11'
 }
-
-const loaderOptions = {
-  url: 'http://js.arcgis.com/4.11'
-}
-
 export default props => {
   return (
     <Map
