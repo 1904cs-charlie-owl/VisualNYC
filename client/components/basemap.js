@@ -4,6 +4,7 @@ import {Scene} from '@esri/react-arcgis'
 import BoroughLayer from './borough-layer'
 import CrimeLayer from './crime-layer'
 import BuildingLayer from './building-layer'
+import LayerList from './layerlistwidget'
 
 export default props => {
   return (
@@ -15,6 +16,7 @@ export default props => {
         zoom: 12.5
       }}
     >
+      <LayerList />
       <BoroughLayer />
       <CrimeLayer />
       <BuildingLayer />
