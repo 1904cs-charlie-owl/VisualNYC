@@ -9,7 +9,7 @@ export default props => {
   return (
     <Map
       style={{width: '100vw', height: '100vh'}}
-      mapProperties={{basemap: 'satellite'}}
+      mapProperties={{basemap: 'dark-gray-vector'}}
       viewProperties={{
         center: [-73.953413, 40.788602],
         zoom: 12.5
