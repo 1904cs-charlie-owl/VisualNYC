@@ -1,17 +1,21 @@
 import {useState, useEffect} from 'react'
 import {loadModules} from '@esri/react-arcgis'
 
-const LayerList = props => {
+const LayerListWidget = props => {
   const [widget, setWidget] = useState(null)
   useEffect(() => {
-    loadModules(['esri/widgets/LayerList'])
-      .then(([LayerList]) => {
+    loadModules(['esri/widgets/LayerList', 'esri/widgets/Expand'])
+      .then(([LayerList, Expand]) => {
         props.view.when(function() {
           var layerList = new LayerList({
             view: props.view
           })
-          setWidget(layerList)
-          props.view.ui.add(layerList, 'top-right')
+          var expand = new Expand({
+            view: props.view,
+            content: layerList
+          })
+          setWidget(expand)
+          props.view.ui.add(expand, 'top-right')
         })
       })
       .catch(err => console.error(err))
@@ -19,4 +23,4 @@ const LayerList = props => {
   return null
 }
 
-export default LayerList
+export default LayerListWidget
