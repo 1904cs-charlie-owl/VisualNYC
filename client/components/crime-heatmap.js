@@ -20,7 +20,7 @@ const CrimeHeat = props => {
       {color: '#e0cf40', ratio: 0.913},
       {color: '#ffff00', ratio: 1}
     ],
-    maxPixelIntensity: 10,
+    maxPixelIntensity: 12,
     minPixelIntensity: 0
   }
 
