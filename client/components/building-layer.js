@@ -23,34 +23,7 @@ const Boroughs = props => {
           }
         }
       ]
-    },
-    visualVariables: [
-      {
-        // specifies a visual variable of continuous color
-        type: 'color',
-        // based on a field indicating the walking time to public transport
-        field: 'walkTimeToStopsInService',
-        legendOptions: {
-          title: 'Walking time to public transport'
-        },
-        // color ramp from white to blue
-        // based on the walking time to public transport.
-        // Buildings will be assigned a color proportional to the
-        // min and max colors specified below.
-        stops: [
-          {
-            value: 1,
-            color: '#2887a1',
-            label: 'less than 1 minute'
-          },
-          {
-            value: 15,
-            color: '#ffffff',
-            label: 'more than 15 minutes'
-          }
-        ]
-      }
-    ]
+    }
   }
 
   useEffect(() => {
