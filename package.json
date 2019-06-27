@@ -28,8 +28,15 @@
 		}
 	},
 	"lint-staged": {
-		"*.{js,jsx}": [ "prettier --write", "npm run lint-fix", "git add" ],
-		"*.{css,scss,json,md}": [ "prettier --write", "git add" ]
+		"*.{js,jsx}": [
+			"prettier --write",
+			"npm run lint-fix",
+			"git add"
+		],
+		"*.{css,scss,json,md}": [
+			"prettier --write",
+			"git add"
+		]
 	},
 	"author": "Fullstack Academy of Code",
 	"license": "MIT",
