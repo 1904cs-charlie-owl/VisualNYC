@@ -22,7 +22,6 @@ const Crimes = props => {
             'https://services9.arcgis.com/pI8WB6ioL0sQBuuC/arcgis/rest/services/test_crime_data/FeatureServer',
           renderer: crimeHeadsRenderer
         })
-
         setLayer(initLayer)
         props.map.add(initLayer)
       })
