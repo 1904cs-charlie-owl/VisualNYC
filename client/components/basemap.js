@@ -1,13 +1,13 @@
 /* eslint-disable react/display-name */
 import React from 'react'
-import {Map} from '@esri/react-arcgis'
+import {Scene} from '@esri/react-arcgis'
 import BoroughLayer from './borough-layer'
 import CrimeLayer from './crime-layer'
 import BuildingLayer from './building-layer'
 
 export default props => {
   return (
-    <Map
+    <Scene
       style={{width: '100vw', height: '100vh'}}
       mapProperties={{basemap: 'dark-gray-vector'}}
       viewProperties={{
@@ -18,6 +18,6 @@ export default props => {
       <BoroughLayer />
       <CrimeLayer />
       <BuildingLayer />
-    </Map>
+    </Scene>
   )
 }

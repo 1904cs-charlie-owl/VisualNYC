@@ -10,9 +10,7 @@ const Crimes = props => {
           url:
             'https://services9.arcgis.com/pI8WB6ioL0sQBuuC/arcgis/rest/services/test_crime_data/FeatureServer'
         })
-        console.log(initLayer)
         setLayer(initLayer)
-        console.log(props)
         props.map.add(initLayer)
       })
       .catch(err => console.error(err))
