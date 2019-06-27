@@ -1,9 +1,15 @@
 /* eslint-disable react/display-name */
 import React from 'react'
-import {Scene} from '@esri/react-arcgis'
+import {Map, Scene} from '@esri/react-arcgis'
 import BoroughLayer from './borough-layer'
 import CrimeLayer from './crime-layer'
 import BuildingLayer from './building-layer'
+import LayerList from './layerlistwidget'
+import CrimeHeat from './crime-heatmap'
+
+const loaderOptions = {
+  url: 'http://js.arcgis.com/4.11'
+}
 
 const loaderOptions = {
   url: 'http://js.arcgis.com/4.11'
@@ -11,7 +17,7 @@ const loaderOptions = {
 
 export default props => {
   return (
-    <Scene
+    <Map
       style={{width: '100vw', height: '100vh'}}
       mapProperties={{basemap: 'dark-gray-vector'}}
       viewProperties={{
@@ -20,9 +26,10 @@ export default props => {
       }}
       loaderOptions={loaderOptions}
     >
+      <LayerList />
       <BoroughLayer />
-      <CrimeLayer />
+      <CrimeHeat />
       <BuildingLayer />
-    </Scene>
+    </Map>
   )
 }
