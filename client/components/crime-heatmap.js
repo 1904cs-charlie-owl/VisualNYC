@@ -20,7 +20,7 @@ const CrimeHeat = props => {
       {color: '#e0cf40', ratio: 0.913},
       {color: '#ffff00', ratio: 1}
     ],
-    maxPixelIntensity: 25,
+    maxPixelIntensity: 10,
     minPixelIntensity: 0
   }
 
@@ -29,7 +29,7 @@ const CrimeHeat = props => {
       .then(([GeoJSONLayer]) => {
         let initLayer = new GeoJSONLayer({
           url:
-            'https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon&$limit=500000',
+            'https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20AND%20cmplnt_fr_tm%20between%20%2701:00:00%27%20and%20%2701:15:00%27&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon&$limit=50000',
           renderer
         })
         setLayer(initLayer)
