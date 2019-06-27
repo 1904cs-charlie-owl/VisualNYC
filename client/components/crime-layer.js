@@ -4,26 +4,15 @@ import {loadModules} from '@esri/react-arcgis'
 const Crimes = props => {
   const [layer, setLayer] = useState(null)
   useEffect(() => {
-    loadModules(['esri/layers/FeatureLayer'])
-      .then(([FeatureLayer]) => {
-        let crimeHeadsRenderer = {
-          type: 'simple',
-          symbol: {
-            type: 'picture-marker',
-            url:
-              'http://static.arcgis.com/images/Symbols/SafetyHealth/Burglary.png',
-            width: '18px',
-            height: '18px'
-          }
-        }
-
-        let initLayer = new FeatureLayer({
+    loadModules(['esri/layers/GeoJSONLayer'])
+      .then(([GeoJSONLayer]) => {
+        const geoJSONLayer = new GeoJSONLayer({
           url:
-            'https://services9.arcgis.com/pI8WB6ioL0sQBuuC/arcgis/rest/services/test_crime_data/FeatureServer',
-          renderer: crimeHeadsRenderer
+            'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson',
+          copyright: 'USGS Earthquakes'
         })
-        setLayer(initLayer)
-        props.map.add(initLayer)
+        setLayer(geoJSONLayer)
+        props.map.add(geoJSONLayer)
       })
       .catch(err => console.error(err))
   }, [])
