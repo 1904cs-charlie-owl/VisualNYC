@@ -34,7 +34,6 @@ export default function(state = defaultView, action) {
   let newState = JSON.parse(JSON.stringify(state))
   switch (action.type) {
     case TOOGLE_3D:
-      console.log('reducer')
       newState.threeD = action.threeD
       return newState
     default:
