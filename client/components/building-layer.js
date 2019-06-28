@@ -34,7 +34,8 @@ const Boroughs = props => {
             id: '2e0761b9a4274b8db52c4bf34356911e'
           },
           popupEnabled: false,
-          renderer
+          renderer,
+          title: '3D Building Models'
         })
         setLayer(initLayer)
         props.map.add(initLayer)

@@ -7,6 +7,7 @@ import BuildingLayer from './building-layer'
 import LayerList from './layerlistwidget'
 import CrimeHeat from './crime-heatmap'
 import SwitchButton from './switchbutton'
+import NYCSubwayLines from './nycsubwaylayer'
 
 const loaderOptions = {
   url: 'http://js.arcgis.com/4.11'
@@ -40,7 +41,7 @@ class BaseMap extends Component {
           <LayerList />
           <BoroughLayer />
           <CrimeHeat />
-          <BuildingLayer />
+          <NYCSubwayLines />
           <SwitchButton toggle3d={this.toggle3d} butText={this.state.is3d} />
         </Map>
       )
@@ -50,16 +51,18 @@ class BaseMap extends Component {
           style={{width: '100vw', height: '100vh'}}
           mapProperties={{basemap: 'dark-gray-vector'}}
           viewProperties={{
-            center: [-73.953413, 40.788602],
-            zoom: 12.5
+            camera: {
+              position: [-73.993413, 40.65002, 4000],
+              tilt: 65
+            }
           }}
           loaderOptions={loaderOptions}
         >
           <LayerList />
           <BoroughLayer />
-          <CrimeHeat />
           <BuildingLayer />
-          <SwitchButton />
+          <NYCSubwayLines />
+          <SwitchButton toggle3d={this.toggle3d} butText={this.state.is3d} />
         </Scene>
       )
     }
