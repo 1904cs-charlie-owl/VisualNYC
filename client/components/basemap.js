@@ -40,8 +40,10 @@ export function BaseMap(props) {
         style={{width: '100vw', height: '100vh'}}
         mapProperties={{basemap: 'dark-gray-vector'}}
         viewProperties={{
-          center: [-73.953413, 40.788602],
-          zoom: 12.5
+          camera: {
+            position: [-73.993413, 40.65002, 4000],
+            tilt: 65
+          }
         }}
         loaderOptions={loaderOptions}
       >
