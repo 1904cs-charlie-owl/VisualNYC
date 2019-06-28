@@ -54,13 +54,13 @@ const Boroughs = props => {
         let initLayer = new FeatureLayer({
           url:
             'https://services8.arcgis.com/ZeG44A1dK4TLLucO/arcgis/rest/services/Neighborhood_Tabulation_Areas/FeatureServer',
-          renderer: boroughRenderer
+          renderer: boroughRenderer,
+          title: 'NYC Boroughs'
         })
         setLayer(initLayer)
         props.map.add(initLayer)
         console.log()
       })
-
       .catch(err => console.error(err))
   }, [])
 
