@@ -4,8 +4,12 @@ import {loadModules} from '@esri/react-arcgis'
 const LayerListWidget = props => {
   const [widget, setWidget] = useState(null)
   useEffect(() => {
-    loadModules(['esri/widgets/LayerList', 'esri/widgets/Expand'])
-      .then(([LayerList, Expand]) => {
+    loadModules([
+      'esri/widgets/LayerList',
+      'esri/widgets/Expand',
+      'esri/widgets/Locate'
+    ])
+      .then(([LayerList, Expand, Locate]) => {
         props.view.when(function() {
           var layerList = new LayerList({
             view: props.view
@@ -16,6 +20,12 @@ const LayerListWidget = props => {
           })
           setWidget(expand)
           props.view.ui.add(expand, 'top-right')
+          var locateBtn = new Locate({
+            view: props.view
+          })
+          props.view.ui.add(locateBtn, {
+            position: 'top-left'
+          })
         })
       })
       .catch(err => console.error(err))
