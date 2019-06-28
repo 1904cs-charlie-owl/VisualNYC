@@ -55,7 +55,8 @@ const Boroughs = props => {
           url:
             'https://services8.arcgis.com/ZeG44A1dK4TLLucO/arcgis/rest/services/Neighborhood_Tabulation_Areas/FeatureServer',
           renderer: boroughRenderer,
-          title: 'NYC Boroughs'
+          title: 'NYC Boroughs',
+          visible: false
         })
         setLayer(initLayer)
         props.map.add(initLayer)
