@@ -1,9 +1,10 @@
 import {useState, useEffect} from 'react'
 import {loadModules} from '@esri/react-arcgis'
+import view from '../store/view'
 
 const CrimeHeat = props => {
   const [layer, setLayer] = useState(null)
-  const renderer = {
+  const heatMapRenderer = {
     type: 'heatmap',
     colorStops: [
       {color: 'rgba(63, 40, 102, 0)', ratio: 0},
@@ -20,22 +21,41 @@ const CrimeHeat = props => {
       {color: '#e0cf40', ratio: 0.913},
       {color: '#ffff00', ratio: 1}
     ],
-    maxPixelIntensity: 12,
+    maxPixelIntensity: 500,
     minPixelIntensity: 0
   }
 
   useEffect(() => {
-    loadModules(['esri/layers/GeoJSONLayer'])
+    loadModules([
+      'esri/layers/GeoJSONLayer',
+      'esri/widgets/Expand',
+      'esri/core/watchUtils'
+    ])
       .then(([GeoJSONLayer]) => {
         let initLayer = new GeoJSONLayer({
           url: `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20AND%20cmplnt_fr_tm%20between%20%27${props.currentHour -
             1}:00:00%27%20and%20%27${props.currentHour +
             1}:15:00%27&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon&$limit=50000`,
-          renderer,
+          renderer: heatMapRenderer,
           title: 'Crime Heat Map'
         })
         setLayer(initLayer)
         props.map.add(initLayer)
+
+        props.view.when().then(function() {
+          const simpleRenderer = {
+            type: 'simple',
+            symbol: {
+              type: 'simple-marker',
+              color: '#c80000',
+              size: 10
+            }
+          }
+          props.view.watch('scale', function(newValue) {
+            initLayer.renderer =
+              newValue <= 10000 ? simpleRenderer : heatMapRenderer
+          })
+        })
       })
       .catch(err => console.error(err))
   }, [])
