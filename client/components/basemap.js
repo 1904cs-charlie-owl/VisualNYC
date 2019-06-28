@@ -10,16 +10,20 @@ import SwitchButton from './switchbutton'
 import {toggle3d} from '../store'
 import {connect} from 'react-redux'
 import NYCSubwayLines from './nycsubwaylayer'
+import CrimeSlider from './time-slider'
 
 const loaderOptions = {
   url: 'http://js.arcgis.com/4.11'
 }
 
+let currentTime = new Date()
+let currentHour = currentTime.getHours()
+
 export function BaseMap(props) {
   if (!props.view.threeD) {
     return (
       <Map
-        style={{width: '100vw', height: '100vh'}}
+        style={{width: '100vw', height: '90vh'}}
         mapProperties={{basemap: 'dark-gray-vector'}}
         viewProperties={{
           center: [-73.953413, 40.788602],
@@ -29,9 +33,13 @@ export function BaseMap(props) {
       >
         <LayerList />
         <BoroughLayer />
-        <CrimeHeat />
+        <CrimeHeat currentHour={currentHour} />
         <NYCSubwayLines />
         <SwitchButton threeD={props.view.threeD} toggle3d={props.toggle3d} />
+        <CrimeSlider
+          currentHourPct={currentHour / 24 * 100}
+          sstyle={{position: 'absolute'}}
+        />
       </Map>
     )
   } else {
@@ -52,6 +60,10 @@ export function BaseMap(props) {
         <BuildingLayer />
         <NYCSubwayLines />
         <SwitchButton threeD={props.view.threeD} toggle3d={props.toggle3d} />
+        <CrimeSlider
+          currentHourPct={currentHour / 24 * 100}
+          style={{position: 'absolute'}}
+        />
       </Scene>
     )
   }
