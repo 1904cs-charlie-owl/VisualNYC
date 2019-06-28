@@ -16,7 +16,7 @@ const loaderOptions = {
 }
 
 export function BaseMap(props) {
-  if (props.view.threeD) {
+  if (!props.view.threeD) {
     return (
       <Map
         style={{width: '100vw', height: '100vh'}}
@@ -30,12 +30,8 @@ export function BaseMap(props) {
         <LayerList />
         <BoroughLayer />
         <CrimeHeat />
-        <BuildingLayer />
-        <SwitchButton
-          threeD={props.view.threeD}
-          toggle3d={props.toggle3d}
-          butText={props.view.threeD}
-        />
+        <NYCSubwayLines />
+        <SwitchButton threeD={props.view.threeD} toggle3d={props.toggle3d} />
       </Map>
     )
   } else {
@@ -51,13 +47,9 @@ export function BaseMap(props) {
       >
         <LayerList />
         <BoroughLayer />
-        <CrimeHeat />
         <BuildingLayer />
-        <SwitchButton
-          threeD={props.view.threeD}
-          toggle3d={props.toggle3d}
-          butText={props.view.threeD}
-        />
+        <NYCSubwayLines />
+        <SwitchButton threeD={props.view.threeD} toggle3d={props.toggle3d} />
       </Scene>
     )
   }
@@ -71,6 +63,5 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {toggle3d: threeD => dispatch(toggle3d(threeD))}
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(BaseMap)
