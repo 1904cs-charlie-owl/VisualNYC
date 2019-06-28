@@ -39,6 +39,7 @@ const CrimeHeat = props => {
           renderer: heatMapRenderer,
           title: 'Crime Heat Map'
         })
+        console.log(props.currentHour)
         setLayer(initLayer)
         props.map.add(initLayer)
 

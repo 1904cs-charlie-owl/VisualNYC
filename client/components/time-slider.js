@@ -8,7 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '100%',
+    width: '80%',
     padding: 24
   },
   margin: {
@@ -85,6 +85,9 @@ export default function DiscreteSlider(props) {
         aria-labelledby="discrete-slider-restrict"
         step={null}
         marks={marks}
+        onChange={(e, v) => {
+          return props.changeTime(Math.round(24 * (v / 100)))
+        }}
       />
     </div>
   )
