@@ -9,6 +9,7 @@ import CrimeHeat from './crime-heatmap'
 import SwitchButton from './switchbutton'
 import {toggle3d} from '../store'
 import {connect} from 'react-redux'
+import NYCSubwayLines from './nycsubwaylayer'
 
 const loaderOptions = {
   url: 'http://js.arcgis.com/4.11'
@@ -70,5 +71,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {toggle3d: threeD => dispatch(toggle3d(threeD))}
 }
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(BaseMap)
