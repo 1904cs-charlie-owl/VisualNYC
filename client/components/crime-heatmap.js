@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import {loadModules} from '@esri/react-arcgis'
-import CrimeSlider from './time-slider'
 import {changeTimeThunk} from '../store'
 import {connect} from 'react-redux'
+import CrimeSlider from './time-slider'
 
 const CrimeHeat = props => {
   const [layer, setLayer] = useState(null)
@@ -47,6 +47,14 @@ const CrimeHeat = props => {
             definitionExpression: `CMPLNT_FR_TM >= '${props.currentHour -
               1}:00:00'`
           })
+
+          setLayer(initLayer)
+          if (
+            !props.map.allLayers.items
+              .map(item => item.title)
+              .includes('Crime Heat Map')
+          )
+            props.map.add(initLayer)
 
           props.view.when().then(function() {
             const simpleRenderer = {
