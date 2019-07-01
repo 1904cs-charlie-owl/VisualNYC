@@ -36,7 +36,7 @@ const CrimeHeat = props => {
           const template = {
             title: '{PD_DESC}',
             content:
-              '<p><b>Specifcs:</b> {OFNS_DESC}</p> <b>Date:</b> {CMPLNT_FR_DT:DateString} <b>Time:</b>{CMPLNT_FR_TM} <b>'
+              '<p><b>Specifcs:</b> {OFNS_DESC} </p> <b>Date:</b> {CMPLNT_FR_DT:DateString} <b>Time:</b>{CMPLNT_FR_TM} <b>'
           }
           let initLayer = new GeoJSONLayer({
             url: `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20AND%20cmplnt_fr_tm%20between%20%27${props.currentHour -
@@ -56,8 +56,19 @@ const CrimeHeat = props => {
                 type: 'simple-marker',
                 color: '#c80000',
                 size: 10
-              }
+              },
+              visualVariables: [
+                {
+                  type: 'size',
+                  field: 'KY_CD',
+                  stops: [
+                    {value: 101, size: 24, label: 'High Severity'},
+                    {value: 678, size: 4, label: 'Low Severity'}
+                  ]
+                }
+              ]
             }
+
             props.view.watch('scale', function(newValue) {
               initLayer.renderer =
                 newValue <= 10000 ? simpleRenderer : heatMapRenderer
