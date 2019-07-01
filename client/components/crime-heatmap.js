@@ -38,7 +38,6 @@ const CrimeHeat = props => {
           const template = {
             title: '{PD_DESC}',
             content:
-
               '<p><b>Crime:</b> {OFNS_DESC}</p> <b>Date:</b> {CMPLNT_FR_DT:DateString(hideTime: true)} <b>Time:</b>{CMPLNT_FR_TM} <b>'
           }
           let initLayer = new FeatureLayer({
@@ -73,6 +72,15 @@ const CrimeHeat = props => {
                     {value: 101, size: 24, label: 'High Severity'},
                     {value: 678, size: 4, label: 'Low Severity'}
                   ]
+                },
+                {
+                  type: 'color',
+                  title: 'TYPE OF CRIME',
+                  field: 'KY_CD',
+                  stops: [
+                    {value: 101, color: '#c80000'},
+                    {value: 678, color: '#FFA07A'}
+                  ]
                 }
               ]
             }
@@ -93,7 +101,7 @@ const CrimeHeat = props => {
   )
   return (
     <CrimeSlider
-      currentHourPct={props.view.currentHour / 24 * 100}
+      currentHourPct={props.mapView.currentHour / 24 * 100}
       style={{position: 'absolute'}}
       changeTime={props.changeTime}
     />
@@ -101,8 +109,8 @@ const CrimeHeat = props => {
 }
 
 const mapStateToProps = state => {
-  let view = state.view
-  return {view}
+  let mapView = state.view
+  return {mapView}
 }
 
 const mapDispatchToProps = dispatch => {
