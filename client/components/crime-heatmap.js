@@ -38,9 +38,7 @@ const CrimeHeat = props => {
           const template = {
             title: '{PD_DESC}',
             content:
-              ' <p><b>Severity:</b> {LAW_CAT_CD}</p><b>Date:</b> {CMPLNT_FR_DT:DateString(hideTime: true)} <p><b>Time: </b>{CMPLNT_FR_TM} </p>'
-
-            // ' <p><b>Severity:</b> {LAW_CAT_CD}</p><b>Date:</b> {CMPLNT_FR_DT:DateString(hideTime: true)} <p><b>Time: </b>{CMPLNT_FR_TM:DateFormat(datePattern: "h:mm a",selector: "date")} </p>'
+            ' <p><b>Severity:</b> {LAW_CAT_CD}</p><b>Date:</b> {CMPLNT_FR_DT:DateString(hideTime: true)} <p><b>Time: </b>{CMPLNT_FR_TM:DateFormat(datePattern: "h:mm a",selector: "date")} </p>'
           }
           let initLayer = new GeoJSONLayer({
             url: `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon,KY_CD,OFNS_DESC,PD_DESC&$limit=500000`,
@@ -100,6 +98,15 @@ const CrimeHeat = props => {
                     {value: 'FELONY', size: 24, label: 'High Severity'},
                     {value: 'MISDEMEANOR', size: 10, label: 'Medium Severity'},
                     {value: 'VIOLATION', size: 4, label: 'Low Severity'}
+                  ]
+                },
+                {
+                  type: 'color',
+                  title: 'TYPE OF CRIME',
+                  field: 'KY_CD',
+                  stops: [
+                    {value: 101, color: '#c80000'},
+                    {value: 678, color: '#FFA07A'}
                   ]
                 }
               ]
