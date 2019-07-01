@@ -38,7 +38,8 @@ const CrimeHeat = props => {
           const template = {
             title: '{PD_DESC}',
             content:
-              '<p><b>Crime:</b> {OFNS_DESC}</p> <b>Date:</b> {CMPLNT_FR_DT:DateString(hideTime: true).substring(0,11)} <b>Time:</b>{CMPLNT_FR_TM} <b>'
+
+              '<p><b>Crime:</b> {OFNS_DESC}</p> <b>Date:</b> {CMPLNT_FR_DT:DateString(hideTime: true)} <b>Time:</b>{CMPLNT_FR_TM} <b>'
           }
           let initLayer = new FeatureLayer({
             url: `https://services9.arcgis.com/11PXd1ZqyV8pqiij/arcgis/rest/services/9s4h_37hy_2/FeatureServer`,
@@ -63,8 +64,19 @@ const CrimeHeat = props => {
                 type: 'simple-marker',
                 color: '#c80000',
                 size: 10
-              }
+              },
+              visualVariables: [
+                {
+                  type: 'size',
+                  field: 'KY_CD',
+                  stops: [
+                    {value: 101, size: 24, label: 'High Severity'},
+                    {value: 678, size: 4, label: 'Low Severity'}
+                  ]
+                }
+              ]
             }
+
             props.view.watch('scale', function(newValue) {
               initLayer.renderer =
                 newValue <= 10000 ? simpleRenderer : heatMapRenderer
