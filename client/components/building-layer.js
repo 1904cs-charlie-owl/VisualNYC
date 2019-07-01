@@ -30,10 +30,9 @@ const Boroughs = props => {
     loadModules(['esri/layers/SceneLayer'])
       .then(([SceneLayer]) => {
         var initLayer = new SceneLayer({
-          portalItem: {
-            id: '2e0761b9a4274b8db52c4bf34356911e'
-          },
-          popupEnabled: false,
+          url:
+            'https://tiles.arcgis.com/tiles/0p6i4J6xhQas4Unf/arcgis/rest/services/New_York_City_3D_Buildings_Optimized/SceneServer',
+          popupEnabled: true,
           renderer,
           title: '3D Building Models'
         })
