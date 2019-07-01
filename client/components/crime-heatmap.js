@@ -33,11 +33,6 @@ const CrimeHeat = props => {
         'esri/core/watchUtils'
       ])
         .then(([GeoJSONLayer]) => {
-          const template = {
-            title: 'Crime Info',
-            content: '{LAW_CAT_CD}'
-          }
-
           let initLayer = new GeoJSONLayer({
             url: `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20AND%20cmplnt_fr_tm%20between%20%27${props.currentHour -
               1}:00:00%27%20and%20%27${props.currentHour +
@@ -45,6 +40,7 @@ const CrimeHeat = props => {
             renderer: heatMapRenderer,
             title: 'Crime Heat Map'
           })
+          console.log(props.currentHour)
           setLayer(initLayer)
           props.map.add(initLayer)
 
@@ -57,11 +53,9 @@ const CrimeHeat = props => {
                 size: 10
               }
             }
-
             props.view.watch('scale', function(newValue) {
               initLayer.renderer =
                 newValue <= 10000 ? simpleRenderer : heatMapRenderer
-              initLayer.popupTemplate = newValue <= 10000 ? template : null
             })
           })
         })
