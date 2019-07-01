@@ -33,6 +33,11 @@ const CrimeHeat = props => {
         'esri/core/watchUtils'
       ])
         .then(([GeoJSONLayer]) => {
+          const template = {
+            title: '{PD_DESC}',
+            content:
+              '<p><b>Specifcs:</b> {OFNS_DESC}</p> <b>Date:</b> {CMPLNT_FR_DT:DateString} <b>Time:</b>{CMPLNT_FR_TM} <b>'
+          }
           let initLayer = new GeoJSONLayer({
             url: `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20AND%20cmplnt_fr_tm%20between%20%27${props.currentHour -
               1}:00:00%27%20and%20%27${props.currentHour +
@@ -56,6 +61,7 @@ const CrimeHeat = props => {
             props.view.watch('scale', function(newValue) {
               initLayer.renderer =
                 newValue <= 10000 ? simpleRenderer : heatMapRenderer
+              initLayer.popupTemplate = newValue <= 10000 ? template : null
             })
           })
         })
