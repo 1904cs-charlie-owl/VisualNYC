@@ -9,9 +9,10 @@ const LayerListWidget = props => {
       'esri/widgets/Expand',
       'esri/widgets/Locate',
       'esri/core/watchUtils',
-      'esri/widgets/Legend'
+      'esri/widgets/Legend',
+      'esri/widgets/Search'
     ])
-      .then(([LayerList, Expand, Locate, watchUtils, Legend]) => {
+      .then(([LayerList, Expand, Locate, watchUtils, Legend, Search]) => {
         props.view.when(function() {
           var layerList = new LayerList({
             view: props.view
@@ -27,6 +28,12 @@ const LayerListWidget = props => {
           })
           props.view.ui.add(locateBtn, {
             position: 'top-left'
+          })
+          var searchBtn = new Search({
+            view: props.view
+          })
+          props.view.ui.add(searchBtn, {
+            position: 'bottom-right'
           })
 
           props.view.ui.add(
