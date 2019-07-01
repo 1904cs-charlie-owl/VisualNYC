@@ -1,10 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import {withStyles, makeStyles} from '@material-ui/core/styles'
-import Paper from '@material-ui/core/Paper'
+import {makeStyles} from '@material-ui/core/styles'
+import IconButton from '@material-ui/core/IconButton'
+import {PlayCircleOutline} from '@material-ui/icons'
 import {Slider} from '@material-ui/lab'
 import Typography from '@material-ui/core/Typography'
-import Tooltip from '@material-ui/core/Tooltip'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -13,6 +12,11 @@ const useStyles = makeStyles(theme => ({
   },
   margin: {
     height: theme.spacing(1)
+  },
+  button: {
+    margin: theme.spacing(1),
+    color: 'blue',
+    marginRight: '5%'
   }
 }))
 
@@ -73,26 +77,47 @@ function valueLabelFormat(value) {
 
 export default function DiscreteSlider(props) {
   const classes = useStyles()
+  let hourPct = props.currentHourPct
 
   return (
     <div className={classes.root}>
       <Typography id="discrete-slider-restrict" gutterBottom>
-        Restricted values
+        Time of Day
       </Typography>
-      <Slider
-        defaultValue={props.currentHourPct}
-        valueLabelFormat={valueLabelFormat}
-        aria-labelledby="discrete-slider-restrict"
-        step={null}
-        marks={marks}
-        onChange={(e, v) => {
-          if (
-            Math.round(24 * (v / 100)) !==
-            Math.round(24 * (props.currentHourPct / 100))
-          )
-            return props.changeTime(Math.round(24 * (v / 100)))
-        }}
-      />
+      <div style={{display: 'flex'}}>
+        <IconButton
+          className={classes.button}
+          aria-label="Play"
+          disabled={props.currentHourPct > 99}
+          size="medium"
+          onClick={() => {
+            if (hourPct < 99) {
+              let int = setInterval(() => {
+                if (hourPct > 91) clearInterval(int)
+                hourPct = hourPct + 9.09
+                props.changeTime(Math.round(24 * (hourPct / 100)))
+              }, 3000)
+            }
+          }}
+        >
+          <PlayCircleOutline />
+        </IconButton>
+        <Slider
+          className={classes.slider}
+          value={hourPct}
+          valueLabelFormat={valueLabelFormat}
+          aria-labelledby="discrete-slider-restrict"
+          step={null}
+          marks={marks}
+          onChangeCommitted={(e, v) => {
+            if (
+              Math.round(24 * (v / 100)) !==
+              Math.round(24 * (props.currentHourPct / 100))
+            )
+              return props.changeTime(Math.round(24 * (v / 100)))
+          }}
+        />
+      </div>
     </div>
   )
 }
