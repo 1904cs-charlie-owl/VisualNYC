@@ -3,6 +3,7 @@
  */
 const TOOGLE_3D = 'TOOGLE_3D'
 const CHANGE_TIME = 'CHANGE_TIME'
+const INITIAL_LOAD = 'INITIAL_LOAD'
 
 /**
  * INITIAL STATE
@@ -10,10 +11,12 @@ const CHANGE_TIME = 'CHANGE_TIME'
 
 let currentTime = new Date()
 let currentHour = currentTime.getHours()
+let initialLoad = true
 
 const defaultView = {
   threeD: false,
-  currentHour
+  currentHour,
+  initialLoad
 }
 
 /**
@@ -21,6 +24,7 @@ const defaultView = {
  */
 export const toggle3dAction = threeD => ({type: TOOGLE_3D, threeD})
 export const changeTimeAction = newTime => ({type: CHANGE_TIME, newTime})
+export const initialLoadCheck = () => ({type: INITIAL_LOAD})
 
 //{type: GET_3D, threeD }
 /**
@@ -39,6 +43,11 @@ export const changeTimeThunk = newTime => {
   }
 }
 
+export const changeLoadStatus = () => {
+  return dispatch => {
+    dispatch(initialLoadCheck())
+  }
+}
 /**
  * REDUCER
  */
@@ -51,6 +60,9 @@ export default function(state = defaultView, action) {
       return newState
     case CHANGE_TIME:
       newState.currentHour = action.newTime
+      return newState
+    case INITIAL_LOAD:
+      newState.initialLoad = false
       return newState
     default:
       return state
