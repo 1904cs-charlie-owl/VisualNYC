@@ -1,23 +1,21 @@
 /* eslint-disable react/display-name */
-import React, {Component, useEffect} from 'react'
+import React from 'react'
 import {Map, Scene} from '@esri/react-arcgis'
 import BoroughLayer from './borough-layer'
-import CrimeLayer from './crime-layer'
 import BuildingLayer from './building-layer'
 import LayerList from './layerlistwidget'
 import CrimeHeat from './crime-heatmap'
 import SwitchButton from './switchbutton'
-import {toggle3d, changeTimeThunk} from '../store'
-import {connect} from 'react-redux'
 import NYCSubwayLines from './nycsubwaylayer'
-import CrimeSlider from './time-slider'
+import {toggle3d} from '../store'
+import {connect} from 'react-redux'
 
 const loaderOptions = {
   url: 'http://js.arcgis.com/4.11'
 }
 
 export function BaseMap(props) {
-  if (!props.view.threeD) {
+  if (!props.mapView.threeD) {
     return (
       <Map
         style={{width: '100vw', height: '90vh'}}
@@ -30,14 +28,9 @@ export function BaseMap(props) {
       >
         <LayerList />
         <BoroughLayer />
-        <CrimeHeat currentHour={props.view.currentHour} />
+        <CrimeHeat currentHour={props.mapView.currentHour} />
         <NYCSubwayLines />
-        <SwitchButton threeD={props.view.threeD} toggle3d={props.toggle3d} />
-        <CrimeSlider
-          currentHourPct={props.view.currentHour / 24 * 100}
-          style={{position: 'absolute'}}
-          changeTime={props.changeTime}
-        />
+        <SwitchButton threeD={props.mapView.threeD} toggle3d={props.toggle3d} />
       </Map>
     )
   } else {
@@ -57,21 +50,20 @@ export function BaseMap(props) {
         <BoroughLayer />
         <BuildingLayer />
         <NYCSubwayLines />
-        <SwitchButton threeD={props.view.threeD} toggle3d={props.toggle3d} />
+        <SwitchButton threeD={props.mapView.threeD} toggle3d={props.toggle3d} />
       </Scene>
     )
   }
 }
 
 const mapStateToProps = state => {
-  let view = state.view
-  return {view}
+  let mapView = state.view
+  return {mapView}
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    toggle3d: threeD => dispatch(toggle3d(threeD)),
-    changeTime: newTime => dispatch(changeTimeThunk(newTime))
+    toggle3d: threeD => dispatch(toggle3d(threeD))
   }
 }
 

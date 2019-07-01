@@ -7,9 +7,10 @@ const WidgetLayer = props => {
     loadModules([
       'esri/widgets/LayerList',
       'esri/widgets/Expand',
-      'esri/widgets/Locate'
+      'esri/widgets/Locate',
+      'esri/widgets/Search'
     ])
-      .then(([LayerList, Expand, Locate]) => {
+      .then(([LayerList, Expand, Locate, Search]) => {
         props.view.when(function() {
           var layerList = new LayerList({
             view: props.view
@@ -25,6 +26,12 @@ const WidgetLayer = props => {
           })
           props.view.ui.add(locateBtn, {
             position: 'top-left'
+          })
+          var searchBtn = new Search({
+            view: props.view
+          })
+          props.view.ui.add(searchBtn, {
+            position: 'bottom-right'
           })
         })
       })
