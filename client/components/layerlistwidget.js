@@ -33,7 +33,7 @@ const LayerListWidget = props => {
             new Legend({
               view: props.view
             }),
-            'bottom-left'
+            'bottom-right'
           )
 
           const sampleInstructions = document.createElement('div')
