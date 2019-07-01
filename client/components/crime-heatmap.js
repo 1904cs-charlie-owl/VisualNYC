@@ -38,8 +38,7 @@ const CrimeHeat = props => {
           const template = {
             title: '{PD_DESC}',
             content:
-
-              '<p><b>Crime:</b> {OFNS_DESC}</p> <b>Date:</b> {CMPLNT_FR_DT:DateString(hideTime: true)} <b>Time:</b>{CMPLNT_FR_TM} <b>'
+              ' <p><b>Severity:</b> {LAW_CAT_CD}</p><b>Date:</b> {CMPLNT_FR_DT:DateString(hideTime: true)} <b>Time:</b>{CMPLNT_FR_TM} <b>'
           }
           let initLayer = new FeatureLayer({
             url: `https://services9.arcgis.com/11PXd1ZqyV8pqiij/arcgis/rest/services/9s4h_37hy_2/FeatureServer`,
@@ -68,10 +67,11 @@ const CrimeHeat = props => {
               visualVariables: [
                 {
                   type: 'size',
-                  field: 'KY_CD',
+                  field: 'LAW_CAT_CD',
                   stops: [
-                    {value: 101, size: 24, label: 'High Severity'},
-                    {value: 678, size: 4, label: 'Low Severity'}
+                    {value: 'FELONY', size: 24, label: 'High Severity'},
+                    {value: 'MISDEMEANOR', size: 10, label: 'Medium Severity'},
+                    {value: 'VIOLATION', size: 4, label: 'Low Severity'}
                   ]
                 }
               ]
@@ -85,15 +85,12 @@ const CrimeHeat = props => {
           })
         })
         .catch(err => console.error(err))
-      return function cleanup() {
-        props.map.remove(layer)
-      }
     },
     [props.currentHour]
   )
   return (
     <CrimeSlider
-      currentHourPct={props.view.currentHour / 24 * 100}
+      currentHourPct={props.mapView.currentHour / 24 * 100}
       style={{position: 'absolute'}}
       changeTime={props.changeTime}
     />
@@ -101,8 +98,8 @@ const CrimeHeat = props => {
 }
 
 const mapStateToProps = state => {
-  let view = state.view
-  return {view}
+  let mapView = state.view
+  return {mapView}
 }
 
 const mapDispatchToProps = dispatch => {
