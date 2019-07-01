@@ -1,6 +1,8 @@
-import {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import {loadModules} from '@esri/react-arcgis'
-import view from '../store/view'
+import CrimeSlider from './time-slider'
+import {changeTimeThunk} from '../store'
+import {connect} from 'react-redux'
 
 const CrimeHeat = props => {
   const [layer, setLayer] = useState(null)
@@ -28,42 +30,54 @@ const CrimeHeat = props => {
   useEffect(
     () => {
       loadModules([
-        'esri/layers/GeoJSONLayer',
+        'esri/layers/FeatureLayer',
         'esri/widgets/Expand',
         'esri/core/watchUtils'
       ])
-        .then(([GeoJSONLayer]) => {
-          let initLayer = new GeoJSONLayer({
-            url: `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20AND%20cmplnt_fr_tm%20between%20%27${props.currentHour -
-              1}:00:00%27%20and%20%27${props.currentHour +
-              1}:15:00%27&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon&$limit=50000`,
+        .then(([FeatureLayer]) => {
+          let initLayer = new FeatureLayer({
+            url: `https://services9.arcgis.com/11PXd1ZqyV8pqiij/arcgis/rest/services/9s4h_37hy_2/FeatureServer`,
             renderer: heatMapRenderer,
-            title: 'Crime Heat Map'
+            title: 'Crime Heat Map',
+            definitionExpression: `CMPLNT_FR_TM >= '${props.currentHour -
+              1}:00:00'`
           })
-          console.log(props.currentHour)
-          setLayer(initLayer)
-          props.map.add(initLayer)
 
-          props.view.when().then(function() {
-            const simpleRenderer = {
-              type: 'simple',
-              symbol: {
-                type: 'simple-marker',
-                color: '#c80000',
-                size: 10
-              }
-            }
-            props.view.watch('scale', function(newValue) {
-              initLayer.renderer =
-                newValue <= 10000 ? simpleRenderer : heatMapRenderer
-            })
-          })
+          console.log(initLayer)
+
+          setLayer(initLayer)
+          if (
+            !props.map.allLayers.items
+              .map(item => item.title)
+              .includes('Crime Heat Map')
+          )
+            props.map.add(initLayer)
         })
         .catch(err => console.error(err))
+      return function cleanup() {
+        props.map.remove(layer)
+      }
     },
     [props.currentHour]
   )
-  return null
+  return (
+    <CrimeSlider
+      currentHourPct={props.view.currentHour / 24 * 100}
+      style={{position: 'absolute'}}
+      changeTime={props.changeTime}
+    />
+  )
 }
 
-export default CrimeHeat
+const mapStateToProps = state => {
+  let view = state.view
+  return {view}
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeTime: newTime => dispatch(changeTimeThunk(newTime))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CrimeHeat)
