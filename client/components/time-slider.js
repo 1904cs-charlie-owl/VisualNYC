@@ -86,7 +86,11 @@ export default function DiscreteSlider(props) {
         step={null}
         marks={marks}
         onChange={(e, v) => {
-          return props.changeTime(Math.round(24 * (v / 100)))
+          if (
+            Math.round(24 * (v / 100)) !==
+            Math.round(24 * (props.currentHourPct / 100))
+          )
+            return props.changeTime(Math.round(24 * (v / 100)))
         }}
       />
     </div>
