@@ -35,6 +35,11 @@ const CrimeHeat = props => {
         'esri/core/watchUtils'
       ])
         .then(([FeatureLayer]) => {
+          const template = {
+            title: '{PD_DESC}',
+            content:
+              '<p><b>Specifcs:</b> {OFNS_DESC}</p> <b>Date:</b> {CMPLNT_FR_DT:DateString} <b>Time:</b>{CMPLNT_FR_TM} <b>'
+          }
           let initLayer = new FeatureLayer({
             url: `https://services9.arcgis.com/11PXd1ZqyV8pqiij/arcgis/rest/services/9s4h_37hy_2/FeatureServer`,
             renderer: heatMapRenderer,
@@ -43,15 +48,21 @@ const CrimeHeat = props => {
               1}:00:00'`
           })
 
-          console.log(initLayer)
-
-          setLayer(initLayer)
-          if (
-            !props.map.allLayers.items
-              .map(item => item.title)
-              .includes('Crime Heat Map')
-          )
-            props.map.add(initLayer)
+          props.view.when().then(function() {
+            const simpleRenderer = {
+              type: 'simple',
+              symbol: {
+                type: 'simple-marker',
+                color: '#c80000',
+                size: 10
+              }
+            }
+            props.view.watch('scale', function(newValue) {
+              initLayer.renderer =
+                newValue <= 10000 ? simpleRenderer : heatMapRenderer
+              initLayer.popupTemplate = newValue <= 10000 ? template : null
+            })
+          })
         })
         .catch(err => console.error(err))
       return function cleanup() {
