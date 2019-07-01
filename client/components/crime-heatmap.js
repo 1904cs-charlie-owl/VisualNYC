@@ -57,12 +57,18 @@ const CrimeHeat = props => {
           ) {
             props.map.add(initLayer)
 
-            props.view.whenLayerView(initLayer).then(function(layerView) {
-              layerView.filter = {
-                where: `CMPLNT_FR_TM BETWEEN '${props.currentHour -
-                  1}:00:00' AND '${props.currentHour + 1}:00:00'`
-              }
-            })
+            props.view
+              .whenLayerView(
+                props.map.allLayers.find(
+                  curLayer => curLayer.title === 'Crime Heat Map'
+                )
+              )
+              .then(function(layerView) {
+                layerView.filter = {
+                  where: `CMPLNT_FR_TM BETWEEN '${props.currentHour -
+                    1}:00:00' AND '${props.currentHour + 1}:00:00'`
+                }
+              })
           } else {
             props.view
               .whenLayerView(
