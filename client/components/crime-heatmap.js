@@ -38,7 +38,7 @@ const CrimeHeat = props => {
           const template = {
             title: '{PD_DESC}',
             content:
-              '<p><b>Specifcs:</b> {OFNS_DESC}</p> <b>Date:</b> {CMPLNT_FR_DT:DateString} <b>Time:</b>{CMPLNT_FR_TM} <b>'
+              '<p><b>Crime:</b> {OFNS_DESC}</p> <b>Date:</b> {CMPLNT_FR_DT:DateString(hideTime: true).substring(0,11)} <b>Time:</b>{CMPLNT_FR_TM} <b>'
           }
           let initLayer = new FeatureLayer({
             url: `https://services9.arcgis.com/11PXd1ZqyV8pqiij/arcgis/rest/services/9s4h_37hy_2/FeatureServer`,
