@@ -1,4 +1,5 @@
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
 export {default as Basemap} from './basemap'
+export {default as CrimeSlider} from './time-slider'
 export {Login, Signup} from './auth-form'

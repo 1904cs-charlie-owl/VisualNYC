@@ -2,9 +2,6 @@ import {useState, useEffect} from 'react'
 import {loadModules} from '@esri/react-arcgis'
 import view from '../store/view'
 
-let currentTime = new Date()
-let currentHour = currentTime.getHours()
-
 const CrimeHeat = props => {
   const [layer, setLayer] = useState(null)
   const heatMapRenderer = {
@@ -27,7 +24,7 @@ const CrimeHeat = props => {
     maxPixelIntensity: 500,
     minPixelIntensity: 0
   }
-
+  
   useEffect(() => {
     loadModules([
       'esri/layers/GeoJSONLayer',
@@ -50,13 +47,15 @@ const CrimeHeat = props => {
         setLayer(initLayer)
         props.map.add(initLayer)
 
-        props.view.when().then(function() {
-          const simpleRenderer = {
-            type: 'simple',
-            symbol: {
-              type: 'simple-marker',
-              color: '#c80000',
-              size: 10
+
+          props.view.when().then(function() {
+            const simpleRenderer = {
+              type: 'simple',
+              symbol: {
+                type: 'simple-marker',
+                color: '#c80000',
+                size: 10
+              }
             }
           }
 
@@ -64,11 +63,13 @@ const CrimeHeat = props => {
             initLayer.renderer =
               newValue <= 10000 ? simpleRenderer : heatMapRenderer
             initLayer.popupTemplate = newValue <= 10000 ? template : null
+
           })
         })
-      })
-      .catch(err => console.error(err))
-  }, [])
+        .catch(err => console.error(err))
+    },
+    [props.currentHour]
+  )
   return null
 }
 

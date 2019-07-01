@@ -7,9 +7,10 @@ import BuildingLayer from './building-layer'
 import LayerList from './layerlistwidget'
 import CrimeHeat from './crime-heatmap'
 import SwitchButton from './switchbutton'
-import {toggle3d} from '../store'
+import {toggle3d, changeTimeThunk} from '../store'
 import {connect} from 'react-redux'
 import NYCSubwayLines from './nycsubwaylayer'
+import CrimeSlider from './time-slider'
 
 const loaderOptions = {
   url: 'http://js.arcgis.com/4.11'
@@ -19,7 +20,7 @@ export function BaseMap(props) {
   if (!props.view.threeD) {
     return (
       <Map
-        style={{width: '100vw', height: '100vh'}}
+        style={{width: '100vw', height: '90vh'}}
         mapProperties={{basemap: 'dark-gray-vector'}}
         viewProperties={{
           center: [-73.953413, 40.788602],
@@ -29,9 +30,14 @@ export function BaseMap(props) {
       >
         <LayerList />
         <BoroughLayer />
-        <CrimeHeat />
+        <CrimeHeat currentHour={props.view.currentHour} />
         <NYCSubwayLines />
         <SwitchButton threeD={props.view.threeD} toggle3d={props.toggle3d} />
+        <CrimeSlider
+          currentHourPct={props.view.currentHour / 24 * 100}
+          style={{position: 'absolute'}}
+          changeTime={props.changeTime}
+        />
       </Map>
     )
   } else {
@@ -63,7 +69,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-  return {toggle3d: threeD => dispatch(toggle3d(threeD))}
+  return {
+    toggle3d: threeD => dispatch(toggle3d(threeD)),
+    changeTime: newTime => dispatch(changeTimeThunk(newTime))
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BaseMap)
