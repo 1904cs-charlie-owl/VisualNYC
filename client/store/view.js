@@ -4,6 +4,7 @@
 const TOOGLE_3D = 'TOOGLE_3D'
 const CHANGE_TIME = 'CHANGE_TIME'
 const INITIAL_LOAD = 'INITIAL_LOAD'
+const FILTER_CHANGE = 'FILTER_CHANGE'
 
 /**
  * INITIAL STATE
@@ -12,11 +13,17 @@ const INITIAL_LOAD = 'INITIAL_LOAD'
 let currentTime = new Date()
 let currentHour = currentTime.getHours()
 let initialLoad = true
+let crimeFilter = {
+  felony: true,
+  misd: true,
+  viol: true
+}
 
 const defaultView = {
   threeD: false,
   currentHour,
-  initialLoad
+  initialLoad,
+  crimeFilter
 }
 
 /**
@@ -25,8 +32,12 @@ const defaultView = {
 export const toggle3dAction = threeD => ({type: TOOGLE_3D, threeD})
 export const changeTimeAction = newTime => ({type: CHANGE_TIME, newTime})
 export const initialLoadCheck = () => ({type: INITIAL_LOAD})
+export const crimeFilterChange = (filterValue, checked) => ({
+  type: FILTER_CHANGE,
+  filterValue,
+  checked
+})
 
-//{type: GET_3D, threeD }
 /**
  * THUNK CREATORS
  */
@@ -48,6 +59,12 @@ export const changeLoadStatus = () => {
     dispatch(initialLoadCheck())
   }
 }
+
+export const changeFilter = (filterValue, checked) => {
+  return dispatch => {
+    dispatch(crimeFilterChange(filterValue, checked))
+  }
+}
 /**
  * REDUCER
  */
@@ -64,6 +81,9 @@ export default function(state = defaultView, action) {
       return newState
     case INITIAL_LOAD:
       newState.initialLoad = false
+      return newState
+    case FILTER_CHANGE:
+      newState.crimeFilter[action.filterValue] = action.checked
       return newState
     default:
       return state

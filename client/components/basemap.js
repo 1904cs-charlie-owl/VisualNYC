@@ -7,6 +7,7 @@ import WidgetLayer from './widgetlayer'
 import CrimeHeat from './crime-heatmap'
 import SwitchButton from './switchbutton'
 import NYCSubwayLines from './nycsubwaylayer'
+import SeverityFilter from './severity-filter'
 import {toggle3d} from '../store'
 import {connect} from 'react-redux'
 
@@ -26,6 +27,7 @@ export function BaseMap(props) {
         }}
         loaderOptions={loaderOptions}
       >
+        <SeverityFilter />
         <WidgetLayer />
         <BoroughLayer />
         <CrimeHeat currentHour={props.mapView.currentHour} />
@@ -46,6 +48,7 @@ export function BaseMap(props) {
         }}
         loaderOptions={loaderOptions}
       >
+        <SeverityFilter />
         <WidgetLayer />
         <BoroughLayer />
         <BuildingLayer />
