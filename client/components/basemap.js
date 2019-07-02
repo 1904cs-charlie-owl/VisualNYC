@@ -3,7 +3,7 @@ import React from 'react'
 import {Map, Scene} from '@esri/react-arcgis'
 import BoroughLayer from './borough-layer'
 import BuildingLayer from './building-layer'
-import LayerList from './layerlistwidget'
+import WidgetLayer from './widgetlayer'
 import CrimeHeat from './crime-heatmap'
 import SwitchButton from './switchbutton'
 import NYCSubwayLines from './nycsubwaylayer'
@@ -18,7 +18,7 @@ export function BaseMap(props) {
   if (!props.mapView.threeD) {
     return (
       <Map
-        style={{width: '100vw', height: '90vh'}}
+        style={{width: '100vw', height: '100vh'}}
         mapProperties={{basemap: 'dark-gray-vector'}}
         viewProperties={{
           center: [-73.953413, 40.788602],
@@ -26,7 +26,7 @@ export function BaseMap(props) {
         }}
         loaderOptions={loaderOptions}
       >
-        <LayerList />
+        <WidgetLayer />
         <BoroughLayer />
         <CrimeHeat currentHour={props.mapView.currentHour} />
         <NYCSubwayLines />
@@ -46,7 +46,7 @@ export function BaseMap(props) {
         }}
         loaderOptions={loaderOptions}
       >
-        <LayerList />
+        <WidgetLayer />
         <BoroughLayer />
         <BuildingLayer />
         <NYCSubwayLines />
