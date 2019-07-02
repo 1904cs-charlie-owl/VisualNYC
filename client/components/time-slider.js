@@ -116,7 +116,14 @@ function DiscreteSlider(props) {
           onChangeCommitted={(e, v) => {
             let hourOnSlider = Math.round(v / 100 * 24)
             let currentHour = Math.round(24 * (hourPct / 100))
-
+            if ([0, 2, 4, 20, 22].includes(hourOnSlider)) {
+              hourOnSlider += 1
+            }
+            if (hourOnSlider === 24) {
+              hourOnSlider = 23
+            }
+            console.log(hourOnSlider, 'hourOnSlider')
+            console.log(currentHour, 'currentHour')
             if (hourOnSlider !== currentHour)
               return props.changeTime(hourOnSlider)
           }}
