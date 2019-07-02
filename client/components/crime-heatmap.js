@@ -30,31 +30,57 @@ const CrimeHeat = props => {
   useEffect(
     () => {
       loadModules([
-        'esri/layers/FeatureLayer',
+        'esri/layers/GeoJSONLayer',
         'esri/widgets/Expand',
         'esri/core/watchUtils'
       ])
-        .then(([FeatureLayer]) => {
+        .then(([GeoJSONLayer]) => {
           const template = {
             title: '{PD_DESC}',
-            content:
-              '<p><b>Crime:</b> {OFNS_DESC}</p> <b>Date:</b> {CMPLNT_FR_DT:DateString(hideTime: true)} <b>Time:</b>{CMPLNT_FR_TM} <b>'
+            content: `<p><b>Severity:</b> {LAW_CAT_CD} </p>
+              <b>Date:</b> {CMPLNT_FR_DT:DateString(hideTime: true)}<p><b>Time: </b>{CMPLNT_FR_TM:DateFormat(datePattern: "h:mm a",selector: "date")} </p>`
           }
-          let initLayer = new FeatureLayer({
-            url: `https://services9.arcgis.com/11PXd1ZqyV8pqiij/arcgis/rest/services/9s4h_37hy_2/FeatureServer`,
+          let initLayer = new GeoJSONLayer({
+            url: `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon,KY_CD,OFNS_DESC,PD_DESC&$limit=500000`,
             renderer: heatMapRenderer,
-            title: 'Crime Heat Map',
-            definitionExpression: `CMPLNT_FR_TM >= '${props.currentHour -
-              1}:00:00'`
+            title: 'Crime Heat Map'
           })
 
           setLayer(initLayer)
+
           if (
             !props.map.allLayers.items
               .map(item => item.title)
               .includes('Crime Heat Map')
-          )
+          ) {
             props.map.add(initLayer)
+
+            props.view
+              .whenLayerView(
+                props.map.allLayers.find(
+                  curLayer => curLayer.title === 'Crime Heat Map'
+                )
+              )
+              .then(function(layerView) {
+                layerView.filter = {
+                  where: `CMPLNT_FR_TM BETWEEN '${props.currentHour -
+                    1}:00:00' AND '${props.currentHour + 1}:00:00'`
+                }
+              })
+          } else {
+            props.view
+              .whenLayerView(
+                props.map.allLayers.find(
+                  curLayer => curLayer.title === 'Crime Heat Map'
+                )
+              )
+              .then(function(layerView) {
+                layerView.filter = {
+                  where: `CMPLNT_FR_TM BETWEEN '${props.currentHour -
+                    1}:00:00' AND '${props.currentHour + 1}:00:00'`
+                }
+              })
+          }
 
           props.view.when().then(function() {
             const simpleRenderer = {
@@ -68,6 +94,9 @@ const CrimeHeat = props => {
                 {
                   type: 'size',
                   field: 'KY_CD',
+                  legendOptions: {
+                    title: 'Class of Crime'
+                  },
                   stops: [
                     {value: 101, size: 24, label: 'High Severity'},
                     {value: 678, size: 4, label: 'Low Severity'}
@@ -75,8 +104,10 @@ const CrimeHeat = props => {
                 },
                 {
                   type: 'color',
-                  title: 'TYPE OF CRIME',
                   field: 'KY_CD',
+                  legendOptions: {
+                    title: 'Type of Crime'
+                  },
                   stops: [
                     {value: 101, color: '#c80000'},
                     {value: 678, color: '#FFA07A'}
@@ -93,9 +124,6 @@ const CrimeHeat = props => {
           })
         })
         .catch(err => console.error(err))
-      return function cleanup() {
-        props.map.remove(layer)
-      }
     },
     [props.currentHour]
   )
