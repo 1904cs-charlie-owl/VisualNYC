@@ -57,6 +57,7 @@ export default function(state = defaultView, action) {
   switch (action.type) {
     case TOOGLE_3D:
       newState.threeD = action.threeD
+      newState.initialLoad = true
       return newState
     case CHANGE_TIME:
       newState.currentHour = action.newTime

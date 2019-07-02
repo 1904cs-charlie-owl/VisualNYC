@@ -3,6 +3,7 @@ import {loadModules} from '@esri/react-arcgis'
 import {changeTimeThunk} from '../store'
 import {connect} from 'react-redux'
 import CrimeSlider from './time-slider'
+import TimePicker from './time-field'
 
 const CrimeHeat = props => {
   const [layer, setLayer] = useState(null)
@@ -130,8 +131,8 @@ const CrimeHeat = props => {
   return (
     <CrimeSlider
       currentHourPct={props.mapView.currentHour / 24 * 100}
-      style={{position: 'absolute'}}
       changeTime={props.changeTime}
+      view={props.view}
     />
   )
 }

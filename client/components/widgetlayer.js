@@ -1,17 +1,25 @@
 import {useState, useEffect} from 'react'
 import {loadModules} from '@esri/react-arcgis'
 
-const WidgetLayer = props => {
+const LayerListWidget = props => {
   const [widget, setWidget] = useState(null)
   useEffect(() => {
     loadModules([
       'esri/widgets/LayerList',
       'esri/widgets/Expand',
       'esri/widgets/Locate',
+      'esri/core/watchUtils',
+      'esri/widgets/Legend',
       'esri/widgets/Search'
     ])
-      .then(([LayerList, Expand, Locate, Search]) => {
+      .then(([LayerList, Expand, Locate, watchUtils, Legend, Search]) => {
         props.view.when(function() {
+          var searchBtn = new Search({
+            view: props.view
+          })
+          props.view.ui.add(searchBtn, {
+            position: 'top-right'
+          })
           var layerList = new LayerList({
             view: props.view
           })
@@ -27,11 +35,36 @@ const WidgetLayer = props => {
           props.view.ui.add(locateBtn, {
             position: 'top-left'
           })
-          var searchBtn = new Search({
-            view: props.view
+
+          props.view.ui.add(
+            new Legend({
+              view: props.view
+            }),
+            'bottom-left'
+          )
+
+          const sampleInstructions = document.createElement('div')
+          sampleInstructions.style.padding = '10px'
+          sampleInstructions.style.backgroundColor = 'white'
+          sampleInstructions.style.width = '300px'
+          sampleInstructions.innerText = [
+            'As you zoom in, the style will switch from a',
+            'heatmap to individual points.'
+          ].join(' ')
+
+          const instructionsExpand = new Expand({
+            expandIconClass: 'esri-icon-question',
+            expandTooltip: 'How to use this sample',
+            expanded: false,
+            view: props.view,
+            content: sampleInstructions
           })
-          props.view.ui.add(searchBtn, {
-            position: 'bottom-right'
+          props.view.ui.add(instructionsExpand, 'top-left')
+
+          // Hide the instructions when the user starts interacting with the sample
+
+          watchUtils.whenTrueOnce(props.view, 'interacting', function() {
+            instructionsExpand.expanded = false
           })
         })
       })
@@ -40,4 +73,4 @@ const WidgetLayer = props => {
   return null
 }
 
-export default WidgetLayer
+export default LayerListWidget
