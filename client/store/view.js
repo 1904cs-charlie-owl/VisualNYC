@@ -38,7 +38,6 @@ export const crimeFilterChange = (filterValue, checked) => ({
   checked
 })
 
-//{type: GET_3D, threeD }
 /**
  * THUNK CREATORS
  */
@@ -61,7 +60,10 @@ export const changeLoadStatus = () => {
   }
 }
 
-export const changeFilter = (filterValue, checked) => {
+export const changeFilter = () => {
+  // console.log('filterValue: ', filterValue)
+  // console.log('checked', checked)
+  console.log('what is wrong?')
   return dispatch => {
     dispatch(crimeFilterChange(filterValue, checked))
   }
@@ -84,10 +86,11 @@ export default function(state = defaultView, action) {
       newState.initialLoad = false
       return newState
     case FILTER_CHANGE:
-      newState.crimeFilter = {
-        ...crimeFilter,
-        [action.filterValue]: action.checked
-      }
+      console.log('fuck off')
+      // newState.crimeFilter = {
+      //   ...crimeFilter,
+      //   [action.filterValue]: action.checked
+      // }
       return newState
     default:
       return state

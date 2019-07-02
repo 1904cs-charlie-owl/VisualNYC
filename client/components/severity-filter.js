@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export const SeverityFilter = props => {
+const SeverityFilter = props => {
   const classes = useStyles()
   const selectedClasses = props.mapView.crimeFilter
   return (
@@ -31,7 +31,12 @@ export const SeverityFilter = props => {
             control={
               <Checkbox
                 checked={selectedClasses.felony}
-                onChange={e => changeFilter('felony', e)}
+                onChange={e => {
+                  e.persist()
+                  // console.log("selected: ", selectedClasses.felony)
+                  // console.log('event: ', e.target.checked)
+                  changeFilter('felony', e.target.checked)
+                }}
                 value="FELONY"
               />
             }
@@ -61,13 +66,18 @@ export const SeverityFilter = props => {
       </FormControl>
     </div>
   )
+  // const div = document.createElement('div');
+  // div.innerHTML = sevFilter
+  // if (props.mapView.initialLoad) props.view.ui.add(sevFilter, 'top-right')
+  // if (props.mapView.initialLoad) props.initialLoad()
+  // return <div />
 }
 
-const createFilter = props => {
-  const node = document.createElement('div')
-  props.view.ui.add(node, 'top-right')
-  return <div />
-}
+// const createFilter = props => {
+//   const node = document.createElement('div')
+//   props.view.ui.add(node, 'top-right')
+//   return <SeverityFilter />
+// }
 
 const mapStateToProps = state => {
   let mapView = state.view
@@ -81,4 +91,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(createFilter)
+export default connect(mapStateToProps, mapDispatchToProps)(SeverityFilter)
