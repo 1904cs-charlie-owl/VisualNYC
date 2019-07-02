@@ -38,11 +38,7 @@ const LayerListWidget = props => {
           var legend = new Legend({
             view: props.view
           })
-          var legendExpand = new Expand({
-            view: props.view,
-            content: legend
-          })
-          props.view.ui.add(legendExpand, 'bottom-left')
+          props.view.ui.add(legend, 'bottom-left')
 
           const sampleInstructions = document.createElement('div')
           sampleInstructions.style.padding = '10px'

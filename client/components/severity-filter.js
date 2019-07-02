@@ -12,7 +12,11 @@ import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex'
+    display: 'flex',
+    backgroundColor: 'white',
+    position: 'fixed',
+    bottom: '18%',
+    right: '1%'
   },
   formControl: {
     margin: theme.spacing(3)
