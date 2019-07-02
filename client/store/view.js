@@ -60,10 +60,7 @@ export const changeLoadStatus = () => {
   }
 }
 
-export const changeFilter = () => {
-  // console.log('filterValue: ', filterValue)
-  // console.log('checked', checked)
-  console.log('what is wrong?')
+export const changeFilter = (filterValue, checked) => {
   return dispatch => {
     dispatch(crimeFilterChange(filterValue, checked))
   }
@@ -86,11 +83,7 @@ export default function(state = defaultView, action) {
       newState.initialLoad = false
       return newState
     case FILTER_CHANGE:
-      console.log('fuck off')
-      // newState.crimeFilter = {
-      //   ...crimeFilter,
-      //   [action.filterValue]: action.checked
-      // }
+      newState.crimeFilter[action.filterValue] = action.checked
       return newState
     default:
       return state

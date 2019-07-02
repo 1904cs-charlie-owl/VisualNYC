@@ -33,9 +33,7 @@ const SeverityFilter = props => {
                 checked={selectedClasses.felony}
                 onChange={e => {
                   e.persist()
-                  // console.log("selected: ", selectedClasses.felony)
-                  // console.log('event: ', e.target.checked)
-                  changeFilter('felony', e.target.checked)
+                  props.changeFilter('felony', e.target.checked)
                 }}
                 value="FELONY"
               />
@@ -46,7 +44,10 @@ const SeverityFilter = props => {
             control={
               <Checkbox
                 checked={selectedClasses.misd}
-                onChange={e => changeFilter('misd', e)}
+                onChange={e => {
+                  e.persist()
+                  props.changeFilter('misd', e.target.checked)
+                }}
                 value="MISDEMEANOR"
               />
             }
@@ -56,7 +57,10 @@ const SeverityFilter = props => {
             control={
               <Checkbox
                 checked={selectedClasses.viol}
-                onChange={e => changeFilter('viol', e)}
+                onChange={e => {
+                  e.persist()
+                  props.changeFilter('viol', e.target.checked)
+                }}
                 value="VIOLATION"
               />
             }
