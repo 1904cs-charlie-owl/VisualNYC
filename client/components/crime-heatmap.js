@@ -10,9 +10,9 @@ const CrimeHeat = props => {
     type: 'heatmap',
     colorStops: [
       {color: 'rgba(63, 40, 102, 0)', ratio: 0},
-      {color: 'rgba(146, 57, 255, 0.02)', ratio: 0.04},
-      {color: 'rgba(255, 0, 0, 0.1)', ratio: 0.2},
-      {color: 'rgba(248, 255, 0, 0.202)', ratio: 0.3}
+      {color: 'rgb(118, 57, 255)', ratio: 0.04},
+      {color: 'rgb(255, 0, 0)', ratio: 0.2},
+      {color: 'rgb(248, 255, 0)', ratio: 0.3}
     ],
     maxPixelIntensity: 500,
     minPixelIntensity: 0

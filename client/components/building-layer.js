@@ -13,7 +13,7 @@ const Boroughs = props => {
         {
           type: 'fill',
           material: {
-            color: '#2887a1',
+            color: 'rgba(101, 212, 243, 0.5)',
             colorMixMode: 'replace'
           },
           edges: {

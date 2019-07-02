@@ -48,7 +48,6 @@ export function BaseMap(props) {
         }}
         loaderOptions={loaderOptions}
       >
-        <SeverityFilter />
         <WidgetLayer />
         <BoroughLayer />
         <BuildingLayer />
