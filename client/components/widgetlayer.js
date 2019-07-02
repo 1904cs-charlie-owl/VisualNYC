@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 import {loadModules} from '@esri/react-arcgis'
 
 const LayerListWidget = props => {
-  const [widget, setWidget] = useState(null)
+  const [widgets, setWidgets] = useState(null)
   useEffect(() => {
     loadModules([
       'esri/widgets/LayerList',
@@ -27,7 +27,6 @@ const LayerListWidget = props => {
             view: props.view,
             content: layerList
           })
-          setWidget(expand)
           props.view.ui.add(expand, 'top-right')
           var locateBtn = new Locate({
             view: props.view
@@ -36,12 +35,14 @@ const LayerListWidget = props => {
             position: 'top-left'
           })
 
-          props.view.ui.add(
-            new Legend({
-              view: props.view
-            }),
-            'bottom-left'
-          )
+          var legend = new Legend({
+            view: props.view
+          })
+          var legendExpand = new Expand({
+            view: props.view,
+            content: legend
+          })
+          props.view.ui.add(legendExpand, 'bottom-left')
 
           const sampleInstructions = document.createElement('div')
           sampleInstructions.style.padding = '10px'
