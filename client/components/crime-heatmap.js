@@ -63,9 +63,20 @@ const CrimeHeat = props => {
                 )
               )
               .then(function(layerView) {
+                let oneHourBefore = String(props.currentHour - 1)
+                let oneHourAfter = String(props.currentHour + 1)
+
+                if (Number(oneHourBefore) < 10) {
+                  oneHourBefore = '0' + oneHourBefore
+                }
+
+                if (Number(oneHourAfter) < 10) {
+                  oneHourAfter = '0' + oneHourAfter
+                }
+
                 layerView.filter = {
-                  where: `CMPLNT_FR_TM BETWEEN '${props.currentHour -
-                    1}:00:00' AND '${props.currentHour + 1}:00:00'`
+                  where: `CMPLNT_FR_TM BETWEEN '${oneHourBefore -
+                    1}:00:00' AND '${oneHourAfter + 1}:00:00'`
                 }
               })
           } else {
@@ -76,9 +87,19 @@ const CrimeHeat = props => {
                 )
               )
               .then(function(layerView) {
+                let oneHourBefore = String(props.currentHour - 1)
+                let oneHourAfter = String(props.currentHour + 1)
+
+                if (Number(oneHourBefore) < 10) {
+                  oneHourBefore = '0' + oneHourBefore
+                }
+
+                if (Number(oneHourAfter) < 10) {
+                  oneHourAfter = '0' + oneHourAfter
+                }
+
                 layerView.filter = {
-                  where: `CMPLNT_FR_TM BETWEEN '${props.currentHour -
-                    1}:00:00' AND '${props.currentHour + 1}:00:00'`
+                  where: `CMPLNT_FR_TM BETWEEN '${oneHourBefore}:00:00' AND '${oneHourAfter}:00:00'`
                 }
               })
           }
