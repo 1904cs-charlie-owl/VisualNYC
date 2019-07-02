@@ -108,22 +108,20 @@ function DiscreteSlider(props) {
       <div style={{display: 'flex'}}>
         <Slider
           className={classes.slider}
-          value={hourPct}
           valueLabelFormat={valueLabelFormat}
           aria-labelledby="discrete-slider-restrict"
           step={null}
           marks={marks}
+          defaultValue={hourPct + 9.09}
           onChangeCommitted={(e, v) => {
             let hourOnSlider = Math.round(v / 100 * 24)
             let currentHour = Math.round(24 * (hourPct / 100))
-            if ([0, 2, 4, 20, 22].includes(hourOnSlider)) {
+            if ([0, 2, 4].includes(hourOnSlider)) {
               hourOnSlider += 1
             }
-            if (hourOnSlider === 24) {
-              hourOnSlider = 23
+            if ([20, 22, 24].includes(hourOnSlider)) {
+              hourOnSlider -= 1
             }
-            console.log(hourOnSlider, 'hourOnSlider')
-            console.log(currentHour, 'currentHour')
             if (hourOnSlider !== currentHour)
               return props.changeTime(hourOnSlider)
           }}
