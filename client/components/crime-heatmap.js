@@ -154,7 +154,7 @@ const CrimeHeat = props => {
     return (
       <CrimeSlider
         currentHourPct={props.mapView.currentHour / 24 * 100}
-        //changeTime={props.changeTime}
+        changeTime={props.changeTime}
         view={props.view}
       />
     )

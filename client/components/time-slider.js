@@ -6,7 +6,6 @@ import {PlayCircleOutline} from '@material-ui/icons'
 import {Slider} from '@material-ui/lab'
 import Typography from '@material-ui/core/Typography'
 import marks from '../timeMarks'
-import {changeTimeThunk} from '../store'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -99,10 +98,4 @@ const mapStateToProps = state => {
   return {mapView}
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    changeTime: newTime => dispatch(changeTimeThunk(newTime))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(DiscreteSlider)
+export default connect(mapStateToProps, null)(DiscreteSlider)
