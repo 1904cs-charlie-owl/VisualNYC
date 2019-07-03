@@ -72,7 +72,7 @@ const TopTenCrimes = props => {
             {
               type: 'text',
               text:
-                '<p><b>Description:</b> {DESCRIPTION} </p> <b>Date:</b> {WHEN_:DateString(hideTime: true)}'
+                '<p><b>Date:</b> {WHEN_:DateString(hideTime: true)}</p> <p><b>Location: </b> {WHERE_} </p><b>Description:</b> {DESCRIPTION} '
             },
             {
               type: 'media',
