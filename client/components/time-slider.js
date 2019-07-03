@@ -34,7 +34,7 @@ function valueLabelFormat(value) {
 
 const getHourPct = currentHour => {
   let hours = marks.map(el => el.value)
-  let currentHourPct = currentHour / 24 * 100
+  let currentHourPct = currentHour / 22 * 100
   return hours.filter(
     el => currentHourPct >= el && currentHourPct < el + 9.09
   )[0]
