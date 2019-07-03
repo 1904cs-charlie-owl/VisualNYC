@@ -13,7 +13,7 @@ import {toggle3d} from '../store'
 import {connect} from 'react-redux'
 
 const loaderOptions = {
-  url: 'http://js.arcgis.com/4.11'
+  url: 'https://js.arcgis.com/4.11'
 }
 
 export function BaseMap(props) {
