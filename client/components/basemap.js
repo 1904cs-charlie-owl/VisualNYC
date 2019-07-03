@@ -6,6 +6,7 @@ import BuildingLayer from './building-layer'
 import WidgetLayer from './widgetlayer'
 import CrimeHeat from './crime-heatmap'
 import SwitchButton from './switchbutton'
+import FilterButton from './filterButton'
 import NYCSubwayLines from './nycsubwaylayer'
 import SeverityFilter from './severity-filter'
 import {toggle3d} from '../store'
@@ -27,11 +28,12 @@ export function BaseMap(props) {
         }}
         loaderOptions={loaderOptions}
       >
-        <SeverityFilter />
+        {!props.mapView.filterHidden ? <SeverityFilter /> : <div />}
         <WidgetLayer />
         <BoroughLayer />
         <CrimeHeat currentHour={props.mapView.currentHour} />
         <NYCSubwayLines />
+        <FilterButton />
         <SwitchButton threeD={props.mapView.threeD} toggle3d={props.toggle3d} />
       </Map>
     )

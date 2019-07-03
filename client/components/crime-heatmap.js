@@ -43,7 +43,6 @@ const CrimeHeat = props => {
 
           setLayer(initLayer)
           let crimeFilter = props.mapView.crimeFilter
-          console.log(crimeFilter)
           if (
             !props.map.allLayers.items
               .map(item => item.title)
@@ -151,13 +150,17 @@ const CrimeHeat = props => {
     },
     [props.mapView.currentHour, props.mapView.crimeFilter]
   )
-  return (
-    <CrimeSlider
-      currentHourPct={props.mapView.currentHour / 24 * 100}
-      changeTime={props.changeTime}
-      view={props.view}
-    />
-  )
+  if (!props.mapView.filterHidden) {
+    return (
+      <CrimeSlider
+        currentHourPct={props.mapView.currentHour / 24 * 100}
+        changeTime={props.changeTime}
+        view={props.view}
+      />
+    )
+  } else {
+    return <div />
+  }
 }
 
 const mapStateToProps = state => {

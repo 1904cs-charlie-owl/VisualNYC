@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'white',
     position: 'fixed',
     bottom: '5%',
-    right: '1%'
+    right: '3%'
   },
   margin: {
     height: theme.spacing(1)
