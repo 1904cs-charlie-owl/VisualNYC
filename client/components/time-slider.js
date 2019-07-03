@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import {connect} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
@@ -82,7 +81,14 @@ function valueLabelFormat(value) {
 
 function DiscreteSlider(props) {
   const classes = useStyles()
-  let hourPct = props.currentHourPct
+  const setHour = currentHour => {
+    let hours = marks.map(el => el.value)
+    let currentHourPct = currentHour / 24 * 100
+    return hours.filter(
+      el => currentHourPct > el && currentHourPct < el + 9.09
+    )[0]
+  }
+  let hourPct = setHour(props.mapView.currentHour)
   return (
     <div className={classes.root}>
       <Typography id="discrete-slider-restrict" gutterBottom>
@@ -90,7 +96,7 @@ function DiscreteSlider(props) {
         <IconButton
           className={classes.button}
           aria-label="Play"
-          disabled={props.currentHourPct > 99}
+          disabled={hourPct > 99}
           size="medium"
           onClick={() => {
             if (hourPct < 99) {
@@ -98,7 +104,8 @@ function DiscreteSlider(props) {
                 if (hourPct > 91) clearInterval(int)
                 hourPct = hourPct + 9.09
                 props.changeTime(Math.round(24 * (hourPct / 100)))
-              }, 3000)
+                console.log(hourPct)
+              }, 2500)
             }
           }}
         >
@@ -112,7 +119,7 @@ function DiscreteSlider(props) {
           aria-labelledby="discrete-slider-restrict"
           step={null}
           marks={marks}
-          defaultValue={hourPct + 9.09}
+          value={hourPct}
           onChangeCommitted={(e, v) => {
             let hourOnSlider = Math.round(v / 100 * 24)
             let currentHour = Math.round(24 * (hourPct / 100))
