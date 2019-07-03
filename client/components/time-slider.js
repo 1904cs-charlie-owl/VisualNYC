@@ -9,8 +9,11 @@ import marks from '../timeMarks'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '60%',
-    padding: 5,
+    width: '20%',
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
     backgroundColor: 'white',
     position: 'fixed',
     bottom: '5%',
@@ -57,7 +60,7 @@ function DiscreteSlider(props) {
   return (
     <div className={classes.root}>
       <Typography id="discrete-slider-restrict" gutterBottom>
-        Time of Day
+        Time of Day (2 hour intervals)
         <IconButton
           className={classes.button}
           aria-label="Play"

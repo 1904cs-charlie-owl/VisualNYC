@@ -10,11 +10,11 @@ const CrimeHeat = props => {
     type: 'heatmap',
     colorStops: [
       {color: 'rgba(63, 40, 102, 0)', ratio: 0},
-      {color: 'rgb(118, 57, 255)', ratio: 0.04},
-      {color: 'rgb(255, 0, 0)', ratio: 0.2},
-      {color: 'rgb(248, 255, 0)', ratio: 0.3}
+      {color: 'rgb(118, 57, 255)', ratio: 0.2},
+      {color: 'rgb(255, 0, 0)', ratio: 0.4},
+      {color: 'rgb(248, 255, 0)', ratio: 0.9}
     ],
-    maxPixelIntensity: 500,
+    maxPixelIntensity: 100,
     minPixelIntensity: 0
   }
 
@@ -150,8 +150,8 @@ const CrimeHeat = props => {
 
             props.view.watch('scale', function(newValue) {
               initLayer.renderer =
-                newValue <= 10000 ? simpleRenderer : heatMapRenderer
-              initLayer.popupTemplate = newValue <= 10000 ? template : null
+                newValue <= 12000 ? simpleRenderer : heatMapRenderer
+              initLayer.popupTemplate = newValue <= 12000 ? template : null
             })
           })
         })
