@@ -14,16 +14,16 @@ notifications:
 install:
   - npm ci # faster, goes only from package-lock
 before_script:
-  - psql -c 'create database "boilermaker-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+  - psql -c 'create database "visualnyc-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 script:
   - npm test             # test the code
   - npm run build-client # make the bundle
 
-# before_deploy:
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy:
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: visualnyc # see README
+  api_key:
+    secure: LjuuNWBgj8hc1BpS2+4AzeTU/9Xqk0WBcwlTrPSlS52qLcy/PzoGsF+nTJ9RvrJ4CdjbHUaQKxesy9ekjgibhD97d2z/MCkJvIgVes8GTPWnumESTbnVg00+jjDWhNXhMoDnRqT0x2jf8CTnbqj4kI8lhJ53KE7VSOzE9UUhM2Bqzybd0zuLE3vlVALfZOhOQqEhV/C4zIphcv6fAxv64msDmLU+nqQ5gZaD31/V6b8yOam9vzHZQ+MmMMhdkHTW/FT/QqBoVu4gmMdCvJtL1Z/LWkqpY3+xkRhCMpeeDqhcvp97REnSQAURGVVKliqIaRTYo8SFPVfSzIwtTZbmeci3C2xr3+yVnVpB7JNNdAHaCQ2OPt8H835+ipuflwQPK1P6lYcwQEpVQRyH0SP6U7d/NotyvSMvHJu3qQkpj1IBOnQiIA5f9m7BTnPK0Gz3iYaXcfKz+axGj+5A0fReR4/1o4w2682KpUn4OLBKQGH/s9rth3e8oPFz5NMpXWSc4vCWmwpJXlXG2ZltVzo4AvZ4ThI0OCqqOEivhYMI91Z+beRpAUyLFqInhYZroaapVZgc844YRxvScXVIFbWN6aZxElOtlp5WrFfT3JVhdneHnKZFpDMG2BVikESy0IrUjYxx5ThJZ3QTRZ8ruWvu9Q5Pnqrhss6WMDFT8BwiLpM=
