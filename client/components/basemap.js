@@ -9,6 +9,7 @@ import SwitchButton from './switchbutton'
 import FilterButton from './filterButton'
 import NYCSubwayLines from './nycsubwaylayer'
 import SeverityFilter from './severity-filter'
+import TopTenCrimes from './topTenCrimes-layer'
 import {toggle3d} from '../store'
 import {connect} from 'react-redux'
 
@@ -54,6 +55,7 @@ export function BaseMap(props) {
         <BoroughLayer />
         <BuildingLayer />
         <NYCSubwayLines />
+        <TopTenCrimes />
         <SwitchButton threeD={props.mapView.threeD} toggle3d={props.toggle3d} />
       </Scene>
     )
