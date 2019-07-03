@@ -14,16 +14,17 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: theme.spacing(1),
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(3),
-    backgroundColor: 'white',
+    backgroundColor: '#242424',
     position: 'fixed',
     bottom: '5%',
-    right: '3%'
+    right: '3%',
+    color: 'white'
   },
   margin: {
     height: theme.spacing(1)
   },
   button: {
-    color: 'blue',
+    color: '#69dcff',
     marginRight: '5%'
   }
 }))
