@@ -15,12 +15,34 @@ const TopTenCrimes = props => {
           }
         }
 
+        const template = {
+          title: '{TITLE}',
+          content: [
+            {
+              type: 'text',
+              text:
+                '<p><b>Description:</b> {DESCRIPTION} </p> <b>Date:</b> {WHEN_:DateString(hideTime: true)}'
+            },
+            {
+              type: 'media',
+              mediaInfos: [
+                {
+                  type: 'image',
+                  value: {
+                    sourceURL: '{IMAGE_URL}'
+                  }
+                }
+              ]
+            }
+          ]
+        }
+
         let initLayer = new FeatureLayer({
           url:
             'https://services9.arcgis.com/UBBAhYgiEL7Yaa7P/arcgis/rest/services/top10_crimes/FeatureServer',
           renderer,
-          title: 'NYC Top Ten Crimes'
-          // visible: false
+          title: 'NYC Top Ten Crimes',
+          popupTemplate: template
         })
         setLayer(initLayer)
         props.map.add(initLayer)
