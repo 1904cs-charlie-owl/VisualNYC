@@ -65,7 +65,7 @@ const TopTenCrimes = props => {
             expression: 'DefaultValue($feature.TITLE, "no data")'
           }
         })
-        
+
         const template = {
           title: '{TITLE}',
           content: [
@@ -98,7 +98,7 @@ const TopTenCrimes = props => {
           elevationInfo: {
             // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
             mode: 'relative-to-scene'
-          }
+          },
           popupTemplate: template
         })
         setLayer(initLayer)
