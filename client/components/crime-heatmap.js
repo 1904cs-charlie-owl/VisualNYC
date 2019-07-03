@@ -159,13 +159,7 @@ const CrimeHeat = props => {
     [props.mapView.currentHour, props.mapView.crimeFilter]
   )
   if (!props.mapView.filterHidden) {
-    return (
-      <CrimeSlider
-        currentHourPct={props.mapView.currentHour / 24 * 100}
-        changeTime={props.changeTime}
-        view={props.view}
-      />
-    )
+    return <CrimeSlider changeTime={props.changeTime} />
   } else {
     return <div />
   }
