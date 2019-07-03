@@ -60,7 +60,6 @@ const Boroughs = props => {
         })
         setLayer(initLayer)
         props.map.add(initLayer)
-        console.log()
       })
       .catch(err => console.error(err))
   }, [])
