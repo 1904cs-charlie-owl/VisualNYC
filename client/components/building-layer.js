@@ -32,6 +32,7 @@ const Boroughs = props => {
         var initLayer = new SceneLayer({
           url:
             'https://tiles.arcgis.com/tiles/0p6i4J6xhQas4Unf/arcgis/rest/services/New_York_City_3D_Buildings_Optimized/SceneServer',
+          popupEnabled: false,
           renderer,
           title: '3D Building Models'
         })

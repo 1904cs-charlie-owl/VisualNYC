@@ -65,8 +65,7 @@ const LayerListWidget = props => {
             sampleInstructions.style.backgroundColor = 'white'
             sampleInstructions.style.width = '300px'
             sampleInstructions.innerText = [
-              'As you zoom in, the style will switch from a',
-              'heatmap to individual points.'
+              'Historical activity shows crimes committed in a two hour window occurring on the same weekday. Source: 2018 NYC Crime Open Data. '
             ].join(' ')
 
             const instructionsExpand = new Expand({

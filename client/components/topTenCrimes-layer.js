@@ -92,7 +92,7 @@ const TopTenCrimes = props => {
           url:
             'https://services9.arcgis.com/UBBAhYgiEL7Yaa7P/arcgis/rest/services/top10_crimes/FeatureServer',
           renderer: iconSymbolRenderer,
-          title: 'NYC Top Ten Crimes',
+          title: 'NYC Top Ten Murders',
           labelingInfo: [labelClass],
           popupEnabled: true,
           elevationInfo: {
