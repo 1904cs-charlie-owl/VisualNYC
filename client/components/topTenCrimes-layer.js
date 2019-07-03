@@ -65,6 +65,28 @@ const TopTenCrimes = props => {
             expression: 'DefaultValue($feature.TITLE, "no data")'
           }
         })
+        
+        const template = {
+          title: '{TITLE}',
+          content: [
+            {
+              type: 'text',
+              text:
+                '<p><b>Description:</b> {DESCRIPTION} </p> <b>Date:</b> {WHEN_:DateString(hideTime: true)}'
+            },
+            {
+              type: 'media',
+              mediaInfos: [
+                {
+                  type: 'image',
+                  value: {
+                    sourceURL: '{IMAGE_URL}'
+                  }
+                }
+              ]
+            }
+          ]
+        }
 
         let initLayer = new FeatureLayer({
           url:
@@ -77,6 +99,7 @@ const TopTenCrimes = props => {
             // elevation mode that will place points on top of the buildings or other SceneLayer 3D objects
             mode: 'relative-to-scene'
           }
+          popupTemplate: template
         })
         setLayer(initLayer)
         props.map.add(initLayer)
