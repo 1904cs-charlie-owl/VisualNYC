@@ -4,7 +4,11 @@ import {changeLoadStatus} from '../store'
 
 const SwitchButton = props => {
   const switchButton = document.createElement('button')
-  switchButton.innerHTML = props.threeD ? '2D' : '3D'
+  switchButton.innerHTML = props.threeD ? '<b>2D</b>' : '<b>3D</b>'
+  switchButton.setAttribute(
+    'style',
+    'width:32px; height:32px; font-size:.85em; background-color: #242424; color: #69dcff; border-width: 0px '
+  )
   switchButton.onclick = () => props.toggle3d(!props.threeD)
   if (props.mapView.initialLoad) props.view.ui.add(switchButton, 'top-left')
   if (props.mapView.initialLoad) props.initialLoad()
