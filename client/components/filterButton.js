@@ -5,6 +5,7 @@ import Drawer from '@material-ui/core/Drawer'
 import IconButton from '@material-ui/core/IconButton'
 import SeverityFilter from './severity-filter'
 import CrimeSlider from './time-slider'
+import DaySlider from './day-slider'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import {makeStyles, useTheme} from '@material-ui/core/styles'
 
@@ -67,6 +68,7 @@ const FilterButton = props => {
     >
       <SeverityFilter />
       <CrimeSlider changeTime={props.changeTime} />
+      <DaySlider changeTime={props.changeTime} />
       <div className={classes.drawerHeader}>
         <IconButton onClick={toggleFilterDrawer(false)}>
           <ChevronRightIcon />

@@ -6,6 +6,7 @@ const CHANGE_TIME = 'CHANGE_TIME'
 const INITIAL_LOAD = 'INITIAL_LOAD'
 const FILTER_CHANGE = 'FILTER_CHANGE'
 const TOGGLE_HIDE = 'HIDE_FILTERS'
+const CHANGE_DAY = 'CHANGE_DAY'
 
 /**
  * INITIAL STATE
@@ -13,6 +14,7 @@ const TOGGLE_HIDE = 'HIDE_FILTERS'
 
 let currentTime = new Date()
 let currentHour = currentTime.getHours()
+const currentDay = currentTime.getDay()
 let initialLoad = true
 let crimeFilter = {
   felony: true,
@@ -26,7 +28,8 @@ const defaultView = {
   currentHour,
   initialLoad,
   crimeFilter,
-  filterHidden
+  filterHidden,
+  day: currentDay
 }
 
 /**
@@ -41,6 +44,7 @@ export const crimeFilterChange = (filterValue, checked) => ({
   checked
 })
 export const toggleFilterHiddenAction = hidden => ({type: TOGGLE_HIDE, hidden})
+export const changeDay = day => ({type: CHANGE_DAY, day})
 
 /**
  * THUNK CREATORS
@@ -75,6 +79,12 @@ export const toggleHideFilter = () => {
     dispatch(toggleFilterHiddenAction())
   }
 }
+
+export const newDay = day => {
+  return dispatch => {
+    dispatch(changeDay(day))
+  }
+}
 /**
  * REDUCER
  */
@@ -97,6 +107,9 @@ export default function(state = defaultView, action) {
       return newState
     case TOGGLE_HIDE:
       newState.filterHidden = !newState.filterHidden
+      return newState
+    case CHANGE_DAY:
+      newState.day = action.day
       return newState
     default:
       return state

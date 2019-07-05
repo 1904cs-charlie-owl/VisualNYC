@@ -5,12 +5,13 @@ import IconButton from '@material-ui/core/IconButton'
 import {PlayCircleOutline} from '@material-ui/icons'
 import {Slider} from '@material-ui/lab'
 import Typography from '@material-ui/core/Typography'
-import marks from '../timeMarks'
+import marks, {days} from '../timeMarks'
+import {newDay} from '../store'
 
 const useStyles = makeStyles(theme => ({
   root: {
     height: 300,
-    paddingTop: theme.spacing(1),
+    paddingTop: theme.spacing(7),
     paddingBottom: theme.spacing(3),
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(3),
@@ -24,10 +25,6 @@ const useStyles = makeStyles(theme => ({
     marginRight: '5%'
   }
 }))
-
-function valueLabelFormat(value) {
-  return marks.findIndex(mark => mark.value === value) + 1
-}
 
 const getHourPct = currentHour => {
   let hours = marks.map(el => el.value)
@@ -43,49 +40,32 @@ const getHour = pct => {
   return hours.filter(el => hour >= el && hour < el + 2)[0]
 }
 
-function DiscreteSlider(props) {
-  const [hourPct, setHourPct] = useState(getHourPct(props.mapView.currentHour))
+function DaySlider(props) {
+  const [dow, setDow] = useState(props.mapView.day)
   useEffect(
     () => {
-      props.changeTime(getHour(hourPct))
+      props.newDay(dow)
     },
-    [hourPct]
+    [dow]
   )
-  let pct = hourPct
+  //let pct = hourPct
 
   const classes = useStyles()
   return (
     <div className={classes.root}>
       <Typography id="discrete-slider-restrict" gutterBottom>
-        Time of Day
-        <IconButton
-          className={classes.button}
-          aria-label="Play"
-          disabled={hourPct < 10}
-          size="medium"
-          onClick={() => {
-            if (pct > 9) {
-              let int = setInterval(() => {
-                if (pct < 9) clearInterval(int)
-                pct = pct - 9.09
-                setHourPct(pct)
-              }, 2000)
-            }
-          }}
-        >
-          <PlayCircleOutline />
-        </IconButton>
+        Day of Week
       </Typography>
       <div style={{height: '100%'}}>
         <Slider
           className={classes.slider}
           aria-labelledby="vertical-slider"
-          min={0}
-          max={99.99}
+          min={-6}
+          max={0}
           step={null}
-          marks={marks}
-          onChange={(e, v) => setHourPct(v)}
-          value={hourPct}
+          marks={days}
+          onChange={(e, v) => setDow(v * -1)}
+          value={dow * -1}
           orientation="vertical"
         />
       </div>
@@ -98,4 +78,10 @@ const mapStateToProps = state => {
   return {mapView}
 }
 
-export default connect(mapStateToProps, null)(DiscreteSlider)
+const mapDispatchToProps = dispatch => {
+  return {
+    newDay: day => dispatch(newDay(day))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DaySlider)
