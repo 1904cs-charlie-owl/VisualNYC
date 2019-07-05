@@ -48,7 +48,7 @@ const CrimeHeat = props => {
           })
 
           setLayer(initLayer)
-          let classFilter = props.mapView.crimeFilter
+          let classFilter = props.mapView.classFilter
           if (
             !props.map.allLayers.items
               .map(item => item.title)
@@ -154,7 +154,7 @@ const CrimeHeat = props => {
         })
         .catch(err => console.error(err))
     },
-    [props.mapView.currentHour, props.mapView.crimeFilter]
+    [props.mapView.currentHour, props.mapView.classFilter]
   )
 
   return <div />

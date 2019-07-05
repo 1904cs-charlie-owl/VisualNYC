@@ -104,7 +104,7 @@ export default function(state = defaultView, action) {
       newState.initialLoad = false
       return newState
     case CLASS_FILTER_CHANGE:
-      newState.crimeFilter[action.filterValue] = action.checked
+      newState.classFilter[action.filterValue] = action.checked
       return newState
     case CATEGORY_FILTER_CHANGE:
       newState.categoryFilter[action.filterValue] = action.checked

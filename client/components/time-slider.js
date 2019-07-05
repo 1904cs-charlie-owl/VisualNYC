@@ -66,7 +66,7 @@ function DiscreteSlider(props) {
           onClick={() => {
             if (pct > 9) {
               let int = setInterval(() => {
-                if (pct < 9) clearInterval(int)
+                if (pct < 10) clearInterval(int)
                 pct = pct - 9.09
                 setHourPct(pct)
               }, 2000)
