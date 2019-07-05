@@ -27,9 +27,12 @@ const LayerListWidget = props => {
             var searchBtn = new Search({
               view: props.view
             })
-            props.view.ui.add(searchBtn, {
-              position: 'top-right'
+            var searchExpand = new Expand({
+              view: props.view,
+              content: searchBtn
             })
+            props.view.ui.add(searchExpand, 'top-left')
+
             var layerList = new LayerList({
               view: props.view
             })
@@ -37,7 +40,7 @@ const LayerListWidget = props => {
               view: props.view,
               content: layerList
             })
-            props.view.ui.add(expand, 'top-right')
+            props.view.ui.add(expand, 'top-left')
             var locateBtn = new Locate({
               view: props.view
             })
@@ -58,7 +61,7 @@ const LayerListWidget = props => {
               view: props.view,
               content: basemap
             })
-            props.view.ui.add(baseExpand, 'top-right')
+            props.view.ui.add(baseExpand, 'top-left')
 
             const sampleInstructions = document.createElement('div')
             sampleInstructions.style.padding = '10px'

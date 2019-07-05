@@ -8,7 +8,7 @@ import CrimeSlider from './time-slider'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import {makeStyles, useTheme} from '@material-ui/core/styles'
 
-const drawerWidth = '10%'
+const drawerWidth = '200'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,8 +26,8 @@ const useStyles = makeStyles(theme => ({
   },
   drawerHeader: {
     display: 'flex',
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-start'
+    marginTop: 'auto',
+    ...theme.mixins.toolbar
   }
 }))
 
@@ -48,11 +48,9 @@ const FilterButton = props => {
   const filterButton = document.createElement('button')
   filterButton.setAttribute(
     'style',
-    'width:32px; height:32px;font-size:.85em; background-color: #242424; color: #69dcff; border-width: 0px; font-weight: bold'
+    'width:32px; height:32px;font-size:.85em; background-color: #242424; color: #69dcff; border-width: 0px; font-weight: bold; display: flex; justify-content: center'
   )
-  const icon = document.createElement('span')
-  icon.className = 'esri-icon-left-triangle-arrow'
-  filterButton.appendChild(icon)
+  filterButton.innerHTML = '<i class="material-icons">chevron_left</i>'
   filterButton.onclick = function() {
     setOpen(!open)
   }
@@ -64,11 +62,18 @@ const FilterButton = props => {
       open={open}
       onClose={toggleFilterDrawer(false)}
       variant="persistent"
+      className={classes.drawer}
+      classes={{
+        paper: classes.drawerPaper
+      }}
     >
       <SeverityFilter />
       <CrimeSlider changeTime={props.changeTime} />
       <div className={classes.drawerHeader}>
-        <IconButton onClick={toggleFilterDrawer(false)}>
+        <IconButton
+          onClick={toggleFilterDrawer(false)}
+          style={{color: '#69dcff'}}
+        >
           <ChevronRightIcon />
         </IconButton>
       </div>
