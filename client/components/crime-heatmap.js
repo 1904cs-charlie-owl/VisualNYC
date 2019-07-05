@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {loadModules} from '@esri/react-arcgis'
-import {changeTimeThunk} from '../store'
 import {connect} from 'react-redux'
-import CrimeSlider from './time-slider'
 
 const CrimeHeat = props => {
   const [layer, setLayer] = useState(null)
@@ -158,11 +156,8 @@ const CrimeHeat = props => {
     },
     [props.mapView.currentHour, props.mapView.crimeFilter]
   )
-  if (!props.mapView.filterHidden) {
-    return <CrimeSlider changeTime={props.changeTime} />
-  } else {
-    return <div />
-  }
+
+  return <div />
 }
 
 const mapStateToProps = state => {
@@ -170,10 +165,4 @@ const mapStateToProps = state => {
   return {mapView}
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    changeTime: newTime => dispatch(changeTimeThunk(newTime))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CrimeHeat)
+export default connect(mapStateToProps, null)(CrimeHeat)

@@ -1,6 +1,9 @@
 body {
   margin: 0px;
 }
+pre {
+  display: none;
+}
 
 #legend {
   margin-right: 25%;
