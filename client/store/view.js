@@ -6,6 +6,7 @@ const CHANGE_TIME = 'CHANGE_TIME'
 const INITIAL_LOAD = 'INITIAL_LOAD'
 const CLASS_FILTER_CHANGE = 'CLASS_FILTER_CHANGE'
 const CATEGORY_FILTER_CHANGE = 'CATEGORY_FILTER_CHANGE'
+const CHANGE_DAY = 'CHANGE_DAY'
 
 /**
  * INITIAL STATE
@@ -13,6 +14,7 @@ const CATEGORY_FILTER_CHANGE = 'CATEGORY_FILTER_CHANGE'
 
 let currentTime = new Date()
 let currentHour = currentTime.getHours()
+const currentDay = currentTime.getDay()
 let initialLoad = true
 let classFilter = {
   felony: true,
@@ -33,7 +35,8 @@ const defaultView = {
   currentHour,
   initialLoad,
   classFilter,
-  categoryFilter
+  categoryFilter,
+  day: currentDay
 }
 
 /**
@@ -52,6 +55,8 @@ export const categoryFilterChange = (filterValue, checked) => ({
   filterValue,
   checked
 })
+
+export const changeDay = day => ({type: CHANGE_DAY, day})
 
 /**
  * THUNK CREATORS
@@ -86,6 +91,12 @@ export const changeCategoryFilter = (filterValue, checked) => {
     dispatch(categoryFilterChange(filterValue, checked))
   }
 }
+
+export const newDay = day => {
+  return dispatch => {
+    dispatch(changeDay(day))
+  }
+}
 /**
  * REDUCER
  */
@@ -108,6 +119,9 @@ export default function(state = defaultView, action) {
       return newState
     case CATEGORY_FILTER_CHANGE:
       newState.categoryFilter[action.filterValue] = action.checked
+      return newState
+    case CHANGE_DAY:
+      newState.day = action.day
       return newState
     default:
       return state
