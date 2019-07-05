@@ -9,7 +9,7 @@ import marks from '../timeMarks'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: 300,
+    height: 200,
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
     paddingLeft: theme.spacing(3),
@@ -56,7 +56,7 @@ function DiscreteSlider(props) {
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      <Typography id="discrete-slider-restrict" gutterBottom>
+      <Typography id="time-of-day-slider" gutterBottom>
         Time of Day
         <IconButton
           className={classes.button}

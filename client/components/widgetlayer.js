@@ -66,7 +66,7 @@ const LayerListWidget = props => {
 
             const sampleInstructions = document.createElement('div')
             sampleInstructions.style.padding = '10px'
-            sampleInstructions.style.backgroundColor = 'black'
+            sampleInstructions.style.backgroundColor = '#242424'
             sampleInstructions.style.width = '300px'
             sampleInstructions.innerText = [
               'Historical activity shows crimes committed in a two hour window occurring on the same weekday. Source: 2018 NYC Crime Open Data. '

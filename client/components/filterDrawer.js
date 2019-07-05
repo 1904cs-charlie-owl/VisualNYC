@@ -7,6 +7,7 @@ import SeverityFilter from './severity-filter'
 import CrimeSlider from './time-slider'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import {makeStyles, useTheme} from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
 
 const drawerWidth = '200'
 
@@ -25,6 +26,12 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#242424'
   },
   drawerHeader: {
+    paddingTop: theme.spacing(1),
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+    fontWeight: 'bold'
+  },
+  drawerFooter: {
     display: 'flex',
     marginTop: 'auto',
     ...theme.mixins.toolbar
@@ -67,9 +74,16 @@ const FilterButton = props => {
         paper: classes.drawerPaper
       }}
     >
+      <Typography
+        className={classes.drawerHeader}
+        id="time-of-day-slider"
+        gutterBottom
+      >
+        Filters:
+      </Typography>
       <SeverityFilter />
       <CrimeSlider changeTime={props.changeTime} />
-      <div className={classes.drawerHeader}>
+      <div className={classes.drawerFooter}>
         <IconButton
           onClick={toggleFilterDrawer(false)}
           style={{color: '#69dcff'}}
