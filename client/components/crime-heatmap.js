@@ -65,8 +65,9 @@ const CrimeHeat = props => {
                 )
               )
               .then(function(layerView) {
-                let oneHourBefore = String(props.currentHour - 1)
-                let oneHourAfter = String(props.currentHour + 1)
+                let oneHourBefore = String(props.currentHour)
+                let oneHourAfter = String(props.currentHour + 2)
+                console.log(props.currentHour)
 
                 if (Number(oneHourBefore) < 10) {
                   oneHourBefore = '0' + oneHourBefore
@@ -92,8 +93,9 @@ const CrimeHeat = props => {
                 )
               )
               .then(function(layerView) {
-                let oneHourBefore = String(props.currentHour - 1)
-                let oneHourAfter = String(props.currentHour + 1)
+                console.log(props.currentHour)
+                let oneHourBefore = String(props.currentHour)
+                let oneHourAfter = String(props.currentHour + 2)
 
                 if (Number(oneHourBefore) < 10) {
                   oneHourBefore = '0' + oneHourBefore
