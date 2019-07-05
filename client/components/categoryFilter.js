@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {changeLoadStatus, changeClassFilter} from '../store'
+import {changeLoadStatus, changeCategoryFilter} from '../store'
 import {
   FormControl,
   FormLabel,
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const SeverityFilter = props => {
+const CategoryFilter = props => {
   const classes = useStyles()
   const selectedClasses = props.mapView.crimeFilter
   return (
@@ -69,18 +69,7 @@ const SeverityFilter = props => {
       </FormControl>
     </div>
   )
-  // const div = document.createElement('div');
-  // div.innerHTML = sevFilter
-  // if (props.mapView.initialLoad) props.view.ui.add(sevFilter, 'top-right')
-  // if (props.mapView.initialLoad) props.initialLoad()
-  // return <div />
 }
-
-// const createFilter = props => {
-//   const node = document.createElement('div')
-//   props.view.ui.add(node, 'top-right')
-//   return <SeverityFilter />
-// }
 
 const mapStateToProps = state => {
   let mapView = state.view
@@ -90,8 +79,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     initialLoad: () => dispatch(changeLoadStatus()),
-    changeFilter: (name, event) => dispatch(changeClassFilter(name, event))
+    changeCategoryFilter: (name, event) =>
+      dispatch(changeCategoryFilter(name, event))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SeverityFilter)
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryFilter)

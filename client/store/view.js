@@ -4,7 +4,8 @@
 const TOOGLE_3D = 'TOOGLE_3D'
 const CHANGE_TIME = 'CHANGE_TIME'
 const INITIAL_LOAD = 'INITIAL_LOAD'
-const FILTER_CHANGE = 'FILTER_CHANGE'
+const CLASS_FILTER_CHANGE = 'CLASS_FILTER_CHANGE'
+const CATEGORY_FILTER_CHANGE = 'CATEGORY_FILTER_CHANGE'
 const TOGGLE_HIDE = 'HIDE_FILTERS'
 
 /**
@@ -19,6 +20,8 @@ let crimeFilter = {
   misd: true,
   viol: true
 }
+
+let categoryFilter = {}
 let filterHidden = true
 
 const defaultView = {
@@ -36,7 +39,7 @@ export const toggle3dAction = threeD => ({type: TOOGLE_3D, threeD})
 export const changeTimeAction = newTime => ({type: CHANGE_TIME, newTime})
 export const initialLoadCheck = () => ({type: INITIAL_LOAD})
 export const crimeFilterChange = (filterValue, checked) => ({
-  type: FILTER_CHANGE,
+  type: CLASS_FILTER_CHANGE,
   filterValue,
   checked
 })
@@ -64,7 +67,7 @@ export const changeLoadStatus = () => {
   }
 }
 
-export const changeFilter = (filterValue, checked) => {
+export const changeClassFilter = (filterValue, checked) => {
   return dispatch => {
     dispatch(crimeFilterChange(filterValue, checked))
   }
@@ -92,7 +95,7 @@ export default function(state = defaultView, action) {
     case INITIAL_LOAD:
       newState.initialLoad = false
       return newState
-    case FILTER_CHANGE:
+    case CLASS_FILTER_CHANGE:
       newState.crimeFilter[action.filterValue] = action.checked
       return newState
     case TOGGLE_HIDE:
