@@ -8,7 +8,6 @@ import CrimeSlider from './time-slider'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import {makeStyles, useTheme} from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
 
 const drawerWidth = '200'
 
@@ -103,7 +102,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    toggleFilters: () => dispatch(toggleHideFilter()),
     changeTime: newTime => dispatch(changeTimeThunk(newTime))
   }
 }

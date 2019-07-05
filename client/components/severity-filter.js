@@ -20,11 +20,11 @@ const useStyles = makeStyles(theme => ({
 
 const SeverityFilter = props => {
   const classes = useStyles()
-  const selectedClasses = props.mapView.crimeFilter
+  const selectedClasses = props.mapView.classFilter
   return (
     <div className={classes.root}>
       <FormControl component="fieldset" className={classes.formControl}>
-        <FormLabel component="legend">Crime Class</FormLabel>
+        <FormLabel>Crime Class</FormLabel>
         <FormGroup>
           <FormControlLabel
             control={

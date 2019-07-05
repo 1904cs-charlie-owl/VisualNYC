@@ -48,7 +48,7 @@ const CrimeHeat = props => {
           })
 
           setLayer(initLayer)
-          let crimeFilter = props.mapView.crimeFilter
+          let classFilter = props.mapView.crimeFilter
           if (
             !props.map.allLayers.items
               .map(item => item.title)
@@ -77,9 +77,9 @@ const CrimeHeat = props => {
                 layerView.filter = {
                   where: `CMPLNT_FR_TM BETWEEN '${oneHourBefore}
                   :00:00' AND '${oneHourAfter}:00:00' AND LAW_CAT_CD IN ('${
-                    crimeFilter.felony ? 'FELONY' : ''
-                  }', '${crimeFilter.misd ? 'MISDEMEANOR' : ''}',
-                    '${crimeFilter.viol ? 'VIOLATION' : ''}')`
+                    classFilter.felony ? 'FELONY' : ''
+                  }', '${classFilter.misd ? 'MISDEMEANOR' : ''}',
+                    '${classFilter.viol ? 'VIOLATION' : ''}')`
                 }
               })
           } else {
@@ -104,9 +104,9 @@ const CrimeHeat = props => {
                 layerView.filter = {
                   where: `CMPLNT_FR_TM BETWEEN '${oneHourBefore}
                   :00:00' AND '${oneHourAfter}:00:00' AND LAW_CAT_CD IN ('${
-                    crimeFilter.felony ? 'FELONY' : ''
-                  }', '${crimeFilter.misd ? 'MISDEMEANOR' : ''}',
-                    '${crimeFilter.viol ? 'VIOLATION' : ''}')`
+                    classFilter.felony ? 'FELONY' : ''
+                  }', '${classFilter.misd ? 'MISDEMEANOR' : ''}',
+                    '${classFilter.viol ? 'VIOLATION' : ''}')`
                 }
               })
           }

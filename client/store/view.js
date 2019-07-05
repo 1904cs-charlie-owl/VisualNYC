@@ -6,7 +6,6 @@ const CHANGE_TIME = 'CHANGE_TIME'
 const INITIAL_LOAD = 'INITIAL_LOAD'
 const CLASS_FILTER_CHANGE = 'CLASS_FILTER_CHANGE'
 const CATEGORY_FILTER_CHANGE = 'CATEGORY_FILTER_CHANGE'
-const TOGGLE_HIDE = 'HIDE_FILTERS'
 
 /**
  * INITIAL STATE
@@ -15,21 +14,26 @@ const TOGGLE_HIDE = 'HIDE_FILTERS'
 let currentTime = new Date()
 let currentHour = currentTime.getHours()
 let initialLoad = true
-let crimeFilter = {
+let classFilter = {
   felony: true,
   misd: true,
   viol: true
 }
-
-let categoryFilter = {}
-let filterHidden = true
+let categoryFilter = {
+  HOMICIDE: true,
+  SEXCRIME: true,
+  THEFTFRAUD: true,
+  OTHERVIOLENT: true,
+  DRUGS: true,
+  OTHER: true
+}
 
 const defaultView = {
   threeD: false,
   currentHour,
   initialLoad,
-  crimeFilter,
-  filterHidden
+  classFilter,
+  categoryFilter
 }
 
 /**
@@ -38,12 +42,16 @@ const defaultView = {
 export const toggle3dAction = threeD => ({type: TOOGLE_3D, threeD})
 export const changeTimeAction = newTime => ({type: CHANGE_TIME, newTime})
 export const initialLoadCheck = () => ({type: INITIAL_LOAD})
-export const crimeFilterChange = (filterValue, checked) => ({
+export const classFilterChange = (filterValue, checked) => ({
   type: CLASS_FILTER_CHANGE,
   filterValue,
   checked
 })
-export const toggleFilterHiddenAction = hidden => ({type: TOGGLE_HIDE, hidden})
+export const categoryFilterChange = (filterValue, checked) => ({
+  type: CATEGORY_FILTER_CHANGE,
+  filterValue,
+  checked
+})
 
 /**
  * THUNK CREATORS
@@ -69,13 +77,13 @@ export const changeLoadStatus = () => {
 
 export const changeClassFilter = (filterValue, checked) => {
   return dispatch => {
-    dispatch(crimeFilterChange(filterValue, checked))
+    dispatch(classFilterChange(filterValue, checked))
   }
 }
 
-export const toggleHideFilter = () => {
+export const changeCategoryFilter = (filterValue, checked) => {
   return dispatch => {
-    dispatch(toggleFilterHiddenAction())
+    dispatch(categoryFilterChange(filterValue, checked))
   }
 }
 /**
@@ -98,8 +106,8 @@ export default function(state = defaultView, action) {
     case CLASS_FILTER_CHANGE:
       newState.crimeFilter[action.filterValue] = action.checked
       return newState
-    case TOGGLE_HIDE:
-      newState.filterHidden = !newState.filterHidden
+    case CATEGORY_FILTER_CHANGE:
+      newState.categoryFilter[action.filterValue] = action.checked
       return newState
     default:
       return state
