@@ -46,7 +46,8 @@ const LayerListWidget = props => {
             })
 
             var legend = new Legend({
-              view: props.view
+              view: props.view,
+              container: 'legend'
             })
             props.view.ui.add(legend, 'bottom-left')
 

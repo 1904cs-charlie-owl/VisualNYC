@@ -1,3 +1,7 @@
 body {
   margin: 0px;
 }
+
+#legend {
+  margin-right: 25%;
+}
