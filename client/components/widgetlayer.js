@@ -49,7 +49,8 @@ const LayerListWidget = props => {
             })
 
             var legend = new Legend({
-              view: props.view
+              view: props.view,
+              container: 'legend'
             })
             props.view.ui.add(legend, 'bottom-left')
 
@@ -65,7 +66,7 @@ const LayerListWidget = props => {
 
             const sampleInstructions = document.createElement('div')
             sampleInstructions.style.padding = '10px'
-            sampleInstructions.style.backgroundColor = 'white'
+            sampleInstructions.style.backgroundColor = 'black'
             sampleInstructions.style.width = '300px'
             sampleInstructions.innerText = [
               'Historical activity shows crimes committed in a two hour window occurring on the same weekday. Source: 2018 NYC Crime Open Data. '
