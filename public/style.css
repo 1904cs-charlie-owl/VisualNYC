@@ -4,3 +4,7 @@ body {
 pre {
   display: none;
 }
+
+#legend {
+  margin-right: 25%;
+}

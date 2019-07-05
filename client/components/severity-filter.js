@@ -12,7 +12,9 @@ import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   formControl: {
-    margin: theme.spacing(3)
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
+    marginTop: theme.spacing(2)
   }
 }))
 
@@ -22,7 +24,7 @@ const SeverityFilter = props => {
   return (
     <div className={classes.root}>
       <FormControl component="fieldset" className={classes.formControl}>
-        <FormLabel component="legend">Filter By Crime Class</FormLabel>
+        <FormLabel component="legend">Crime Class</FormLabel>
         <FormGroup>
           <FormControlLabel
             control={
