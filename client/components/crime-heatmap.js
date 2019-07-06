@@ -1,6 +1,8 @@
+/* eslint-disable complexity */
 import React, {useState, useEffect} from 'react'
 import {loadModules} from '@esri/react-arcgis'
 import {connect} from 'react-redux'
+import crimeCodes from '../crimeCategoryCodes'
 
 const CrimeHeat = props => {
   const [layer, setLayer] = useState(null)
@@ -24,6 +26,9 @@ const CrimeHeat = props => {
         'esri/core/watchUtils'
       ])
         .then(([GeoJSONLayer]) => {
+          let classFilter = props.mapView.classFilter
+          let categoryFilter = props.mapView.categoryFilter
+
           const template = {
             title: '{PD_DESC}',
             content: `<p><b>Severity:</b> {LAW_CAT_CD} </p>
@@ -38,14 +43,42 @@ const CrimeHeat = props => {
             ]
           }
 
+          let oneHourBefore = String(props.currentHour)
+          let oneHourAfter = String(props.currentHour + 2)
+
+          if (Number(oneHourBefore) < 10) {
+            oneHourBefore = '0' + oneHourBefore
+          }
+
+          if (Number(oneHourAfter) < 10) {
+            oneHourAfter = '0' + oneHourAfter
+          }
+
+          const whereString =
+            `CMPLNT_FR_TM BETWEEN '${oneHourBefore}
+                  :00:00' AND '${oneHourAfter}:00:00' AND
+                  dow = '${props.mapView.day}' AND
+                  LAW_CAT_CD IN ('${classFilter.felony ? 'FELONY' : ''}', '${
+              classFilter.misd ? 'MISDEMEANOR' : ''
+            }',
+                    '${classFilter.viol ? 'VIOLATION' : ''}') AND
+                  KY_CD IN (${
+                    categoryFilter.HOMICIDE ? crimeCodes.HOMICIDE : ''
+                  }${categoryFilter.SEXCRIME ? crimeCodes.SEXCRIME : ''}${
+              categoryFilter.THEFTFRAUD ? crimeCodes.THEFTFRAUD : ''
+            }${categoryFilter.OTHERVIOLENT ? crimeCodes.OTHERVIOLENT : ''}${
+              categoryFilter.DRUGS ? crimeCodes.DRUGS : ''
+            }${categoryFilter.OTHER ? crimeCodes.OTHER : ''})`.slice(0, -2) +
+            ')'
+
           let initLayer = new GeoJSONLayer({
-            url: `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon,KY_CD,OFNS_DESC,PD_DESC, date_extract_m(CMPLNT_FR_DT) AS month, date_extract_d(CMPLNT_FR_DT) AS day, date_extract_y(CMPLNT_FR_DT) AS year, date_extract_dow(cmplnt_fr_dt) AS dow&$limit=500000`,
+            // url: `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon,KY_CD,OFNS_DESC,PD_DESC, date_extract_m(CMPLNT_FR_DT) AS month, date_extract_d(CMPLNT_FR_DT) AS day, date_extract_y(CMPLNT_FR_DT) AS year, date_extract_dow(cmplnt_fr_dt) AS dow&$limit=500000`,
+            url: `/9s4h-37hy_6.geojson`,
             renderer: heatMapRenderer,
             title: 'Crime Heat Map'
           })
 
           setLayer(initLayer)
-          let classFilter = props.mapView.classFilter
           if (
             !props.map.allLayers.items
               .map(item => item.title)
@@ -60,25 +93,8 @@ const CrimeHeat = props => {
                 )
               )
               .then(function(layerView) {
-                let oneHourBefore = String(props.currentHour)
-                let oneHourAfter = String(props.currentHour + 2)
-
-                if (Number(oneHourBefore) < 10) {
-                  oneHourBefore = '0' + oneHourBefore
-                }
-
-                if (Number(oneHourAfter) < 10) {
-                  oneHourAfter = '0' + oneHourAfter
-                }
-
                 layerView.filter = {
-                  where: `CMPLNT_FR_TM BETWEEN '${oneHourBefore}
-                  :00:00' AND '${oneHourAfter}:00:00' AND
-                  dow = '${props.mapView.day}' AND
-                  LAW_CAT_CD IN ('${crimeFilter.felony ? 'FELONY' : ''}', '${
-                    crimeFilter.misd ? 'MISDEMEANOR' : ''
-                  }',
-                    '${crimeFilter.viol ? 'VIOLATION' : ''}')`
+                  where: whereString
                 }
               })
           } else {
@@ -89,25 +105,8 @@ const CrimeHeat = props => {
                 )
               )
               .then(function(layerView) {
-                let oneHourBefore = String(props.currentHour)
-                let oneHourAfter = String(props.currentHour + 2)
-
-                if (Number(oneHourBefore) < 10) {
-                  oneHourBefore = '0' + oneHourBefore
-                }
-
-                if (Number(oneHourAfter) < 10) {
-                  oneHourAfter = '0' + oneHourAfter
-                }
-
                 layerView.filter = {
-                  where: `CMPLNT_FR_TM BETWEEN '${oneHourBefore}
-                  :00:00' AND '${oneHourAfter}:00:00' AND
-                  dow = '${props.mapView.day}' AND
-                  LAW_CAT_CD IN ('${crimeFilter.felony ? 'FELONY' : ''}', '${
-                    crimeFilter.misd ? 'MISDEMEANOR' : ''
-                  }',
-                    '${crimeFilter.viol ? 'VIOLATION' : ''}')`
+                  where: whereString
                 }
               })
           }
@@ -155,7 +154,12 @@ const CrimeHeat = props => {
         })
         .catch(err => console.error(err))
     },
-    [props.mapView.day, props.mapView.currentHour, props.mapView.crimeFilter]
+    [
+      props.mapView.day,
+      props.mapView.currentHour,
+      props.mapView.classFilter,
+      props.mapView.categoryFilter
+    ]
   )
 
   return <div />

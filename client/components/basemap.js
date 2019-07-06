@@ -29,7 +29,6 @@ export function BaseMap(props) {
         }}
         loaderOptions={loaderOptions}
       >
-        {!props.mapView.filterHidden ? <SeverityFilter /> : <div />}
         <WidgetLayer />
         <BoroughLayer />
         <CrimeHeat currentHour={props.mapView.currentHour} />

@@ -11,10 +11,16 @@ import {
 import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
-  formControl: {
+  root: {
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3),
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(4)
+  },
+  label: {
+    height: 30
+  },
+  header: {
+    marginBottom: 5
   }
 }))
 
@@ -24,9 +30,12 @@ const SeverityFilter = props => {
   return (
     <div className={classes.root}>
       <FormControl component="fieldset" className={classes.formControl}>
-        <FormLabel>Crime Class</FormLabel>
+        <FormLabel className={classes.header} component="legend">
+          Crime Class
+        </FormLabel>
         <FormGroup>
           <FormControlLabel
+            className={classes.label}
             control={
               <Checkbox
                 checked={selectedClasses.felony}
@@ -40,6 +49,7 @@ const SeverityFilter = props => {
             label="Felony"
           />
           <FormControlLabel
+            className={classes.label}
             control={
               <Checkbox
                 checked={selectedClasses.misd}
@@ -53,6 +63,7 @@ const SeverityFilter = props => {
             label="Misdemeanor"
           />
           <FormControlLabel
+            className={classes.label}
             control={
               <Checkbox
                 checked={selectedClasses.viol}
@@ -69,18 +80,7 @@ const SeverityFilter = props => {
       </FormControl>
     </div>
   )
-  // const div = document.createElement('div');
-  // div.innerHTML = sevFilter
-  // if (props.mapView.initialLoad) props.view.ui.add(sevFilter, 'top-right')
-  // if (props.mapView.initialLoad) props.initialLoad()
-  // return <div />
 }
-
-// const createFilter = props => {
-//   const node = document.createElement('div')
-//   props.view.ui.add(node, 'top-right')
-//   return <SeverityFilter />
-// }
 
 const mapStateToProps = state => {
   let mapView = state.view

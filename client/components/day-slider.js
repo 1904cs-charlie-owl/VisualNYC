@@ -10,35 +10,34 @@ import {newDay} from '../store'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: 300,
-    paddingTop: theme.spacing(7),
+    marginTop: theme.spacing(7),
+    height: 150,
+    paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(3),
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(3),
-    color: 'white'
-  },
-  margin: {
-    height: theme.spacing(1)
+    color: 'rgba(255, 255, 255, 0.7)'
   },
   button: {
     color: '#69dcff',
     marginRight: '5%'
+  },
+  header: {
+    marginBottom: theme.spacing(2)
   }
 }))
 
-const getHourPct = currentHour => {
-  let hours = marks.map(el => el.value)
-  let currentHourPct = 100 - currentHour / 22 * 100
-  return hours.filter(
-    el => currentHourPct >= el && currentHourPct < el + 9.09
-  )[0]
-}
+// const getHourPct = (currentHour) => {
+// 	let hours = marks.map((el) => el.value);
+// 	let currentHourPct = 100 - currentHour / 22 * 100;
+// 	return hours.filter((el) => currentHourPct >= el && currentHourPct < el + 9.09)[0];
+// };
 
-const getHour = pct => {
-  let hours = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22]
-  let hour = Math.floor(24 * (pct / 100))
-  return hours.filter(el => hour >= el && hour < el + 2)[0]
-}
+// const getHour = (pct) => {
+// 	let hours = [ 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22 ];
+// 	let hour = Math.floor(24 * (pct / 100));
+// 	return hours.filter((el) => hour >= el && hour < el + 2)[0];
+// };
 
 function DaySlider(props) {
   const [dow, setDow] = useState(props.mapView.day)
@@ -53,7 +52,11 @@ function DaySlider(props) {
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      <Typography id="discrete-slider-restrict" gutterBottom>
+      <Typography
+        id="discrete-slider-restrict"
+        gutterBottom
+        className={classes.header}
+      >
         Day of Week
       </Typography>
       <div style={{height: '100%'}}>

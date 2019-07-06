@@ -11,59 +11,112 @@ import {
 import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
-  formControl: {
+  root: {
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3),
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(4)
+  },
+  label: {
+    height: 30
+  },
+  header: {
+    marginBottom: 5
   }
 }))
 
 const CategoryFilter = props => {
   const classes = useStyles()
-  const selectedClasses = props.mapView.crimeFilter
+  const selectedCategories = props.mapView.categoryFilter
   return (
     <div className={classes.root}>
       <FormControl component="fieldset" className={classes.formControl}>
-        <FormLabel component="legend">Crime Class</FormLabel>
+        <FormLabel className={classes.header} component="legend">
+          Crime Category
+        </FormLabel>
         <FormGroup>
           <FormControlLabel
+            className={classes.label}
             control={
               <Checkbox
-                checked={selectedClasses.felony}
+                checked={selectedCategories.HOMICIDE}
                 onChange={e => {
                   e.persist()
-                  props.changeFilter('felony', e.target.checked)
+                  props.changeCategoryFilter('HOMICIDE', e.target.checked)
                 }}
-                value="FELONY"
+                value="HOMICIDE"
               />
             }
-            label="Felony"
+            label="Homicide"
           />
           <FormControlLabel
+            className={classes.label}
             control={
               <Checkbox
-                checked={selectedClasses.misd}
+                checked={selectedCategories.SEXCRIME}
                 onChange={e => {
                   e.persist()
-                  props.changeFilter('misd', e.target.checked)
+                  props.changeCategoryFilter('SEXCRIME', e.target.checked)
                 }}
-                value="MISDEMEANOR"
+                value="SEXCRIME"
               />
             }
-            label="Misdemeanor"
+            label="Sex Crime"
           />
           <FormControlLabel
+            className={classes.label}
             control={
               <Checkbox
-                checked={selectedClasses.viol}
+                checked={selectedCategories.THEFTFRAUD}
                 onChange={e => {
                   e.persist()
-                  props.changeFilter('viol', e.target.checked)
+                  props.changeCategoryFilter('THEFTFRAUD', e.target.checked)
                 }}
-                value="VIOLATION"
+                value="THEFTFRAUD"
               />
             }
-            label="Violation"
+            label="Theft/Fraud"
+          />
+          <FormControlLabel
+            className={classes.label}
+            control={
+              <Checkbox
+                checked={selectedCategories.OTHERVIOLENT}
+                onChange={e => {
+                  e.persist()
+                  props.changeCategoryFilter('OTHERVIOLENT', e.target.checked)
+                }}
+                value="OTHERVIOLENT"
+              />
+            }
+            label="Other Violent Crime"
+          />
+          <FormControlLabel
+            className={classes.label}
+            control={
+              <Checkbox
+                checked={selectedCategories.DRUGS}
+                onChange={e => {
+                  e.persist()
+                  props.changeCategoryFilter('DRUGS', e.target.checked)
+                }}
+                value="DRUGS"
+              />
+            }
+            label="Drug Crime"
+          />
+          <FormControlLabel
+            className={classes.label}
+            control={
+              <Checkbox
+                checked={selectedCategories.OTHER}
+                onChange={e => {
+                  e.persist()
+                  props.changeCategoryFilter('OTHER', e.target.checked)
+                }}
+                value="OTHER"
+              />
+            }
+            label="Other Crime"
           />
         </FormGroup>
       </FormControl>
