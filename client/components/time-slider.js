@@ -9,25 +9,18 @@ import marks from '../timeMarks'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    height: 200,
-    paddingTop: theme.spacing(1),
+    height: 150,
     paddingBottom: theme.spacing(3),
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(3),
-    color: 'rgba(255, 255, 255, 0.7)'
-  },
-  margin: {
-    height: theme.spacing(1)
+    color: 'rgba(255, 255, 255, 0.7)',
+    marginTop: theme.spacing(2)
   },
   button: {
     color: '#69dcff',
     marginRight: '5%'
   }
 }))
-
-function valueLabelFormat(value) {
-  return marks.findIndex(mark => mark.value === value) + 1
-}
 
 const getHourPct = currentHour => {
   let hours = marks.map(el => el.value)
@@ -61,12 +54,12 @@ function DiscreteSlider(props) {
         <IconButton
           className={classes.button}
           aria-label="Play"
-          disabled={hourPct < 10}
+          disabled={hourPct < 9}
           size="medium"
           onClick={() => {
-            if (pct > 9) {
+            if (pct > 10) {
               let int = setInterval(() => {
-                if (pct < 9) clearInterval(int)
+                if (pct < 10) clearInterval(int)
                 pct = pct - 9.09
                 setHourPct(pct)
               }, 2000)

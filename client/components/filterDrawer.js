@@ -1,9 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {toggleHideFilter, changeTimeThunk} from '../store'
+import {changeTimeThunk} from '../store'
 import Drawer from '@material-ui/core/Drawer'
 import IconButton from '@material-ui/core/IconButton'
 import SeverityFilter from './severity-filter'
+import CategoryFilter from './categoryFilter'
 import CrimeSlider from './time-slider'
 import DaySlider from './day-slider'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
@@ -83,6 +84,7 @@ const FilterButton = props => {
         Filters:
       </Typography>
       <SeverityFilter />
+      <CategoryFilter />
       <CrimeSlider changeTime={props.changeTime} />
       <DaySlider changeTime={props.changeTime} />
       <div className={classes.drawerFooter}>
@@ -104,7 +106,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    toggleFilters: () => dispatch(toggleHideFilter()),
     changeTime: newTime => dispatch(changeTimeThunk(newTime))
   }
 }

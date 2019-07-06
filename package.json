@@ -55,6 +55,7 @@
 		"graphql": "^14.4.0",
 		"history": "^4.9.0",
 		"morgan": "^1.9.1",
+		"ogr2ogr": "^1.4.0",
 		"passport": "^0.4.0",
 		"passport-google-oauth": "^2.0.0",
 		"pg": "^7.9.0",
