@@ -10,6 +10,7 @@ import FilterButton from './filterButton'
 import NYCSubwayLines from './nycsubwaylayer'
 import SeverityFilter from './severity-filter'
 import TopTenCrimes from './topTenCrimes-layer'
+import BoroughsLayer from './boroughs-layer'
 import {toggle3d} from '../store'
 import {connect} from 'react-redux'
 
@@ -32,6 +33,7 @@ export function BaseMap(props) {
         {!props.mapView.filterHidden ? <SeverityFilter /> : <div />}
         <WidgetLayer />
         <BoroughLayer />
+        <BoroughsLayer />
         <CrimeHeat currentHour={props.mapView.currentHour} />
         <NYCSubwayLines />
         <FilterButton />

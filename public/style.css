@@ -5,3 +5,29 @@ body {
 #legend {
   margin-right: 25%;
 }
+
+#paneDiv {
+  position: absolute;
+  display: flex;
+  top: 40px;
+  margin-left: 100px;
+  width: 50%;
+  text-align: center;
+  background-color: transparent;
+  color: white;
+}
+
+.esri-button-overwrite {
+  width: auto;
+  display: table-cell;
+  margin: 4px;
+  background-color: white;
+  color: #0079c1;
+}
+
+#viewDiv {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
