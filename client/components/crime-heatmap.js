@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from 'react'
 import {loadModules} from '@esri/react-arcgis'
 import {connect} from 'react-redux'
-import crimeCodes from '../crimeCategoryCodes'
+import {urlCodes} from '../crimeCategoryCodes'
 
 const CrimeHeat = props => {
   const [layer, setLayer] = useState(null)
@@ -54,73 +54,66 @@ const CrimeHeat = props => {
             oneHourAfter = '0' + oneHourAfter
           }
 
-          const whereString =
-            `CMPLNT_FR_TM BETWEEN '${oneHourBefore}
-                  :00:00' AND '${oneHourAfter}:00:00' AND
-                  dow = '${props.mapView.day}' AND
-                  LAW_CAT_CD IN ('${classFilter.felony ? 'FELONY' : ''}', '${
-              classFilter.misd ? 'MISDEMEANOR' : ''
-            }',
-                    '${classFilter.viol ? 'VIOLATION' : ''}') AND
+          // const whereString =
+          //   `CMPLNT_FR_TM BETWEEN '${oneHourBefore}
+          //         :00:00' AND '${oneHourAfter}:00:00' AND
+          //         dow = '${props.mapView.day}' AND
+          //         LAW_CAT_CD IN ('${classFilter.felony ? 'FELONY' : ''}', '${
+          //     classFilter.misd ? 'MISDEMEANOR' : ''
+          //     }',
+          //           '${classFilter.viol ? 'VIOLATION' : ''}') AND
+          //         KY_CD IN (${
+          //     categoryFilter.HOMICIDE ? normalCodes.HOMICIDE : ''
+          //     }${categoryFilter.SEXCRIME ? normalCodes.SEXCRIME : ''}${
+          //     categoryFilter.THEFTFRAUD ? normalCodes.THEFTFRAUD : ''
+          //     }${categoryFilter.OTHERVIOLENT ? normalCodes.OTHERVIOLENT : ''}${
+          //     categoryFilter.DRUGS ? normalCodes.DRUGS : ''
+          //     }${categoryFilter.OTHER ? normalCodes.OTHER : ''})`.slice(0, -2) +
+          //   ')'
+
+          const urlWhereString =
+            `CMPLNT_FR_TM BETWEEN %27${oneHourBefore}
+                  :00:00%27 AND %27${oneHourAfter}:00:00%27 AND
+                  dow = %27${props.mapView.day}%27 AND
+                  BORO_NM = %27${props.mapView.boro} AND
+                  LAW_CAT_CD IN (%27${
+                    classFilter.felony ? 'FELONY' : ''
+                  }%27, %27${classFilter.misd ? 'MISDEMEANOR' : ''}%27,
+                    %27${classFilter.viol ? 'VIOLATION' : ''}%27) AND
                   KY_CD IN (${
-                    categoryFilter.HOMICIDE ? crimeCodes.HOMICIDE : ''
-                  }${categoryFilter.SEXCRIME ? crimeCodes.SEXCRIME : ''}${
-              categoryFilter.THEFTFRAUD ? crimeCodes.THEFTFRAUD : ''
-            }${categoryFilter.OTHERVIOLENT ? crimeCodes.OTHERVIOLENT : ''}${
-              categoryFilter.DRUGS ? crimeCodes.DRUGS : ''
-            }${categoryFilter.OTHER ? crimeCodes.OTHER : ''})`.slice(0, -2) +
-            ')'
+                    categoryFilter.HOMICIDE ? urlCodes.HOMICIDE : ''
+                  }${categoryFilter.SEXCRIME ? urlCodes.SEXCRIME : ''}${
+              categoryFilter.THEFTFRAUD ? urlCodes.THEFTFRAUD : ''
+            }${categoryFilter.OTHERVIOLENT ? urlCodes.OTHERVIOLENT : ''}${
+              categoryFilter.DRUGS ? urlCodes.DRUGS : ''
+            }${categoryFilter.OTHER ? urlCodes.OTHER : ''})`.slice(0, -2) + ')'
 
-          const url = `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20AND%20boro_nm=%27${
-            props.mapView.boro
-          }%27&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon,KY_CD,OFNS_DESC,PD_DESC, date_extract_m(CMPLNT_FR_DT) AS month, date_extract_d(CMPLNT_FR_DT) AS day, date_extract_y(CMPLNT_FR_DT) AS year, date_extract_dow(cmplnt_fr_dt) AS dow&$limit=500000`
-          console.log(url)
+          const urlString = `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20AND%20${urlWhereString}&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon,KY_CD,OFNS_DESC,PD_DESC, date_extract_m(CMPLNT_FR_DT) AS month, date_extract_d(CMPLNT_FR_DT) AS day, date_extract_y(CMPLNT_FR_DT) AS year, date_extract_dow(cmplnt_fr_dt) AS dow&$limit=500000`
 
-          // default - Manhattan
           let initLayer = new GeoJSONLayer({
-            url,
+            url: urlString,
             // url: `/9s4h-37hy_6.geojson`,
             renderer: heatMapRenderer,
-            title: 'Crime Heat Map'
+            title: 'Crime Heat Map',
+            id: 'initLayer'
           })
 
-          setLayer(initLayer)
           if (
-            !props.map.allLayers.find(
-              curLayer => curLayer.title === 'Crime Heat Map'
-            )
+            !props.map.allLayers.items
+              .map(item => item.title)
+              .includes('Crime Heat Map')
           ) {
             props.map.add(initLayer)
 
-            props.view
-              .whenLayerView(
-                props.map.allLayers.find(
-                  curLayer => curLayer.title === 'Crime Heat Map'
-                )
-              )
-              .then(function(layerView) {
-                layerView.filter = {
-                  where: whereString
-                }
-              })
+            setLayer(initLayer)
           } else {
-            const oldLayer = props.map.allLayers.find(
-              curLayer => curLayer.title === 'Crime Heat Map'
-            )
-            props.map.remove(oldLayer)
+            setLayer(initLayer)
 
+            const curLayer = props.map.allLayers.find(
+              layerFound => layerFound.id === 'initLayer'
+            )
             props.map.add(initLayer)
-            props.view
-              .whenLayerView(
-                props.map.allLayers.find(
-                  curLayer => curLayer.title === 'Crime Heat Map'
-                )
-              )
-              .then(function(layerView) {
-                layerView.filter = {
-                  where: whereString
-                }
-              })
+            initLayer.when(props.map.remove(curLayer))
           }
 
           props.view.when().then(function() {
