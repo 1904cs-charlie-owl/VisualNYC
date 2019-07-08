@@ -1,45 +1,76 @@
 const marks = [
   {
+    value: 0
+  },
+  {
+    value: 9.09,
+    label: '8 PM - 10PM'
+  },
+  {
+    value: 18.18
+  },
+  {
+    value: 27.27,
+    label: '4 PM - 6 PM'
+  },
+  {
+    value: 36.36
+  },
+  {
+    value: 45.45,
+    label: '12 PM - 2PM'
+  },
+  {
+    value: 54.54
+  },
+  {
+    value: 63.63,
+    label: '8 AM - 10AM'
+  },
+  {
+    value: 72.72
+  },
+  {
+    value: 81.81,
+    label: '4 AM - 6AM'
+  },
+  {
+    value: 90.9
+  },
+  {
+    value: 99.99,
+    label: '12 AM - 2AM'
+  }
+]
+
+export const days = [
+  {
     value: 0,
-    label: '12 AM'
+    label: 'Sunday'
   },
   {
-    value: 9.09
+    value: -1,
+    label: 'Monday'
   },
   {
-    value: 18.18,
-    label: '4 AM'
+    value: -2,
+    label: 'Tuesday'
   },
   {
-    value: 27.27
+    value: -3,
+    label: 'Wednesday'
   },
   {
-    value: 36.36,
-    label: '8 AM'
+    value: -4,
+    label: 'Thursday'
   },
   {
-    value: 45.45
+    value: -5,
+    label: 'Friday'
   },
   {
-    value: 54.54,
-    label: '12 PM'
-  },
-  {
-    value: 63.63
-  },
-  {
-    value: 72.72,
-    label: '4 PM'
-  },
-  {
-    value: 81.81
-  },
-  {
-    value: 90.9,
-    label: '8 PM'
-  },
-  {
-    value: 99.99
+    value: -6,
+    label: 'Saturday'
   }
 ]
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {changeLoadStatus, changeFilter} from '../store'
+import {changeLoadStatus, changeClassFilter} from '../store'
 import {
   FormControl,
   FormLabel,
@@ -12,27 +12,30 @@ import {makeStyles} from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
-    backgroundColor: '#242424',
-    position: 'fixed',
-    bottom: '18%',
-    right: '3%',
-    color: 'white'
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
+    marginTop: theme.spacing(4)
   },
-  formControl: {
-    margin: theme.spacing(3)
+  label: {
+    height: 30
+  },
+  header: {
+    marginBottom: 5
   }
 }))
 
 const SeverityFilter = props => {
   const classes = useStyles()
-  const selectedClasses = props.mapView.crimeFilter
+  const selectedClasses = props.mapView.classFilter
   return (
     <div className={classes.root}>
       <FormControl component="fieldset" className={classes.formControl}>
-        <FormLabel component="legend">Filter By Crime Class</FormLabel>
+        <FormLabel className={classes.header} component="legend">
+          Crime Class
+        </FormLabel>
         <FormGroup>
           <FormControlLabel
+            className={classes.label}
             control={
               <Checkbox
                 checked={selectedClasses.felony}
@@ -46,6 +49,7 @@ const SeverityFilter = props => {
             label="Felony"
           />
           <FormControlLabel
+            className={classes.label}
             control={
               <Checkbox
                 checked={selectedClasses.misd}
@@ -59,6 +63,7 @@ const SeverityFilter = props => {
             label="Misdemeanor"
           />
           <FormControlLabel
+            className={classes.label}
             control={
               <Checkbox
                 checked={selectedClasses.viol}
@@ -75,18 +80,7 @@ const SeverityFilter = props => {
       </FormControl>
     </div>
   )
-  // const div = document.createElement('div');
-  // div.innerHTML = sevFilter
-  // if (props.mapView.initialLoad) props.view.ui.add(sevFilter, 'top-right')
-  // if (props.mapView.initialLoad) props.initialLoad()
-  // return <div />
 }
-
-// const createFilter = props => {
-//   const node = document.createElement('div')
-//   props.view.ui.add(node, 'top-right')
-//   return <SeverityFilter />
-// }
 
 const mapStateToProps = state => {
   let mapView = state.view
@@ -96,7 +90,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     initialLoad: () => dispatch(changeLoadStatus()),
-    changeFilter: (name, event) => dispatch(changeFilter(name, event))
+    changeFilter: (name, event) => dispatch(changeClassFilter(name, event))
   }
 }
 

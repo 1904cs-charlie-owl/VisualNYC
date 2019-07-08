@@ -9,19 +9,12 @@ import marks from '../timeMarks'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '20%',
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+    height: 150,
+    paddingBottom: theme.spacing(3),
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(3),
-    backgroundColor: '#242424',
-    position: 'fixed',
-    bottom: '5%',
-    right: '3%',
-    color: 'white'
-  },
-  margin: {
-    height: theme.spacing(1)
+    color: 'rgba(255, 255, 255, 0.7)',
+    marginTop: theme.spacing(2)
   },
   button: {
     color: '#69dcff',
@@ -29,13 +22,9 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function valueLabelFormat(value) {
-  return marks.findIndex(mark => mark.value === value) + 1
-}
-
 const getHourPct = currentHour => {
   let hours = marks.map(el => el.value)
-  let currentHourPct = currentHour / 22 * 100
+  let currentHourPct = 100 - currentHour / 22 * 100
   return hours.filter(
     el => currentHourPct >= el && currentHourPct < el + 9.09
   )[0]
@@ -60,18 +49,18 @@ function DiscreteSlider(props) {
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      <Typography id="discrete-slider-restrict" gutterBottom>
-        Time of Day (2 hour intervals)
+      <Typography id="time-of-day-slider" gutterBottom>
+        Time of Day
         <IconButton
           className={classes.button}
           aria-label="Play"
-          disabled={hourPct > 99}
+          disabled={hourPct < 9}
           size="medium"
           onClick={() => {
-            if (pct < 99) {
+            if (pct > 10) {
               let int = setInterval(() => {
-                if (pct > 90) clearInterval(int)
-                pct = pct + 9.09
+                if (pct < 10) clearInterval(int)
+                pct = pct - 9.09
                 setHourPct(pct)
               }, 2000)
             }
@@ -80,17 +69,17 @@ function DiscreteSlider(props) {
           <PlayCircleOutline />
         </IconButton>
       </Typography>
-      <div style={{display: 'flex'}}>
+      <div style={{height: '100%'}}>
         <Slider
           className={classes.slider}
-          valueLabelFormat={valueLabelFormat}
-          aria-labelledby="discrete-slider-restrict"
+          aria-labelledby="vertical-slider"
           min={0}
           max={99.99}
           step={null}
           marks={marks}
           onChange={(e, v) => setHourPct(v)}
           value={hourPct}
+          orientation="vertical"
         />
       </div>
     </div>
