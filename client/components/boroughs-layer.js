@@ -1,5 +1,7 @@
 import {useState, useEffect} from 'react'
 import {loadModules} from '@esri/react-arcgis'
+import {changeBoroThunk} from '../store'
+import {connect} from 'react-redux'
 
 const BoroughsLayer = props => {
   const [layer, setLayer] = useState(null)
@@ -27,7 +29,7 @@ const BoroughsLayer = props => {
           button.className = 'esri-button esri-button-overwrite boroughs'
           button.setAttribute(
             'style',
-            'width:10%; display:table-cell; margin:4px; background-color: #69dcff'
+            'width:12%; display:table-cell; margin:4px; background-color: #69dcff; font-family: "Avenir Next W00","Helvetica Neue",Helvetica,Arial,sans-serif'
           )
           paneDiv.appendChild(button)
         }
@@ -75,6 +77,7 @@ const BoroughsLayer = props => {
                 }
               )
             })
+            props.changeBoro(event.target.innerText.toUpperCase())
           }
         })
 
@@ -87,4 +90,15 @@ const BoroughsLayer = props => {
   return null
 }
 
-export default BoroughsLayer
+const mapStateToProps = state => {
+  let mapView = state.view
+  return {mapView}
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeBoro: newTime => dispatch(changeBoroThunk(newTime))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BoroughsLayer)

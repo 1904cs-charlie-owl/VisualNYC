@@ -71,9 +71,14 @@ const CrimeHeat = props => {
             }${categoryFilter.OTHER ? crimeCodes.OTHER : ''})`.slice(0, -2) +
             ')'
 
+          const url = `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20AND%20boro_nm=%27${
+            props.mapView.boro
+          }%27&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon,KY_CD,OFNS_DESC,PD_DESC, date_extract_m(CMPLNT_FR_DT) AS month, date_extract_d(CMPLNT_FR_DT) AS day, date_extract_y(CMPLNT_FR_DT) AS year, date_extract_dow(cmplnt_fr_dt) AS dow&$limit=500000`
+          console.log(url)
+
           // default - Manhattan
           let initLayer = new GeoJSONLayer({
-            url: `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon,KY_CD,OFNS_DESC,PD_DESC, date_extract_m(CMPLNT_FR_DT) AS month, date_extract_d(CMPLNT_FR_DT) AS day, date_extract_y(CMPLNT_FR_DT) AS year, date_extract_dow(cmplnt_fr_dt) AS dow&$limit=500000`,
+            url,
             // url: `/9s4h-37hy_6.geojson`,
             renderer: heatMapRenderer,
             title: 'Crime Heat Map'
@@ -81,9 +86,9 @@ const CrimeHeat = props => {
 
           setLayer(initLayer)
           if (
-            !props.map.allLayers.items
-              .map(item => item.title)
-              .includes('Crime Heat Map')
+            !props.map.allLayers.find(
+              curLayer => curLayer.title === 'Crime Heat Map'
+            )
           ) {
             props.map.add(initLayer)
 
@@ -99,6 +104,12 @@ const CrimeHeat = props => {
                 }
               })
           } else {
+            const oldLayer = props.map.allLayers.find(
+              curLayer => curLayer.title === 'Crime Heat Map'
+            )
+            props.map.remove(oldLayer)
+
+            props.map.add(initLayer)
             props.view
               .whenLayerView(
                 props.map.allLayers.find(
@@ -159,7 +170,8 @@ const CrimeHeat = props => {
       props.mapView.day,
       props.mapView.currentHour,
       props.mapView.classFilter,
-      props.mapView.categoryFilter
+      props.mapView.categoryFilter,
+      props.mapView.boro
     ]
   )
 

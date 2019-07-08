@@ -7,6 +7,7 @@ const INITIAL_LOAD = 'INITIAL_LOAD'
 const CLASS_FILTER_CHANGE = 'CLASS_FILTER_CHANGE'
 const CATEGORY_FILTER_CHANGE = 'CATEGORY_FILTER_CHANGE'
 const CHANGE_DAY = 'CHANGE_DAY'
+const CHANGE_BORO = 'CHANGE_BORO'
 
 /**
  * INITIAL STATE
@@ -29,6 +30,7 @@ let categoryFilter = {
   DRUGS: true,
   OTHER: true
 }
+let startBoro = 'MANHATTAN'
 
 const defaultView = {
   threeD: false,
@@ -36,7 +38,8 @@ const defaultView = {
   initialLoad,
   classFilter,
   categoryFilter,
-  day: currentDay
+  day: currentDay,
+  boro: startBoro
 }
 
 /**
@@ -55,6 +58,7 @@ export const categoryFilterChange = (filterValue, checked) => ({
   filterValue,
   checked
 })
+export const changeBoroAction = boro => ({type: CHANGE_BORO, boro})
 
 export const changeDay = day => ({type: CHANGE_DAY, day})
 
@@ -97,6 +101,12 @@ export const newDay = day => {
     dispatch(changeDay(day))
   }
 }
+
+export const changeBoroThunk = boro => {
+  return dispatch => {
+    dispatch(changeBoroAction(boro))
+  }
+}
 /**
  * REDUCER
  */
@@ -122,6 +132,9 @@ export default function(state = defaultView, action) {
       return newState
     case CHANGE_DAY:
       newState.day = action.day
+      return newState
+    case CHANGE_BORO:
+      newState.boro = action.boro
       return newState
     default:
       return state
