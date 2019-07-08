@@ -55,6 +55,7 @@ export function BaseMap(props) {
       >
         <WidgetLayer />
         <BoroughLayer />
+        <BoroughsLayer />
         <BuildingLayer />
         <NYCSubwayLines />
         <TopTenCrimes />

@@ -4,7 +4,7 @@ import {loadModules} from '@esri/react-arcgis'
 const BoroughsLayer = props => {
   const [layer, setLayer] = useState(null)
   useEffect(() => {
-    loadModules(['esri/layers/FeatureLayer', 'esri/WebScene'])
+    loadModules(['esri/layers/FeatureLayer'])
       .then(([FeatureLayer]) => {
         const boroughCoords = {
           Brooklyn: [40.6782, -73.9442],
