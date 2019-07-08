@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import {PlayCircleOutline} from '@material-ui/icons'
-import {Slider} from '@material-ui/lab'
+import Slider from './customSlider/Slider'
 import Typography from '@material-ui/core/Typography'
 import marks, {days} from '../timeMarks'
 import {newDay} from '../store'
@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
     opacity: 0.38
   },
   markLabel: {
-    color: theme.palette.text.primary
+    color: theme.palette.text.secondary
   },
   markLabelActive: {
     color: theme.palette.text.primary
