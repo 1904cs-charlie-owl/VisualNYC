@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {makeStyles} from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import {PlayCircleOutline} from '@material-ui/icons'
-import {Slider} from '@material-ui/lab'
+import Slider from './customSlider/Slider'
 import Typography from '@material-ui/core/Typography'
 import marks from '../timeMarks'
 
@@ -19,6 +19,18 @@ const useStyles = makeStyles(theme => ({
   button: {
     color: '#69dcff',
     marginRight: '5%'
+  },
+  rail: {
+    opacity: 0.38
+  },
+  track: {
+    opacity: 0.38
+  },
+  markLabel: {
+    color: theme.palette.text.secondary
+  },
+  markLabelActive: {
+    color: theme.palette.text.primary
   }
 }))
 
@@ -71,7 +83,12 @@ function DiscreteSlider(props) {
       </Typography>
       <div style={{height: '100%'}}>
         <Slider
-          className={classes.slider}
+          classes={{
+            rail: classes.rail,
+            track: classes.track,
+            markLabel: classes.markLabel,
+            markLabelActive: classes.markLabelActive
+          }}
           aria-labelledby="vertical-slider"
           min={0}
           max={99.99}
