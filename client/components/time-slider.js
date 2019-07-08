@@ -19,6 +19,18 @@ const useStyles = makeStyles(theme => ({
   button: {
     color: '#69dcff',
     marginRight: '5%'
+  },
+  rail: {
+    opacity: 0.38
+  },
+  track: {
+    opacity: 0.38
+  },
+  markLabel: {
+    color: theme.palette.text.primary
+  },
+  markLabelActive: {
+    color: theme.palette.text.primary
   }
 }))
 
@@ -71,7 +83,12 @@ function DiscreteSlider(props) {
       </Typography>
       <div style={{height: '100%'}}>
         <Slider
-          className={classes.slider}
+          classes={{
+            rail: classes.rail,
+            track: classes.track,
+            markLabel: classes.markLabel,
+            markLabelActive: classes.markLabelActive
+          }}
           aria-labelledby="vertical-slider"
           min={0}
           max={99.99}

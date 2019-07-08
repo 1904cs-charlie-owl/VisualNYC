@@ -24,20 +24,20 @@ const useStyles = makeStyles(theme => ({
   },
   header: {
     marginBottom: theme.spacing(2)
+  },
+  rail: {
+    opacity: 0.38
+  },
+  track: {
+    opacity: 0.38
+  },
+  markLabel: {
+    color: theme.palette.text.primary
+  },
+  markLabelActive: {
+    color: theme.palette.text.primary
   }
 }))
-
-// const getHourPct = (currentHour) => {
-// 	let hours = marks.map((el) => el.value);
-// 	let currentHourPct = 100 - currentHour / 22 * 100;
-// 	return hours.filter((el) => currentHourPct >= el && currentHourPct < el + 9.09)[0];
-// };
-
-// const getHour = (pct) => {
-// 	let hours = [ 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22 ];
-// 	let hour = Math.floor(24 * (pct / 100));
-// 	return hours.filter((el) => hour >= el && hour < el + 2)[0];
-// };
 
 function DaySlider(props) {
   const [dow, setDow] = useState(props.mapView.day)
@@ -47,7 +47,6 @@ function DaySlider(props) {
     },
     [dow]
   )
-  //let pct = hourPct
 
   const classes = useStyles()
   return (
@@ -61,7 +60,12 @@ function DaySlider(props) {
       </Typography>
       <div style={{height: '100%'}}>
         <Slider
-          className={classes.slider}
+          classes={{
+            rail: classes.rail,
+            track: classes.track,
+            markLabel: classes.markLabel,
+            markLabelActive: classes.markLabelActive
+          }}
           aria-labelledby="vertical-slider"
           min={-6}
           max={0}
