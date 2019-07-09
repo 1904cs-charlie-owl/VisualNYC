@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#242424'
   },
   drawerHeader: {
-    paddingTop: theme.spacing(1),
+    paddingTop: theme.spacing(2),
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(3),
     fontWeight: 'bold'
