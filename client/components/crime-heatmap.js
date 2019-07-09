@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 import {loadModules} from '@esri/react-arcgis'
 import {connect} from 'react-redux'
 import {urlCodes, categoryCodes} from '../crimeCategoryCodes'
+import boroughsLayer from './boroughs-layer'
 
 const CrimeHeat = props => {
   const [layer, setLayer] = useState(null)
@@ -43,6 +44,14 @@ const CrimeHeat = props => {
             ]
           }
 
+          const boros = [
+            'MANHATTAN',
+            'BROOKLYN',
+            'QUEENS',
+            'STATEN ISLAND',
+            'BRONX'
+          ]
+
           let oneHourBefore = String(props.currentHour)
           let oneHourAfter = String(props.currentHour + 2)
 
@@ -58,7 +67,6 @@ const CrimeHeat = props => {
             `CMPLNT_FR_TM BETWEEN '${oneHourBefore}
                   :00:00' AND '${oneHourAfter}:00:00' AND
                   dow = '${props.mapView.day}' AND
-                  BORO_NM = '${props.mapView.boro}' AND
                   LAW_CAT_CD IN ('${classFilter.felony ? 'FELONY' : ''}', '${
               classFilter.misd ? 'MISDEMEANOR' : ''
             }',
@@ -72,104 +80,99 @@ const CrimeHeat = props => {
             }${categoryFilter.OTHER ? categoryCodes.OTHER : ''})`.slice(0, -2) +
             ')'
 
-          const urlWhereString =
-            `CMPLNT_FR_TM BETWEEN %27${oneHourBefore}
-                  :00:00%27 AND %27${oneHourAfter}:00:00%27 AND
-                  dow = %27${props.mapView.day}%27 AND
-                  LAW_CAT_CD IN (%27${
-                    classFilter.felony ? 'FELONY' : ''
-                  }%27, %27${classFilter.misd ? 'MISDEMEANOR' : ''}%27,
-                    %27${classFilter.viol ? 'VIOLATION' : ''}%27) AND
-                  KY_CD IN (${
-                    categoryFilter.HOMICIDE ? urlCodes.HOMICIDE : ''
-                  }${categoryFilter.SEXCRIME ? urlCodes.SEXCRIME : ''}${
-              categoryFilter.THEFTFRAUD ? urlCodes.THEFTFRAUD : ''
-            }${categoryFilter.OTHERVIOLENT ? urlCodes.OTHERVIOLENT : ''}${
-              categoryFilter.DRUGS ? urlCodes.DRUGS : ''
-            }${categoryFilter.OTHER ? urlCodes.OTHER : ''})`.slice(0, -2) + ')'
-
-          const urlString = `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20AND%20${urlWhereString}&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon,KY_CD,OFNS_DESC,PD_DESC, date_extract_m(CMPLNT_FR_DT) AS month, date_extract_d(CMPLNT_FR_DT) AS day, date_extract_y(CMPLNT_FR_DT) AS year, date_extract_dow(cmplnt_fr_dt) AS dow, BORO_NM&$limit=500000`
-
-          let initLayer = new GeoJSONLayer({
-            url: urlString,
-            // url: `/9s4h-37hy_6.geojson`,
-            renderer: heatMapRenderer,
-            title: 'Crime Heat Map',
-            id: 'initLayer'
-          })
-
-          if (
-            !props.map.allLayers.items
-              .map(item => item.title)
-              .includes('Crime Density Heat Map')
-          ) {
-            props.map.add(initLayer)
-
-            props.view
-              .whenLayerView(
-                props.map.allLayers.find(
-                  curLayer => curLayer.title === 'Crime Density Heat Map'
-                )
-              )
-              .then(function(layerView) {
-                layerView.filter = {
-                  where: whereString
-                }
+          boros.forEach(boro => {
+            const urlString = `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?boro_nm=${boro}&$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon,KY_CD,OFNS_DESC,PD_DESC, date_extract_m(CMPLNT_FR_DT) AS month, date_extract_d(CMPLNT_FR_DT) AS day, date_extract_y(CMPLNT_FR_DT) AS year, date_extract_dow(cmplnt_fr_dt) AS dow, BORO_NM&$limit=500000`
+            if (!props.map.allLayers.find(curLayer => curLayer.id === boro)) {
+              const initLayer = new GeoJSONLayer({
+                url: urlString,
+                // url: `/9s4h-37hy_6.geojson`,
+                renderer: heatMapRenderer,
+                title: 'Crime Density Heat Map',
+                id: boro,
+                legendEnabled: boro === 'MANHATTAN',
+                visible: boro === 'MANHATTAN'
               })
-          } else {
-            props.view
-              .whenLayerView(
-                props.map.allLayers.find(
-                  curLayer => curLayer.title === 'Crime Density Heat Map'
+
+              props.map.add(initLayer)
+
+              props.view
+                .whenLayerView(
+                  props.map.allLayers.find(curLayer => curLayer.id === boro)
                 )
-              )
-              .then(function(layerView) {
-                layerView.filter = {
-                  where: whereString
-                }
-              })
-          }
+                .then(function(layerView) {
+                  layerView.filter = {
+                    where: whereString
+                  }
+                })
 
-          props.view.when().then(function() {
-            const simpleRenderer = {
-              type: 'simple',
-              symbol: {
-                type: 'simple-marker',
-                color: '#c80000',
-                size: 10
-              },
-              visualVariables: [
-                {
-                  type: 'size',
-                  field: 'KY_CD',
-                  legendOptions: {
-                    title: 'Class of Crime'
+              props.view.when().then(function() {
+                const simpleRenderer = {
+                  type: 'simple',
+                  symbol: {
+                    type: 'simple-marker',
+                    color: '#c80000',
+                    size: 10
                   },
-                  stops: [
-                    {value: 101, size: 24, label: 'Felony'},
-                    {value: 678, size: 4, label: 'Violation'}
-                  ]
-                },
-                {
-                  type: 'color',
-                  field: 'KY_CD',
-                  legendOptions: {
-                    title: 'Type of Crime'
-                  },
-                  stops: [
-                    {value: 101, color: '#c80000', label: 'Homicide'},
+                  visualVariables: [
+                    {
+                      type: 'size',
+                      field: 'KY_CD',
+                      legendOptions: {
+                        title: 'Class of Crime'
+                      },
+                      stops: [
+                        {value: 101, size: 24, label: 'Felony'},
+                        {value: 678, size: 4, label: 'Violation'}
+                      ]
+                    },
+                    {
+                      type: 'color',
+                      field: 'KY_CD',
+                      legendOptions: {
+                        title: 'Type of Crime'
+                      },
+                      stops: [
+                        {value: 101, color: '#c80000', label: 'Homicide'},
 
-                    {value: 678, color: '#FFA07A', label: 'Minor Infraction'}
+                        {
+                          value: 678,
+                          color: '#FFA07A',
+                          label: 'Minor Infraction'
+                        }
+                      ]
+                    }
                   ]
                 }
-              ]
+
+                props.view.watch('scale', function(newValue) {
+                  initLayer.renderer =
+                    newValue <= 12000 ? simpleRenderer : heatMapRenderer
+                  initLayer.popupTemplate = newValue <= 12000 ? template : null
+                })
+              })
+            } else {
+              const oldLayer = props.map.allLayers.find(
+                curLayer =>
+                  curLayer.visible === true &&
+                  curLayer.title === 'Crime Density Heat Map'
+              )
+              oldLayer.visible = false
+              oldLayer.legendEnabled = false
+              const newLayer = props.map.allLayers.find(
+                curLayer => curLayer.id === props.mapView.boro
+              )
+              newLayer.visible = true
+              newLayer.legendEnabled = true
+              props.view
+                .whenLayerView(
+                  props.map.allLayers.find(curLayer => curLayer.id === boro)
+                )
+                .then(function(layerView) {
+                  layerView.filter = {
+                    where: whereString
+                  }
+                })
             }
-
-            props.view.watch('scale', function(newValue) {
-              initLayer.renderer =
-                newValue <= 12000 ? simpleRenderer : heatMapRenderer
-              initLayer.popupTemplate = newValue <= 12000 ? template : null
-            })
           })
         })
         .catch(err => console.error(err))
