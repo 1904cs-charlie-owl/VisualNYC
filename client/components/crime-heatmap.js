@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from 'react'
 import {loadModules} from '@esri/react-arcgis'
 import {connect} from 'react-redux'
-import {urlCodes} from '../crimeCategoryCodes'
+import {urlCodes, categoryCodes} from '../crimeCategoryCodes'
 
 const CrimeHeat = props => {
   const [layer, setLayer] = useState(null)
@@ -54,6 +54,24 @@ const CrimeHeat = props => {
             oneHourAfter = '0' + oneHourAfter
           }
 
+          const whereString =
+            `CMPLNT_FR_TM BETWEEN '${oneHourBefore}
+                  :00:00' AND '${oneHourAfter}:00:00' AND
+                  dow = '${props.mapView.day}' AND
+                  BORO_NM = '${props.mapView.boro}' AND
+                  LAW_CAT_CD IN ('${classFilter.felony ? 'FELONY' : ''}', '${
+              classFilter.misd ? 'MISDEMEANOR' : ''
+            }',
+                    '${classFilter.viol ? 'VIOLATION' : ''}') AND
+                  KY_CD IN (${
+                    categoryFilter.HOMICIDE ? categoryCodes.HOMICIDE : ''
+                  }${categoryFilter.SEXCRIME ? categoryCodes.SEXCRIME : ''}${
+              categoryFilter.THEFTFRAUD ? categoryCodes.THEFTFRAUD : ''
+            }${categoryFilter.OTHERVIOLENT ? categoryCodes.OTHERVIOLENT : ''}${
+              categoryFilter.DRUGS ? categoryCodes.DRUGS : ''
+            }${categoryFilter.OTHER ? categoryCodes.OTHER : ''})`.slice(0, -2) +
+            ')'
+
           const urlWhereString =
             `CMPLNT_FR_TM BETWEEN %27${oneHourBefore}
                   :00:00%27 AND %27${oneHourAfter}:00:00%27 AND
@@ -71,12 +89,13 @@ const CrimeHeat = props => {
               categoryFilter.DRUGS ? urlCodes.DRUGS : ''
             }${categoryFilter.OTHER ? urlCodes.OTHER : ''})`.slice(0, -2) + ')'
 
-          const urlString = `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20AND%20${urlWhereString}&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon,KY_CD,OFNS_DESC,PD_DESC, date_extract_m(CMPLNT_FR_DT) AS month, date_extract_d(CMPLNT_FR_DT) AS day, date_extract_y(CMPLNT_FR_DT) AS year, date_extract_dow(cmplnt_fr_dt) AS dow&$limit=500000`
+          const urlString = `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon,KY_CD,OFNS_DESC,PD_DESC, date_extract_m(CMPLNT_FR_DT) AS month, date_extract_d(CMPLNT_FR_DT) AS day, date_extract_y(CMPLNT_FR_DT) AS year, date_extract_dow(cmplnt_fr_dt) AS dow, BORO_NM&$limit=500000`
 
           let initLayer = new GeoJSONLayer({
             url: urlString,
             // url: `/9s4h-37hy_6.geojson`,
             renderer: heatMapRenderer,
+            definitionExpression: whereString,
             title: 'Crime Heat Map',
             id: 'initLayer'
           })
@@ -91,13 +110,9 @@ const CrimeHeat = props => {
             const curLayer = props.map.allLayers.find(
               layerFound => layerFound.id === 'initLayer'
             )
-            curLayer.url = urlString
-            console.log(
-              props.map.allLayers.find(
-                layerFound => layerFound.id === 'initLayer'
-              ).url
-            )
-            props.map.allLayers.refresh()
+            curLayer.definitionExpression = whereString
+
+            // // props.map.allLayers.refresh()
             // props.map.add(initLayer);
             // initLayer.when(props.map.remove(curLayer));
           }
@@ -118,8 +133,8 @@ const CrimeHeat = props => {
                     title: 'Class of Crime'
                   },
                   stops: [
-                    {value: 101, size: 24, label: 'High Severity'},
-                    {value: 678, size: 4, label: 'Low Severity'}
+                    {value: 101, size: 24, label: 'Felony'},
+                    {value: 678, size: 4, label: 'Violation'}
                   ]
                 },
                 {
@@ -129,8 +144,9 @@ const CrimeHeat = props => {
                     title: 'Type of Crime'
                   },
                   stops: [
-                    {value: 101, color: '#c80000'},
-                    {value: 678, color: '#FFA07A'}
+                    {value: 101, color: '#c80000', label: 'Homicide'},
+
+                    {value: 678, color: '#FFA07A', label: 'Minor Infraction'}
                   ]
                 }
               ]
