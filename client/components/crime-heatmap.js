@@ -128,8 +128,8 @@ const CrimeHeat = props => {
                     title: 'Class of Crime'
                   },
                   stops: [
-                    {value: 101, size: 24, label: 'High Severity'},
-                    {value: 678, size: 4, label: 'Low Severity'}
+                    {value: 101, size: 24, label: 'Felony'},
+                    {value: 678, size: 4, label: 'Violation'}
                   ]
                 },
                 {
@@ -139,8 +139,8 @@ const CrimeHeat = props => {
                     title: 'Type of Crime'
                   },
                   stops: [
-                    {value: 101, color: '#c80000'},
-                    {value: 678, color: '#FFA07A'}
+                    {value: 101, color: '#c80000', label: 'Homicide'},
+                    {value: 678, color: '#FFA07A', label: 'Minor Crime'}
                   ]
                 }
               ]
