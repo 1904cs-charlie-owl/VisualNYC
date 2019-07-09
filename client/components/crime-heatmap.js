@@ -90,7 +90,8 @@ const CrimeHeat = props => {
                 title: 'Crime Density Heat Map',
                 id: boro,
                 legendEnabled: boro === 'MANHATTAN',
-                visible: boro === 'MANHATTAN'
+                visible: boro === 'MANHATTAN',
+                listMode: boro === 'MANHATTAN' ? 'show' : 'hide'
               })
 
               props.map.add(initLayer)
@@ -158,11 +159,13 @@ const CrimeHeat = props => {
               )
               oldLayer.visible = false
               oldLayer.legendEnabled = false
+              oldLayer.listMode = 'hide'
               const newLayer = props.map.allLayers.find(
                 curLayer => curLayer.id === props.mapView.boro
               )
               newLayer.visible = true
               newLayer.legendEnabled = true
+              newLayer.listMode = 'show'
               props.view
                 .whenLayerView(
                   props.map.allLayers.find(curLayer => curLayer.id === boro)
