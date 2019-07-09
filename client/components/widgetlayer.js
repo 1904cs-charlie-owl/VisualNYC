@@ -79,7 +79,7 @@ const LayerListWidget = props => {
 
             const instructionsExpand = new Expand({
               expandIconClass: 'esri-icon-question',
-              expandTooltip: 'How to use this sample',
+              expandTooltip: 'Click here for data information.',
               expanded: false,
               view: props.view,
               content: sampleInstructions
