@@ -48,6 +48,11 @@ const LayerListWidget = props => {
               position: 'top-left'
             })
 
+            let legendDiv = document.createElement('div')
+            legendDiv.id = 'legend'
+            legendDiv.setAttribute('style', 'margin-right:25%')
+            document.body.appendChild(legendDiv)
+
             var legend = new Legend({
               view: props.view,
               container: 'legend'
@@ -74,7 +79,7 @@ const LayerListWidget = props => {
 
             const instructionsExpand = new Expand({
               expandIconClass: 'esri-icon-question',
-              expandTooltip: 'How to use this sample',
+              expandTooltip: 'Click here for data information.',
               expanded: false,
               view: props.view,
               content: sampleInstructions

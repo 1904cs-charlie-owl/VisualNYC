@@ -102,7 +102,7 @@ const CategoryFilter = props => {
                 value="DRUGS"
               />
             }
-            label="Drug Crime"
+            label="Drugs/Contraband"
           />
           <FormControlLabel
             className={classes.label}

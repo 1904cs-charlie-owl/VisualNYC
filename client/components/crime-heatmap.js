@@ -101,20 +101,33 @@ const CrimeHeat = props => {
           if (
             !props.map.allLayers.items
               .map(item => item.title)
-              .includes('Crime Heat Map')
+              .includes('Crime Density Heat Map')
           ) {
             props.map.add(initLayer)
-          } else {
-            let curLayer = props.map.allLayers.find(
-              layerFound => layerFound.id === 'initLayer'
-            )
-            curLayer.url = urlString
-            console.log(curLayer.url)
-            curLayer.refresh()
 
-            // // props.map.allLayers.refresh()
-            // props.map.add(initLayer);
-            // initLayer.when(props.map.remove(curLayer));
+            props.view
+              .whenLayerView(
+                props.map.allLayers.find(
+                  curLayer => curLayer.title === 'Crime Density Heat Map'
+                )
+              )
+              .then(function(layerView) {
+                layerView.filter = {
+                  where: whereString
+                }
+              })
+          } else {
+            props.view
+              .whenLayerView(
+                props.map.allLayers.find(
+                  curLayer => curLayer.title === 'Crime Density Heat Map'
+                )
+              )
+              .then(function(layerView) {
+                layerView.filter = {
+                  where: whereString
+                }
+              })
           }
 
           props.view.when().then(function() {

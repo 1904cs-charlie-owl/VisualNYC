@@ -20,7 +20,7 @@ const BoroughsLayer = props => {
         paneDiv.id = 'paneDiv'
         paneDiv.setAttribute(
           'style',
-          'position:absolute; display:flex; margin-left:100px; top:40px; width: 50%; text-align:center; background-color: transparent'
+          'position:absolute; display:flex; margin-left:80px; top:13px; width: 50%; text-align:center; background-color: transparent'
         )
         document.body.appendChild(paneDiv)
 
@@ -29,7 +29,7 @@ const BoroughsLayer = props => {
           button.className = 'esri-button esri-button-overwrite boroughs'
           button.setAttribute(
             'style',
-            'width:12%; display:table-cell; margin:4px; background-color: #69dcff; font-family: "Avenir Next W00","Helvetica Neue",Helvetica,Arial,sans-serif'
+            'width:12%; display:table-cell; margin:4px; background-color: #242424; color: #69dcff; font-family: "Avenir Next W00","Helvetica Neue",Helvetica,Arial,sans-serif; border:0; font-weight: bold'
           )
           paneDiv.appendChild(button)
         }
@@ -47,7 +47,9 @@ const BoroughsLayer = props => {
         let initLayer = new FeatureLayer({
           url:
             'https://services9.arcgis.com/UBBAhYgiEL7Yaa7P/ArcGIS/rest/services/boroughs/FeatureServer',
-          visible: false
+          visible: false,
+          legendEnabled: false,
+          listMode: 'hide'
         })
 
         props.view.when(function() {
