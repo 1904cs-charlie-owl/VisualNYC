@@ -76,7 +76,6 @@ const CrimeHeat = props => {
             `CMPLNT_FR_TM BETWEEN %27${oneHourBefore}
                   :00:00%27 AND %27${oneHourAfter}:00:00%27 AND
                   dow = %27${props.mapView.day}%27 AND
-                  BORO_NM = %27${props.mapView.boro}%27 AND
                   LAW_CAT_CD IN (%27${
                     classFilter.felony ? 'FELONY' : ''
                   }%27, %27${classFilter.misd ? 'MISDEMEANOR' : ''}%27,
@@ -89,20 +88,15 @@ const CrimeHeat = props => {
               categoryFilter.DRUGS ? urlCodes.DRUGS : ''
             }${categoryFilter.OTHER ? urlCodes.OTHER : ''})`.slice(0, -2) + ')'
 
-          const urlString = `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon,KY_CD,OFNS_DESC,PD_DESC, date_extract_m(CMPLNT_FR_DT) AS month, date_extract_d(CMPLNT_FR_DT) AS day, date_extract_y(CMPLNT_FR_DT) AS year, date_extract_dow(cmplnt_fr_dt) AS dow, BORO_NM&$limit=500000`
+          const urlString = `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20AND%20${urlWhereString}&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon,KY_CD,OFNS_DESC,PD_DESC, date_extract_m(CMPLNT_FR_DT) AS month, date_extract_d(CMPLNT_FR_DT) AS day, date_extract_y(CMPLNT_FR_DT) AS year, date_extract_dow(cmplnt_fr_dt) AS dow, BORO_NM&$limit=500000`
 
           let initLayer = new GeoJSONLayer({
             url: urlString,
             // url: `/9s4h-37hy_6.geojson`,
             renderer: heatMapRenderer,
-            definitionExpression: whereString,
             title: 'Crime Heat Map',
             id: 'initLayer'
           })
-
-          function setGeoLayerFilter(expression) {
-            initLayer.definitionExpression = expression
-          }
 
           if (
             !props.map.allLayers.items
@@ -111,7 +105,12 @@ const CrimeHeat = props => {
           ) {
             props.map.add(initLayer)
           } else {
-            setGeoLayerFilter(whereString)
+            let curLayer = props.map.allLayers.find(
+              layerFound => layerFound.id === 'initLayer'
+            )
+            curLayer.url = urlString
+            console.log(curLayer.url)
+            curLayer.refresh()
 
             // // props.map.allLayers.refresh()
             // props.map.add(initLayer);

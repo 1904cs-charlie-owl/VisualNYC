@@ -1,3 +1,6 @@
+/* eslint-disable complexity */
+import axios from 'axios'
+
 /**
  * ACTION TYPES
  */
@@ -8,6 +11,7 @@ const CLASS_FILTER_CHANGE = 'CLASS_FILTER_CHANGE'
 const CATEGORY_FILTER_CHANGE = 'CATEGORY_FILTER_CHANGE'
 const CHANGE_DAY = 'CHANGE_DAY'
 const CHANGE_BORO = 'CHANGE_BORO'
+const GET_CRIMES = 'GET_CRIMES'
 
 /**
  * INITIAL STATE
@@ -31,6 +35,7 @@ let categoryFilter = {
   OTHER: true
 }
 let startBoro = 'MANHATTAN'
+let crimeData = {}
 
 const defaultView = {
   threeD: false,
@@ -39,7 +44,8 @@ const defaultView = {
   classFilter,
   categoryFilter,
   day: currentDay,
-  boro: startBoro
+  boro: startBoro,
+  crimeData
 }
 
 /**
@@ -61,6 +67,7 @@ export const categoryFilterChange = (filterValue, checked) => ({
 export const changeBoroAction = boro => ({type: CHANGE_BORO, boro})
 
 export const changeDay = day => ({type: CHANGE_DAY, day})
+export const getCrimes = crimes => ({type: GET_CRIMES, crimes})
 
 /**
  * THUNK CREATORS
@@ -107,6 +114,15 @@ export const changeBoroThunk = boro => {
     dispatch(changeBoroAction(boro))
   }
 }
+
+export const getCrimesThunk = () => async dispatch => {
+  try {
+    const crimeRes = await axios.get(`/api/crimes`)
+    dispatch(getCrimes(crimeRes.data))
+  } catch (err) {
+    console.error(err)
+  }
+}
 /**
  * REDUCER
  */
@@ -135,6 +151,9 @@ export default function(state = defaultView, action) {
       return newState
     case CHANGE_BORO:
       newState.boro = action.boro
+      return newState
+    case GET_CRIMES:
+      newState.crimes = action.crimes
       return newState
     default:
       return state
