@@ -32,7 +32,7 @@ const CrimeHeat = props => {
 
           const template = {
             title: '{PD_DESC}',
-            content: `<p><b>Severity:</b> {LAW_CAT_CD} </p>
+            content: `<b>Severity:</b> {LAW_CAT_CD} <p><b>Location:</b> {PREM_TYP_DESC}</p>
               <b>Date:</b> {month}-{day}-{year}<p><b>Time: </b>{CMPLNT_FR_TM} </p>`,
             fieldInfos: [
               {
@@ -81,7 +81,7 @@ const CrimeHeat = props => {
             ')'
 
           boros.forEach(boro => {
-            const urlString = `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?boro_nm=${boro}&$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon,KY_CD,OFNS_DESC,PD_DESC, date_extract_m(CMPLNT_FR_DT) AS month, date_extract_d(CMPLNT_FR_DT) AS day, date_extract_y(CMPLNT_FR_DT) AS year, date_extract_dow(cmplnt_fr_dt) AS dow, BORO_NM&$limit=500000`
+            const urlString = `https://data.cityofnewyork.us/resource/9s4h-37hy.geojson?boro_nm=${boro}&$where=cmplnt_fr_dt%20between%20%272018-01-01%27%20and%20%272018-12-31%27%20&$select=CMPLNT_FR_DT,CMPLNT_FR_TM,LAW_CAT_CD,Lat_Lon,KY_CD,OFNS_DESC,PD_DESC,PREM_TYP_DESC,date_extract_m(CMPLNT_FR_DT) AS month, date_extract_d(CMPLNT_FR_DT) AS day, date_extract_y(CMPLNT_FR_DT) AS year, date_extract_dow(cmplnt_fr_dt) AS dow, BORO_NM&$limit=500000`
             if (!props.map.allLayers.find(curLayer => curLayer.id === boro)) {
               const initLayer = new GeoJSONLayer({
                 url: urlString,

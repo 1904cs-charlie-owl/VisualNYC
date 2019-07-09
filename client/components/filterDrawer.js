@@ -45,7 +45,6 @@ const FilterButton = props => {
   const theme = useTheme()
   const [open, setOpen] = React.useState(false)
   const toggleFilterDrawer = openState => event => {
-    console.log('toggling')
     if (
       event.type === 'keydown' &&
       (event.key === 'Tab' || event.key === 'Shift')
