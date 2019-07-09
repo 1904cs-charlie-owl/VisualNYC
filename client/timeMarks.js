@@ -1,45 +1,45 @@
 const marks = [
   {
-    value: 0
+    value: 0,
+    label: '12AM - 2AM'
   },
   {
-    value: 9.09,
-    label: '8 PM - 10PM'
+    value: -2
   },
   {
-    value: 18.18
+    value: -4,
+    label: '4AM - 6 AM'
   },
   {
-    value: 27.27,
-    label: '4 PM - 6 PM'
+    value: -6
   },
   {
-    value: 36.36
+    value: -8,
+    label: '8AM - 10AM'
   },
   {
-    value: 45.45,
-    label: '12 PM - 2PM'
+    value: -10
   },
   {
-    value: 54.54
+    value: -12,
+    label: '12PM - 2PM'
   },
   {
-    value: 63.63,
-    label: '8 AM - 10AM'
+    value: -14
   },
   {
-    value: 72.72
+    value: -16,
+    label: '4PM - 6PM'
   },
   {
-    value: 81.81,
-    label: '4 AM - 6AM'
+    value: -18
   },
   {
-    value: 90.9
+    value: -20,
+    label: '8PM - 10PM'
   },
   {
-    value: 99.99,
-    label: '12 AM - 2AM'
+    value: -22
   }
 ]
 

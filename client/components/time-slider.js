@@ -34,29 +34,20 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const getHourPct = currentHour => {
-  let hours = marks.map(el => el.value)
-  let currentHourPct = 100 - currentHour / 22 * 100
-  return hours.filter(
-    el => currentHourPct >= el && currentHourPct < el + 9.09
-  )[0]
-}
-
-const getHour = pct => {
+const getHour = hour => {
   let hours = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22]
-  let hour = Math.floor(24 * (pct / 100))
   return hours.filter(el => hour >= el && hour < el + 2)[0]
 }
 
 function DiscreteSlider(props) {
-  const [hourPct, setHourPct] = useState(getHourPct(props.mapView.currentHour))
+  const [hour, setHour] = useState(getHour(props.mapView.currentHour))
+  let current = hour
   useEffect(
     () => {
-      props.changeTime(getHour(hourPct))
+      props.changeTime(getHour(current))
     },
-    [hourPct]
+    [current]
   )
-  let pct = hourPct
 
   const classes = useStyles()
   return (
@@ -66,14 +57,14 @@ function DiscreteSlider(props) {
         <IconButton
           className={classes.button}
           aria-label="Play"
-          disabled={hourPct < 9}
+          disabled={current > 20}
           size="medium"
           onClick={() => {
-            if (pct > 10) {
+            if (current < 22) {
               let int = setInterval(() => {
-                if (pct < 10) clearInterval(int)
-                pct = pct - 9.09
-                setHourPct(pct)
+                if (current > 18) clearInterval(int)
+                current = current + 2
+                setHour(getHour(current))
               }, 2000)
             }
           }}
@@ -90,12 +81,12 @@ function DiscreteSlider(props) {
             markLabelActive: classes.markLabelActive
           }}
           aria-labelledby="vertical-slider"
-          min={0}
-          max={99.99}
+          min={-22}
+          max={0}
           step={null}
           marks={marks}
-          onChange={(e, v) => setHourPct(v)}
-          value={hourPct}
+          onChange={(e, v) => setHour(getHour(v * -1))}
+          value={current * -1}
           orientation="vertical"
         />
       </div>
