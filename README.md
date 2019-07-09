@@ -5,6 +5,11 @@
 Interactive map of New York City featuring data visualizations of crime statistics based on NYC open data.
 Map will color code neighborhoods based on : 1. crime rates 2. time of day 3. type of crime
 
+Data is based off of NYC historical crime from beginning of 2018 until end of 2018. Year 2019 has not been released yet.
+
+
+
+
 This project will help users decide if their risk of crime when moving to or visiting a location and answer  
  the age old question, is the neighborhood safe to be in? Example:
 
