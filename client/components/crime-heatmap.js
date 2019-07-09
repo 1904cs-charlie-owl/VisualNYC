@@ -100,6 +100,10 @@ const CrimeHeat = props => {
             id: 'initLayer'
           })
 
+          function setGeoLayerFilter(expression) {
+            initLayer.definitionExpression = expression
+          }
+
           if (
             !props.map.allLayers.items
               .map(item => item.title)
@@ -107,10 +111,7 @@ const CrimeHeat = props => {
           ) {
             props.map.add(initLayer)
           } else {
-            const curLayer = props.map.allLayers.find(
-              layerFound => layerFound.id === 'initLayer'
-            )
-            curLayer.definitionExpression = whereString
+            setGeoLayerFilter(whereString)
 
             // // props.map.allLayers.refresh()
             // props.map.add(initLayer);
