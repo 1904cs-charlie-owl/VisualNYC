@@ -29,7 +29,7 @@ const BoroughsLayer = props => {
           button.className = 'esri-button esri-button-overwrite boroughs'
           button.setAttribute(
             'style',
-            'width:12%; display:table-cell; margin:4px; background-color: #242424; color: #69dcff; font-family: "Avenir Next W00","Helvetica Neue",Helvetica,Arial,sans-serif; border:0; font-weight: bold'
+            'width:125px; display:table-cell; margin:4px; background-color: #242424; color: #69dcff; font-family: "Avenir Next W00","Helvetica Neue",Helvetica,Arial,sans-serif; border:0; font-weight: bold'
           )
           paneDiv.appendChild(button)
         }
