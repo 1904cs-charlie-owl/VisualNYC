@@ -45,7 +45,9 @@ const BoroughsLayer = props => {
         let initLayer = new FeatureLayer({
           url:
             'https://services9.arcgis.com/UBBAhYgiEL7Yaa7P/ArcGIS/rest/services/boroughs/FeatureServer',
-          visible: false
+          visible: false,
+          legendEnabled: false,
+          listMode: 'hide'
         })
 
         props.view.when(function() {
