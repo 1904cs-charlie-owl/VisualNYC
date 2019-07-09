@@ -9,7 +9,7 @@ const BoroughsLayer = props => {
         const boroughCoords = {
           Brooklyn: [40.6782, -73.9442],
           Manhattan: [40.7831, -73.9712],
-          Queens: [40.7174, -73.8743],
+          Queens: [40.782, -73.7949],
           'Staten Island': [40.5795, -74.1502],
           Bronx: [40.8448, -73.8648]
         }
@@ -18,7 +18,7 @@ const BoroughsLayer = props => {
         paneDiv.id = 'paneDiv'
         paneDiv.setAttribute(
           'style',
-          'position:absolute; display:flex; margin-left:100px; top:40px; width: 50%; text-align:center; background-color: transparent'
+          'position:absolute; display:flex; margin-left:80px; top:13px; width: 50%; text-align:center; background-color: transparent'
         )
         document.body.appendChild(paneDiv)
 
@@ -27,7 +27,7 @@ const BoroughsLayer = props => {
           button.className = 'esri-button esri-button-overwrite boroughs'
           button.setAttribute(
             'style',
-            'width:10%; display:table-cell; margin:4px; background-color: #69dcff'
+            'width:12%; display:table-cell; margin:4px; background-color: #242424; color: #69dcff; font-family: "Avenir Next W00","Helvetica Neue",Helvetica,Arial,sans-serif; border:0; font-weight: bold'
           )
           paneDiv.appendChild(button)
         }
@@ -45,8 +45,6 @@ const BoroughsLayer = props => {
         let initLayer = new FeatureLayer({
           url:
             'https://services9.arcgis.com/UBBAhYgiEL7Yaa7P/ArcGIS/rest/services/boroughs/FeatureServer',
-          // title: 'Borough Coordinates',
-          basemapLegendVisible: true,
           visible: false
         })
 
