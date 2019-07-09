@@ -96,6 +96,7 @@ let categoryFilter = {
   DRUGS: true,
   OTHER: true
 }
+let boro = 'MANHATTAN'
 
 const defaultView = {
   threeD: false,
@@ -103,7 +104,8 @@ const defaultView = {
   initialLoad,
   classFilter,
   categoryFilter,
-  day: currentDay
+  day: currentDay,
+  boro
 }
 let testStore
 
@@ -127,7 +129,8 @@ describe('TOOGLE_3D', () => {
       initialLoad,
       classFilter,
       categoryFilter,
-      day: currentDay
+      day: currentDay,
+      boro
     })
   })
 })
@@ -143,7 +146,8 @@ describe('CHANGE_TIME', () => {
       initialLoad,
       classFilter,
       categoryFilter,
-      day: currentDay
+      day: currentDay,
+      boro
     })
   })
 })
@@ -156,7 +160,8 @@ describe('INITIAL_LOAD', () => {
       initialLoad: false,
       classFilter,
       categoryFilter,
-      day: currentDay
+      day: currentDay,
+      boro
     })
   })
 })
@@ -179,7 +184,8 @@ describe('CLASS_FILTER_CHANGE', () => {
         viol: true
       },
       categoryFilter,
-      day: currentDay
+      day: currentDay,
+      boro
     })
   })
 })
@@ -205,7 +211,8 @@ describe('CATEGORY_FILTER_CHANGE', () => {
         DRUGS: true,
         OTHER: true
       },
-      day: currentDay
+      day: currentDay,
+      boro
     })
   })
 })
@@ -219,7 +226,8 @@ describe('CHANGE_DAY', () => {
       initialLoad,
       classFilter,
       categoryFilter,
-      day: testDay
+      day: testDay,
+      boro
     })
   })
 })

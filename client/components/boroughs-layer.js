@@ -1,5 +1,7 @@
 import {useState, useEffect} from 'react'
 import {loadModules} from '@esri/react-arcgis'
+import {changeBoroThunk} from '../store'
+import {connect} from 'react-redux'
 
 const BoroughsLayer = props => {
   const [layer, setLayer] = useState(null)
@@ -77,6 +79,7 @@ const BoroughsLayer = props => {
                 }
               )
             })
+            props.changeBoro(event.target.innerText.toUpperCase())
           }
         })
 
@@ -89,4 +92,15 @@ const BoroughsLayer = props => {
   return null
 }
 
-export default BoroughsLayer
+const mapStateToProps = state => {
+  let mapView = state.view
+  return {mapView}
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeBoro: newTime => dispatch(changeBoroThunk(newTime))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BoroughsLayer)
