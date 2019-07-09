@@ -9,7 +9,7 @@ const BoroughsLayer = props => {
         const boroughCoords = {
           Brooklyn: [40.6782, -73.9442],
           Manhattan: [40.7831, -73.9712],
-          Queens: [40.782, -73.7949],
+          Queens: [40.7174, -73.8743],
           'Staten Island': [40.5795, -74.1502],
           Bronx: [40.8448, -73.8648]
         }
@@ -45,6 +45,8 @@ const BoroughsLayer = props => {
         let initLayer = new FeatureLayer({
           url:
             'https://services9.arcgis.com/UBBAhYgiEL7Yaa7P/ArcGIS/rest/services/boroughs/FeatureServer',
+          // title: 'Borough Coordinates',
+          basemapLegendVisible: true,
           visible: false
         })
 
