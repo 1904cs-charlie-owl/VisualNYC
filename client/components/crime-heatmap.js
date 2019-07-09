@@ -54,28 +54,11 @@ const CrimeHeat = props => {
             oneHourAfter = '0' + oneHourAfter
           }
 
-          // const whereString =
-          //   `CMPLNT_FR_TM BETWEEN '${oneHourBefore}
-          //         :00:00' AND '${oneHourAfter}:00:00' AND
-          //         dow = '${props.mapView.day}' AND
-          //         LAW_CAT_CD IN ('${classFilter.felony ? 'FELONY' : ''}', '${
-          //     classFilter.misd ? 'MISDEMEANOR' : ''
-          //     }',
-          //           '${classFilter.viol ? 'VIOLATION' : ''}') AND
-          //         KY_CD IN (${
-          //     categoryFilter.HOMICIDE ? normalCodes.HOMICIDE : ''
-          //     }${categoryFilter.SEXCRIME ? normalCodes.SEXCRIME : ''}${
-          //     categoryFilter.THEFTFRAUD ? normalCodes.THEFTFRAUD : ''
-          //     }${categoryFilter.OTHERVIOLENT ? normalCodes.OTHERVIOLENT : ''}${
-          //     categoryFilter.DRUGS ? normalCodes.DRUGS : ''
-          //     }${categoryFilter.OTHER ? normalCodes.OTHER : ''})`.slice(0, -2) +
-          //   ')'
-
           const urlWhereString =
             `CMPLNT_FR_TM BETWEEN %27${oneHourBefore}
                   :00:00%27 AND %27${oneHourAfter}:00:00%27 AND
                   dow = %27${props.mapView.day}%27 AND
-                  BORO_NM = %27${props.mapView.boro} AND
+                  BORO_NM = %27${props.mapView.boro}%27 AND
                   LAW_CAT_CD IN (%27${
                     classFilter.felony ? 'FELONY' : ''
                   }%27, %27${classFilter.misd ? 'MISDEMEANOR' : ''}%27,
@@ -104,16 +87,19 @@ const CrimeHeat = props => {
               .includes('Crime Heat Map')
           ) {
             props.map.add(initLayer)
-
-            setLayer(initLayer)
           } else {
-            setLayer(initLayer)
-
             const curLayer = props.map.allLayers.find(
               layerFound => layerFound.id === 'initLayer'
             )
-            props.map.add(initLayer)
-            initLayer.when(props.map.remove(curLayer))
+            curLayer.url = urlString
+            console.log(
+              props.map.allLayers.find(
+                layerFound => layerFound.id === 'initLayer'
+              ).url
+            )
+            props.map.allLayers.refresh()
+            // props.map.add(initLayer);
+            // initLayer.when(props.map.remove(curLayer));
           }
 
           props.view.when().then(function() {
