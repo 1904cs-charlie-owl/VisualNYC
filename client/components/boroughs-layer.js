@@ -20,7 +20,7 @@ const BoroughsLayer = props => {
         paneDiv.id = 'paneDiv'
         paneDiv.setAttribute(
           'style',
-          'position:absolute; display:flex; margin-left:80px; top:13px; width: 50%; text-align:center; background-color: transparent'
+          'position:absolute; display:flex; margin-left:80px; top:11px; width: 50%; text-align:center; background-color: transparent'
         )
         document.body.appendChild(paneDiv)
 
