@@ -1,7 +1,10 @@
 import {useState, useEffect} from 'react'
 import {loadModules} from '@esri/react-arcgis'
+import axios from 'axios'
+import {changeBoroThunk} from '../store'
+import {connect} from 'react-redux'
 
-const LayerListWidget = props => {
+const WidgetLayer = props => {
   const [widgets, setWidgets] = useState(null)
   useEffect(() => {
     loadModules([
@@ -11,7 +14,10 @@ const LayerListWidget = props => {
       'esri/core/watchUtils',
       'esri/widgets/Legend',
       'esri/widgets/Search',
-      'esri/widgets/BasemapGallery'
+      'esri/widgets/BasemapGallery',
+      'esri/tasks/Locator',
+      'esri/geometry/SpatialReference',
+      'esri/geometry/Point'
     ])
       .then(
         ([
@@ -21,11 +27,28 @@ const LayerListWidget = props => {
           watchUtils,
           Legend,
           Search,
-          BasemapGallery
+          BasemapGallery,
+          Point
         ]) => {
           props.view.when(function() {
             var searchBtn = new Search({
               view: props.view
+            })
+            searchBtn.on('select-result', async function(evt) {
+              const lat = parseFloat(evt.result.feature.geometry.latitude)
+              const lon = parseFloat(evt.result.feature.geometry.longitude)
+              const tokenRes = await axios.post(
+                'https://locatenyc.io/arcgis/tokens/generateToken?username=mikejoesis&password=*Buddy0ne12345&expiration=1440'
+              )
+              const token = tokenRes.data.token
+              axios
+                .get(
+                  `https://locatenyc.io/arcgis/rest/services/locateNYC/v1/GeocodeServer/reverseGeocode?location=${lon}%2C${lat}&distance=100&outSR=4326&f=pjson&token=${token}`
+                )
+                .then(res => {
+                  console.log(res)
+                  props.changeBoro(res.data.address.Borough.toUpperCase())
+                })
             })
             var searchExpand = new Expand({
               view: props.view,
@@ -99,4 +122,10 @@ const LayerListWidget = props => {
   return null
 }
 
-export default LayerListWidget
+const mapDispatchToProps = dispatch => {
+  return {
+    changeBoro: newTime => dispatch(changeBoroThunk(newTime))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(WidgetLayer)
