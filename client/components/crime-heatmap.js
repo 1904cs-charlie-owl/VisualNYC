@@ -2,8 +2,7 @@
 import React, {useState, useEffect} from 'react'
 import {loadModules} from '@esri/react-arcgis'
 import {connect} from 'react-redux'
-import {urlCodes, categoryCodes} from '../crimeCategoryCodes'
-import boroughsLayer from './boroughs-layer'
+import {categoryCodes} from '../crimeCategoryCodes'
 
 const CrimeHeat = props => {
   const [layer, setLayer] = useState(null)
