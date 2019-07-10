@@ -27,8 +27,7 @@ const WidgetLayer = props => {
           watchUtils,
           Legend,
           Search,
-          BasemapGallery,
-          Point
+          BasemapGallery
         ]) => {
           props.view.when(function() {
             var searchBtn = new Search({
@@ -66,6 +65,23 @@ const WidgetLayer = props => {
             props.view.ui.add(expand, 'top-left')
             var locateBtn = new Locate({
               view: props.view
+            })
+            locateBtn.on('locate', async function(evt) {
+              console.log(evt)
+              const lat = parseFloat(evt.position.coords.latitude)
+              const lon = parseFloat(evt.position.coords.longitude)
+              const tokenRes = await axios.post(
+                'https://locatenyc.io/arcgis/tokens/generateToken?username=mikejoesis&password=*Buddy0ne12345&expiration=1440'
+              )
+              const token = tokenRes.data.token
+              axios
+                .get(
+                  `https://locatenyc.io/arcgis/rest/services/locateNYC/v1/GeocodeServer/reverseGeocode?location=${lon}%2C${lat}&distance=100&outSR=4326&f=pjson&token=${token}`
+                )
+                .then(res => {
+                  console.log(res)
+                  props.changeBoro(res.data.address.Borough.toUpperCase())
+                })
             })
             props.view.ui.add(locateBtn, {
               position: 'top-left'
