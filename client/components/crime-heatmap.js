@@ -32,8 +32,7 @@ const CrimeHeat = props => {
 
           const template = {
             title: '{PD_DESC}',
-            content: `<b>Severity:</b> {LAW_CAT_CD} <p><b>Location:</b> {PREM_TYP_DESC}</p>
-              <b>Date:</b> {month}-{day}-{year}<p><b>Time: </b>{CMPLNT_FR_TM} </p>`,
+            content: crimeView,
             fieldInfos: [
               {
                 fieldName: 'CMPLNT_FR_DT',
@@ -42,6 +41,42 @@ const CrimeHeat = props => {
                 }
               }
             ]
+          }
+
+          function crimeView(feature) {
+            let time = feature.graphic.attributes.CMPLNT_FR_TM
+            let hour = Number(time.slice(0, 2))
+            let minutes = time.slice(3, 5)
+            if (minutes === '0') {
+              minutes = '00'
+            }
+            let amOrPm = 'AM'
+
+            if (hour > 12) {
+              amOrPm = 'PM'
+              hour = hour - 12
+            }
+
+            if (hour === 12) {
+              amOrPm = 'PM'
+            }
+
+            if (hour === 0) {
+              hour = 12
+            }
+
+            let newTime = String(hour) + ':' + minutes + ' ' + amOrPm
+
+            let severity =
+              feature.graphic.attributes.LAW_CAT_CD[0] +
+              feature.graphic.attributes.LAW_CAT_CD.slice(1).toLowerCase()
+
+            let location =
+              feature.graphic.attributes.PREM_TYP_DESC[0] +
+              feature.graphic.attributes.PREM_TYP_DESC.slice(1).toLowerCase()
+
+            return `<b>Severity:</b> ${severity} <p><b>Location:</b> ${location}</p>
+              <b>Date:</b> {month}-{day}-{year}<p><b>Time: </b>${newTime} </p>`
           }
 
           const boros = [
