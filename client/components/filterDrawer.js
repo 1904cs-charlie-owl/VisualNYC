@@ -28,14 +28,13 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#242424'
   },
   drawerHeader: {
-    // paddingTop: theme.spacing(2),
+    paddingTop: 22,
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(3),
     fontWeight: 'bold'
   },
   drawerFooter: {
     display: 'flex',
-    // marginTop: 'auto',
     ...theme.mixins.toolbar
   }
 }))
@@ -56,10 +55,11 @@ const FilterButton = props => {
   const filterButton = document.createElement('button')
   filterButton.setAttribute(
     'style',
-    'width:100px; height:32px;font-size:.85em; background-color: #242424; color: #69dcff; border-width: 0px; font-weight: bold; display: flex; justify-content: center'
+    'width:100px; height:32px; font-size:14px; background-color: #242424; color: #69dcff; border-width: 0px; font-weight: bold; display: flex; justify-content: center; align-items: center; padding-right:15px; font-family:"Avenir Next W00","Helvetica Neue",Helvetica,Arial,sans-serif'
   )
-  filterButton.innerHTML = '<i class="material-icons">chevron_left</i>'
-  // filterButton.innerText =
+
+  filterButton.innerHTML = '<i class="material-icons">chevron_left</i>Filters'
+
   filterButton.onclick = function() {
     setOpen(!open)
   }
@@ -77,12 +77,6 @@ const FilterButton = props => {
       }}
     >
       <div className={classes.drawerFooter}>
-        <IconButton
-          onClick={toggleFilterDrawer(false)}
-          style={{color: '#69dcff', paddingTop: 0}}
-        >
-          <ChevronRightIcon />
-        </IconButton>
         <Typography
           className={classes.drawerHeader}
           id="time-of-day-slider"
@@ -90,6 +84,17 @@ const FilterButton = props => {
         >
           Filters:
         </Typography>
+        <IconButton
+          onClick={toggleFilterDrawer(false)}
+          style={{
+            color: '#69dcff',
+            paddingTop: 0,
+            paddingBottom: 0,
+            marginLeft: 'auto'
+          }}
+        >
+          <ChevronRightIcon />
+        </IconButton>
       </div>
 
       <SeverityFilter />
