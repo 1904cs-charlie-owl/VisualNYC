@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3),
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(1)
   },
   label: {
     height: 30

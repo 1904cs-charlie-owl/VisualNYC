@@ -4,3 +4,7 @@ body {
 pre {
   display: none;
 }
+
+i.material-icons {
+  font-size: 19px;
+}
