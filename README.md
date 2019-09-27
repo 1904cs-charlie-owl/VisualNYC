@@ -1,14 +1,28 @@
-# VisualNYC
-
-![Map displaying criminal activity in 2018 on Tuesdays between 12 and 2 p.m.](./VisualNYC.png)
-
-## Description
+## VisualNYC
 
 Interactive map of New York City featuring data visualizations of crime statistics based on NYC open data.
 
-Capstone Presentation: https://youtu.be/wW63u2Y1gsk
+---
 
-Map can be adjusted to display only crimes by: 1. time of day, 2. day of the week, 3. type of crime, etc.
+![](visualnyc-logo.png)
+
+---
+
+**Link**: [visualnyc.net](http://www.visualnyc.net/)
+
+**Capstone Presentation**: [https://youtu.be/wW63u2Y1gsk](https://youtu.be/wW63u2Y1gsk)
+
+---
+
+## Description
+
+---
+
+![Map displaying criminal activity in 2018 on Tuesdays between 12 and 2 p.m.](./VisualNYC.png)
+
+Map can be adjusted to display only crimes by: 1. time of day, 2. day of the week, 3. crime class, 4. crime category, etc.
+
+---
 
 Data is based off of NYC historical crime from beginning of 2018 until end of 2018.
 
@@ -29,3 +43,10 @@ This project will help users decide if their risk of crime when moving to or vis
 6.  Git
 7.  GitHub
 8.  Heroku
+
+## Dev Team
+
+* Ricky Lau ([LinkedIn](https://www.linkedin.com/in/rickylaudev) | [GitHub](https://github.com/rickylaufitness))
+* Michael Siciliano ([LinkedIn](https://www.linkedin.com/in/michael-siciliano-1904/) | [GitHub](https://github.com/msicil))
+* Justin Kichler ([LinkedIn](https://www.linkedin.com/in/justinkichler/) | [GitHub](https://github.com/jkichler))
+* Alexander Mann ([LinkedIn](https://www.linkedin.com/in/alexandermann2015/) | [GitHub](https://github.com/AlexanderMann2015))
