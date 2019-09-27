@@ -1,14 +1,28 @@
-# VisualNYC
-
-![Map displaying criminal activity in 2018 on Tuesdays between 12 and 2 p.m.](./VisualNYC.png)
-
-## Description
+## VisualNYC
 
 Interactive map of New York City featuring data visualizations of crime statistics based on NYC open data.
 
-Capstone Presentation: https://youtu.be/wW63u2Y1gsk
+---
+
+![](visualnyc-logo.png)
+
+---
+
+**Link**: [visualnyc.net](http://www.visualnyc.net/)
+
+**Capstone Presentation**: [https://youtu.be/wW63u2Y1gsk](https://youtu.be/wW63u2Y1gsk)
+
+---
+
+## Description
+
+---
+
+![Map displaying criminal activity in 2018 on Tuesdays between 12 and 2 p.m.](./VisualNYC.png)
 
 Map can be adjusted to display only crimes by: 1. time of day, 2. day of the week, 3. crime class, 4. crime category, etc.
+
+---
 
 Data is based off of NYC historical crime from beginning of 2018 until end of 2018.
 
