@@ -8,7 +8,7 @@ Interactive map of New York City featuring data visualizations of crime statisti
 
 Capstone Presentation: https://youtu.be/wW63u2Y1gsk
 
-Map can be adjusted to display only crimes by: 1. time of day, 2. day of the week, 3. type of crime, etc.
+Map can be adjusted to display only crimes by: 1. time of day, 2. day of the week, 3. crime class, 4. crime category, etc.
 
 Data is based off of NYC historical crime from beginning of 2018 until end of 2018.
 
