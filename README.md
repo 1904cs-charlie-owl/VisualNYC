@@ -30,6 +30,12 @@ Map can be adjusted to display only crimes by: 1. time of day, 2. day of the wee
 
 ---
 
+![](./visualnyc-search.png)
+
+Use our search feature to to pinpoint your location in any borough in Greater NYC Area.
+
+---
+
 Data is based off of NYC historical crime from beginning of 2018 until end of 2018.
 
 This project will help users decide if their risk of crime when moving to or visiting a location and answer the age old question, is this area safe to be in? Example:
