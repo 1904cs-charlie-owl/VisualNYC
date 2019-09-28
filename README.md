@@ -3,8 +3,9 @@
 Interactive map of New York City featuring data visualizations of crime statistics based on NYC open data.
 
 ---
-
-![](./visualnyc-logo.png)
+<p align="center">
+  <img src="./visualnyc-logo.png" />
+</p>
 
 ---
 
