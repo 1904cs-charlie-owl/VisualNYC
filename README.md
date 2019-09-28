@@ -18,6 +18,12 @@ Interactive map of New York City featuring data visualizations of crime statisti
 
 ---
 
+![](./visualnyc-init.png)
+
+VisualNYC grab's user's current day and time and automatically filters into a two hour window from your current time.
+
+---
+
 ![Map displaying criminal activity in 2018 on Tuesdays between 12 and 2 p.m.](./VisualNYC.png)
 
 Map can be adjusted to display only crimes by: 1. time of day, 2. day of the week, 3. crime class, 4. crime category, etc.
