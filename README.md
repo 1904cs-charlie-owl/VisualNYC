@@ -36,6 +36,20 @@ Use our search feature to to pinpoint your location in any borough in Greater NY
 
 ---
 
+![](visualnyc-zoomed.png)
+
+As you zoom in heatmap will continue to render to show you crime density based on your location and crime filter settings.
+
+---
+
+![](visualnyc-pinpoint.png)
+
+Once zoomed in enough, visualNYC will transform the user's view into a pin point map with color and radius indicators based on the type of crime and class of crime.
+
+User can click on a pinpoint to see specific crime related details such as severity, location, date and time of crime occurence.
+
+---
+
 Data is based off of NYC historical crime from beginning of 2018 until end of 2018.
 
 This project will help users decide if their risk of crime when moving to or visiting a location and answer the age old question, is this area safe to be in? Example:
