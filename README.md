@@ -22,33 +22,33 @@
 
 ![](./visualnyc-init.png)
 
-VisualNYC grab's user's current day and time and automatically filters into a two hour window from your current time.
+_VisualNYC grab's user's current day and time and automatically filters into a two hour window from your current time._
 
 ---
 
-Highlighted borough buttons on top left allow for easy switch in borough view. Default view is Manhattan.
+**Filter**: Highlighted borough buttons on top left allow for easy switch in borough view. Default view is Manhattan.
 
 ![Map displaying criminal activity in 2018 on Tuesdays between 12 and 2 p.m.](./VisualNYC.png)
 
-Map can be adjusted to display only crimes by: 1. time of day, 2. day of the week, 3. crime class, 4. crime category, etc.
+Map can be adjusted to display only crimes by: **1**. time of day, **2**. day of the week, **3**. crime class, **4**. crime category, etc.
 
 ---
 
 ![](./visualnyc-search.png)
 
-Need to find a specific place, restaurant, or meet up spot? use search feature to to pinpoint your location in any borough in Greater NYC Area.
+**Search**: Need to find a specific place, restaurant, or meet up spot? use search feature to to pinpoint your location in any borough in Greater NYC Area.
 
 ---
 
 ![](visualnyc-zoomed.png)
 
-As you zoom in the heatmap will continue to render to show you crime density based on your location and crime filter settings.
+**Zoom**: As you zoom in the heatmap will continue to render to show you crime density based on your location and crime filter settings.
 
 ---
 
 ![](visualnyc-pinpoint.png)
 
-Once zoomed in enough, visualNYC will transform the user's view into a pin point map with color and radius indicators based on the type of crime and class of crime.
+**View** Once zoomed in enough, visualNYC will transform the user's view into a pin point map with color and radius indicators based on the type of crime and class of crime.
 
 User can click on a pinpoint to see specific crime related details such as severity, location, date and time of crime occurence.
 
