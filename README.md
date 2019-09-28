@@ -1,4 +1,4 @@
-# VisualNYC
+<h1 align="center">VisualNYC</h1>
 
 Interactive map of New York City featuring data visualizations of crime statistics based on NYC open data.
 
@@ -14,7 +14,7 @@ Interactive map of New York City featuring data visualizations of crime statisti
 
 ---
 
-## Description
+<h2 align="center">Description</h2>
 
 ---
 
