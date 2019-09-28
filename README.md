@@ -36,7 +36,7 @@ Map can be adjusted to display only crimes by: **1**. time of day, **2**. day of
 
 ![](./visualnyc-search.png)
 
-**Search**: Need to find a specific place, restaurant, or meet up spot? use search feature to to pinpoint your location in any borough in Greater NYC Area.
+**Search**: Need to find a specific place, restaurant, or meet up spot? Use our search feature to to pinpoint your location in any borough in Greater NYC Area.
 
 ---
 
