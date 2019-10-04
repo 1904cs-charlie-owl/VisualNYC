@@ -36,13 +36,13 @@ Map can be adjusted to display only crimes by: **1**. time of day, **2**. day of
 
 ![](./visualnyc-search.png)
 
-**Search**: Need to find a specific place, restaurant, or meet up spot? Use our search feature to to pinpoint your location in any borough in Greater NYC Area.
+**Search**: Need to find a specific place, restaurant, or meet up spot? Use our search feature to to pinpoint your location in any borough in Greater NYC Area. Geolocation available.
 
 ---
 
 ![](visualnyc-zoomed.png)
 
-**Zoom**: As you zoom in the heatmap will continue to render to show you crime density based on your location and crime filter settings.
+**Zoom**: As you zoom in the heatmap will continue to update and render to show you crime density based on your location and crime filter settings.
 
 ---
 
@@ -58,7 +58,7 @@ User can click on a pinpoint to see specific crime related details such as sever
 
 ![](visualnyc-layer.png)
 
-_**Don't like a specfic layer or view?**_ Filter through your layers, and choose your best eye candy.
+_**Don't like a specfic layer or view?**_ Filter through our layers, and choose your best eye candy.
 
 ---
 
@@ -72,7 +72,7 @@ _**Don't like a specfic layer or view?**_ Filter through your layers, and choose
 
 Data is based off of NYC historical crime from beginning of 2018 until end of 2018.
 
-This project will help users decide if their risk of crime when moving to or visiting a location and answer the age old question, is this area safe to be in?
+This project will help users decide if their is a risk of crime when moving to or visiting a location and answer the age old question, is this area safe to be in?
 
 _Example:_
 
