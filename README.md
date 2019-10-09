@@ -1,6 +1,6 @@
 <h1 align="center">VisualNYC</h1>
 
-<h3 align="center">Interactive map of New York City featuring data visualizations of crime statistics based on NYC open data.</h3>
+<h3 align="center">Interactive heatmap of New York City featuring data visualizations of crime statistics based on NYC open data.</h3>
 
 ---
 
