@@ -36,7 +36,7 @@ Map can be adjusted to display only crimes by: **1**. time of day, **2**. day of
 
 ![](./visualnyc-search.png)
 
-**Search**: Need to find a specific place, restaurant, or meet up spot? Use our search feature to to pinpoint your location in any borough in Greater NYC Area. Geolocation available.
+**Search**: Need to find a specific place, restaurant, or meet up spot? Use our search feature to pinpoint your location in any borough in Greater NYC Area. Geolocation available.
 
 ---
 
@@ -85,7 +85,7 @@ _Example:_
 
 1.  ArcGIS
 2.  React.js
-3.  redux.js
+3.  Redux.js
 4.  Node.js
 5.  Travis
 6.  Git
