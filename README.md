@@ -10,8 +10,6 @@
 
 ---
 
-**Link**: [visualnyc.net](http://www.visualnyc.net/)
-
 **Capstone Presentation**: [https://youtu.be/wW63u2Y1gsk](https://youtu.be/wW63u2Y1gsk)
 
 ---
